@@ -11,5 +11,7 @@ urlpatterns = [
     path('carrinho/', views.cart_view, name='cart_view'),
     path('sweatshirts/', views.sweatshirts_view, name='sweatshirts'),
 
+    path('addStaff_view/', views.addStaff, name='addStaff'),
+    path('addStaff/', views.redirectAddStaff, name='redirectAddStaff'),
 
 ]

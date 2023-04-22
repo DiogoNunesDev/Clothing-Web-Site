@@ -31,6 +31,7 @@ class Utilizador(models.Model):
     numero_telemovel = models.IntegerField(default=0, validators=[MaxValueValidator(999999999)])
     num_cartao_cidadao = models.IntegerField(default=0, validators=[MaxValueValidator(999999999)])
     nif = models.IntegerField(default=0, validators=[MaxValueValidator(999999999)])
+    email = models.EmailField(max_length=150, default="defaultMail@gmail.com")
     num_pontos = models.IntegerField(default=0)
     # image = models.ImageField(upload_to="images/")
 
@@ -46,6 +47,7 @@ class Staff(models.Model):
     morada = models.CharField(max_length=150)
     numero_telemovel = models.IntegerField(default=0, validators=[MaxValueValidator(999999999)])
     num_cartao_cidadao = models.IntegerField(default=0, validators=[MaxValueValidator(999999999)])
+    email = models.EmailField(max_length=150, default="defaulStaffMail@gmail.com")
 
     def __str__(self):
         return self.primeiro_nome + " " + self.apelido + " - " + str(self.num_cartao_cidadao)

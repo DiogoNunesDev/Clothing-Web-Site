@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Signup Page</title>
+    <title>Adicionar Staff Members</title>
 </head>
 <body>
     <div>
-        <form action="{% url 'signup_view' %}" method="post">
+        <form action="{% url 'addStaff' %}" method="post">
             <h1>Signup:</h1>
             {% csrf_token %}
             <p><strong>Username: </strong></p>
@@ -27,8 +27,6 @@
             <input type="number" name="numero_telemovel">
             <p><strong>Número de Cartão Cidadão (CC): </strong></p>
             <input type="number" name="num_cartao_cidadao">
-            <p><strong>Número de Identificação Fiscal (NIF): </strong></p>
-            <input type="number" name="nif">
             <p></p>
             <input type="submit" value="Submit">
         </form>

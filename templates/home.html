@@ -21,13 +21,20 @@
         {% csrf_token %}
         <input type="submit" value="Login">
     </form>
+
     <form action="{% url 'redirectSignup' %}" method="post">
         {% csrf_token %}
         <input type="submit" value="Signup">
     </form>
+
     <form action="{% url 'sweatshirts' %}" method="post">
         {% csrf_token %}
         <input type="submit" value="Sweatshirts">
+    </form>
+
+    <form action="{% url 'redirectAddStaff' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Adicionar Staff">
     </form>
 </body>
 </html>
