@@ -11,19 +11,25 @@
         {% csrf_token %}
         <input type="submit" value="Carrinho">
     </form>
-
+    <p></p>
     <form action="{% url 'full_collection' %}" method="post">
         {% csrf_token %}
         <input type="submit" value="Full Collection">
     </form>
-
+    <p></p>
     <form action="{% url 'redirectLogin' %}" method="post">
         {% csrf_token %}
         <input type="submit" value="Login">
     </form>
+    <p></p>
     <form action="{% url 'redirectSignup' %}" method="post">
         {% csrf_token %}
         <input type="submit" value="Signup">
+    </form>
+    <p></p>
+    <form action="{% url 'redirectAddStaff' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Adicionar Staff">
     </form>
 </body>
 </html>

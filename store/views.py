@@ -1,7 +1,8 @@
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from store.models import Produto
+from store.models import Produto, Utilizador, Staff
 from django.urls import reverse
 
 
@@ -25,11 +26,9 @@ def login_view(request):
         user = authenticate(username=name, password=password)
         if user is not None:
             login(request, user)
-            print("existe")
             # reverse: quando estou dentro dos templates vai procurar o index e vai gerar o url correspondente
             return HttpResponseRedirect(reverse('home'))
         else:
-            print("Nao existe")
             return render(request, 'login.html', {'msg_erro':'Credenciais inválidas, tente novamente.'})
     else:
         #Mostrar o formulario de login
@@ -40,16 +39,55 @@ def redirectLogin(request):
     return render(request, 'login.html')
 
 def signup_view(request):
-    name = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=name, password=password)
-    print("ok")
+    if request.method == 'POST':
+        name = request.POST['username']
+        password = request.POST['password']
+        email = request.POST['email']
+        user = User.objects.create_user(username=name, password=password, email=email)
+        user.save()
+        primeiro_nome = request.POST['primeiro_nome']
+        apelido = request.POST['apelido']
+        data_nascimento = request.POST['data_nascimento']
+        morada = request.POST['morada']
+        numero_telemovel = request.POST['numero_telemovel']
+        num_cartao_cidadao = request.POST['num_cartao_cidadao']
+        nif = request.POST['nif']
+        utilizador = Utilizador(user=user, primeiro_nome=primeiro_nome, apelido=apelido, data_nascimento=data_nascimento, morada=morada,
+                                numero_telemovel=numero_telemovel, num_cartao_cidadao=num_cartao_cidadao, nif=nif, num_pontos=0, email=email)
+        utilizador.save()
+        login(request, user)
+        return render(request, 'home.html')
+
 
 def redirectSignup(request):
     return render(request, 'signup.html')
+
+
+def addStaff(request):
+    if request.method == 'POST':
+        name = request.POST['username']
+        password = request.POST['password']
+        email = request.POST['email']
+        user = User.objects.create_user(username=name, password=password, email=email)
+        user.save()
+        primeiro_nome = request.POST['primeiro_nome']
+        apelido = request.POST['apelido']
+        data_nascimento = request.POST['data_nascimento']
+        morada = request.POST['morada']
+        numero_telemovel = request.POST['numero_telemovel']
+        num_cartao_cidadao = request.POST['num_cartao_cidadao']
+        staff = Staff(user=user, primeiro_nome=primeiro_nome, apelido=apelido, data_nascimento=data_nascimento, morada=morada,
+                        numero_telemovel=numero_telemovel, num_cartao_cidadao=num_cartao_cidadao, email=email)
+        staff.save()
+    return render(request, 'addStaff.html')
+
+def redirectAddStaff(request):
+    return render(request, 'addStaff.html')
 
 def addProduct(request):
     if request.user.staff:
         print("ok")
     else:
         return redirect('login_view')
+
+

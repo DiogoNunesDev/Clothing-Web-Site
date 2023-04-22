@@ -9,6 +9,8 @@ urlpatterns = [
     path('signup/', views.redirectSignup, name='redirectSignup'),
     path('signup_view/', views.signup_view, name='signup_view'),
     path('carrinho/', views.cart_view, name='cart_view'),
+    path('addStaff_view/', views.addStaff, name='addStaff'),
+    path('addStaff/', views.redirectAddStaff, name='redirectAddStaff'),
 
 
 ]
