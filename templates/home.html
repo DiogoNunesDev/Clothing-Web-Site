@@ -25,5 +25,9 @@
         {% csrf_token %}
         <input type="submit" value="Signup">
     </form>
+    <form action="{% url 'sweatshirts' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Sweatshirts">
+    </form>
 </body>
 </html>

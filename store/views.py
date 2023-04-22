@@ -53,3 +53,6 @@ def addProduct(request):
         print("ok")
     else:
         return redirect('login_view')
+
+def sweatshirts_view(request):
+    return render(request, 'sweatshirts.html')

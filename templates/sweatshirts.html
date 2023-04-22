@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sweatshirts</title>
+</head>
+<body>
+    <h1> Lista de Produtos </h1>
+    {% if product_list %}
+        <ul class="product_list">
+            {% for product in product_list %}
+                <li>
+                    {{ product }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Não há produtos disponíveis.</p>
+    {% endif %}
+</body>
+</html>
