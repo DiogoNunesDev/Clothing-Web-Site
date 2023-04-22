@@ -6,13 +6,12 @@ from django.urls import reverse
 
 
 def home(request):
-
     return render(request, 'home.html')
 
-def index(request):
+def full_collection(request):
     product_list = Produto.objects.all()
     context = {'product_list': product_list}
-    return render(request, 'index.html', context)
+    return render(request, 'full_collection.html', context)
 
 def cart_view(request):
     return render(request, 'cart.html')
@@ -26,10 +25,12 @@ def login_view(request):
         user = authenticate(username=name, password=password)
         if user is not None:
             login(request, user)
+            print("existe")
             # reverse: quando estou dentro dos templates vai procurar o index e vai gerar o url correspondente
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('home'))
         else:
-            return render(request, 'login.html', {'msg_erro':'Credenciais inválidas. Tente novamente'})
+            print("Nao existe")
+            return render(request, 'login.html', {'msg_erro':'Credenciais inválidas, tente novamente.'})
     else:
         #Mostrar o formulario de login
         return render(request, 'login.html')
@@ -39,6 +40,9 @@ def redirectLogin(request):
     return render(request, 'login.html')
 
 def signup_view(request):
+    name = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=name, password=password)
     print("ok")
 
 def redirectSignup(request):

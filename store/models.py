@@ -9,6 +9,7 @@ class Produto(models.Model):
     preco = models.DecimalField(max_digits=8, decimal_places=2)
     num_pontos = models.IntegerField(default=0)
     categoria = models.CharField(max_length=50)
+    referencia = models.CharField(max_length=4, default="0")
     #image = models.ImageField(upload_to="images/")
 
     def __str__(self):

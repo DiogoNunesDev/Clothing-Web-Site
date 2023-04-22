@@ -6,9 +6,15 @@
 </head>
 <body>
     <h1>Home Page for Pescada Store</h1>
-    <form action="{% url 'index' %}" method="post">
+
+    <form action="{% url 'cart_view' %}" method="post">
         {% csrf_token %}
-        <input type="submit" value="Items">
+        <input type="submit" value="Carrinho">
+    </form>
+
+    <form action="{% url 'full_collection' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Full Collection">
     </form>
 
     <form action="{% url 'redirectLogin' %}" method="post">
