@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pescada Store</title>
+</head>
+<body>
+    <h1>Home Page for Pescada Store</h1>
+    <form action="{% url 'index' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Items">
+    </form>
+
+    <form action="{% url 'redirectLogin' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Login">
+    </form>
+    <form action="{% url 'redirectSignup' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Signup">
+    </form>
+</body>
+</html>

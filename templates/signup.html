@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup Page</title>
+</head>
+<body>
+    <div>
+        <form action="{% url 'signup_view' %}" method="post">
+            <h1>Signup:</h1>
+            {% csrf_token %}
+            <p><strong>Username: </strong></p>
+            <input type="text" name="username">
+            <p><strong>Password: </strong></p>
+            <input type="password" name="password">
+            <p><strong>Primeiro Nome: </strong></p>
+            <input type="text" name="primeiro_nome">
+            <p><strong> Apelido: </strong></p>
+            <input type="text" name="apelido">
+            <p><strong>Data Nascimento: </strong></p>
+            <input type="date" name="data_nascimento">
+            <p><strong>Morada: </strong></p>
+            <input type="text" name="morada">
+            <p><strong>Número Télemovel: </strong></p>
+            <input type="number" name="numero_telemovel">
+            <p><strong>Número Cartão Cidadão (CC): </strong></p>
+            <input type="number" name="num_cartao_cidadao">
+            <p><strong>Número de Identificação Fiscal (NIF): </strong></p>
+            <input type="number" name="nif">
+            <p></p>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>
