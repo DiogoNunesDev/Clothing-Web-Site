@@ -15,6 +15,9 @@ class Produto(models.Model):
     def __str__(self):
         return self.categoria + " - " + self.cor + " - " + self.tamanho + " - " + str(self.preco)
 
+    def makeProduct(t, c, p, np, cat):
+        product = Produto(tamanho=t, cor=c, preco=p, num_pontos=np, categoria=cat)
+        product.save()
 class CarrinhoCompras(models.Model):
     num_itens = models.IntegerField(default=0)
     valor_total = models.DecimalField(max_digits=8, decimal_places=2)
@@ -52,8 +55,3 @@ class Staff(models.Model):
     def __str__(self):
         return self.primeiro_nome + " " + self.apelido + " - " + str(self.num_cartao_cidadao)
 
-
-
-def makeProduct(t, c, p, np, cat):
-    product = Produto(tamanho=t, cor=c, preco=p, num_pontos=np, categoria=cat)
-    product.save()

@@ -5,6 +5,21 @@
     <title>Adicionar Produtos</title>
 </head>
 <body>
-
+    <form action="{% url 'addProduct' %}" method="post">
+        {% csrf_token %}
+        <p><strong>Tamanho: </strong></p>
+        <input type="text" name="tamanho">
+        <p><strong>Cor: </strong></p>
+        <input type="text" name="cor">
+        <p><strong>Preço: </strong></p>
+        <input type="number" name="preco">
+        <p><strong>Número de Pontos: </strong></p>
+        <input type="number" name="num_pontos">
+        <p><strong>Categoria: </strong></p>
+        <input type="text" name="categoria">
+        <p><strong>Referencia: </strong></p>
+        <input type="text" name="referencia">
+        <input type="submit" value="Sumbit">
+    </form>
 </body>
 </html>

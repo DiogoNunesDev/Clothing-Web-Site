@@ -97,9 +97,18 @@ def profile(request):
 
 def addProduct(request):
     if request.user.staff:
-        print("ok")
+        tamanho = request.POST['tamanho']
+        cor = request.POST['cor']
+        preco = request.POST['preco']
+        num_pontos = request.POST['num_pontos']
+        categoria = request.POST['categoria']
+        referencia = request.POST['referencia']
+        Produto.makeProduct(tamanho, cor, preco, num_pontos, categoria)
     else:
         return redirect('login_view')
+
+def redirectAddProduct(request):
+    return render(request, 'addProduct.html')
 
 
 def sweatshirts_view(request):

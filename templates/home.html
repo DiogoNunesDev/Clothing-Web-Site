@@ -42,6 +42,11 @@
         <input type="submit" value="Profile">
     </form>
 
+    <form action="{% url 'redirectAddProduct' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Adicionar Produto">
+    </form>
+
     <form action="{% url 'logout_view' %}" method="post">
         {% csrf_token %}
         <input type="submit" value="Logout">
