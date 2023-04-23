@@ -1,0 +1,12 @@
+body {
+    background-image: url('../images/sea2.jpeg');
+    background-size: cover;
+}
+
+img{
+    width: 20%;
+}
+
+header{
+    background-color: aquamarine;
+}

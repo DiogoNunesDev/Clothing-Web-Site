@@ -83,6 +83,7 @@ def addStaff(request):
         staff = Staff(user=user, primeiro_nome=primeiro_nome, apelido=apelido, data_nascimento=data_nascimento, morada=morada,
                         numero_telemovel=numero_telemovel, num_cartao_cidadao=num_cartao_cidadao, email=email)
         staff.save()
+        return render(request, 'home.html')
     return render(request, 'addStaff.html')
 
 def redirectAddStaff(request):

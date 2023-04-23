@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Pescada Store</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
     <h1>Home Page for Pescada Store</h1>
@@ -33,11 +32,6 @@
         <input type="submit" value="Sweatshirts">
     </form>
 
-    <form action="{% url 'tshirt' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Tshirts">
-    </form>
-
     <form action="{% url 'redirectAddStaff' %}" method="post">
         {% csrf_token %}
         <input type="submit" value="Adicionar Staff">
@@ -46,11 +40,6 @@
     <form action="{% url 'profile' %}" method="post">
         {% csrf_token %}
         <input type="submit" value="Profile">
-    </form>
-
-    <form action="{% url 'redirectAddProduct' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Adicionar Produto">
     </form>
 
     <form action="{% url 'logout_view' %}" method="post">
