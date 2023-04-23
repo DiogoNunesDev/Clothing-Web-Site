@@ -14,5 +14,6 @@ urlpatterns = [
     path('addStaff/', views.redirectAddStaff, name='redirectAddStaff'),
     path('sweatshirts/', views.sweatshirts_view, name='sweatshirts'),
     path('profile/', views.profile, name='profile'),
+    path('tshirts/', views.tshirts_view, name='tshirt')
 
 ]
