@@ -3,14 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Pescada Store</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'store/css/style.css' %}">
 </head>
 <body>
+    <header>
+        <form action="{% url 'profile' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Profile">
+        </form>
+        <form action="{% url 'cart_view' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Carrinho">
+        </form>
+    </header>
     <h1>Home Page for Pescada Store</h1>
-
-    <form action="{% url 'cart_view' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Carrinho">
-    </form>
 
     <form action="{% url 'full_collection' %}" method="post">
         {% csrf_token %}
@@ -35,11 +43,6 @@
     <form action="{% url 'redirectAddStaff' %}" method="post">
         {% csrf_token %}
         <input type="submit" value="Adicionar Staff">
-    </form>
-
-    <form action="{% url 'profile' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Profile">
     </form>
 
     <form action="{% url 'logout_view' %}" method="post">
