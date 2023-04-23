@@ -1,4 +1,4 @@
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -37,6 +37,10 @@ def login_view(request):
 
 def redirectLogin(request):
     return render(request, 'login.html')
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('home'))
 
 def signup_view(request):
     if request.method == 'POST':
@@ -84,21 +88,30 @@ def addStaff(request):
 def redirectAddStaff(request):
     return render(request, 'addStaff.html')
 
+
+def profile(request):
+    if not request.user.is_authenticated:
+        return render(request, 'login.html', {'msg_erro':'Utilizador não autenticado'})
+
+    return render(request, 'profile.html')
+
 def addProduct(request):
     if request.user.staff:
         print("ok")
     else:
         return redirect('login_view')
 
+
 def sweatshirts_view(request):
     product_list = Produto.objects.filter(categoria='Sweatshirt').order_by('cor')
     arr_produto_unico = []
     cores_vistas = set()
     for product in product_list:
-        if Produto.cor not in cores_vistas:
+        if product.cor not in cores_vistas:
             cores_vistas.add(product.cor)
             arr_produto_unico.append(product)
-    context = {'product_list': product_list}
+    context = {'product_list': arr_produto_unico}
     return render(request, 'sweatshirts.html', context)
+
 
 

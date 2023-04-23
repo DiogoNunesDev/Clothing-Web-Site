@@ -36,5 +36,16 @@
         {% csrf_token %}
         <input type="submit" value="Adicionar Staff">
     </form>
+
+    <form action="{% url 'profile' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Profile">
+    </form>
+
+    <form action="{% url 'logout_view' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Logout">
+    </form>
+
 </body>
 </html>

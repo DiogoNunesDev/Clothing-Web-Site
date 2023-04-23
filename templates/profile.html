@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+    <h1>Profile</h1>
+    {% if request.user.utilizador %}
+        <p><strong>Username: </strong>{{ request.user.username }}</p>
+        <p><strong>Primeiro Nome: </strong>{{ request.user.utilizador.primeiro_nome }}</p>
+        <p><strong>Apelido: </strong>{{ request.user.utilizador.apelido }}</p>
+        <p><strong>Data de Nascimento: </strong>{{ request.user.utilizador.data_nascimento }}</p>
+        <p><strong>Morada: </strong>{{ request.user.utilizador.morada }}</p>
+        <p><strong>Email: </strong>{{ request.user.email }}</p>
+        <p><strong>Número de Télemovel: </strong>{{ request.user.utilizador.numero_telemovel }}</p>
+        <p><strong>Número de Cartão de Cidadão (CC): </strong>{{ request.user.utilizador.num_cartao_cidadao }}</p>
+        <p><strong>Número de Identificação Fiscal (NIF): </strong>{{ request.user.utilizador.nif }}</p>
+        <p><strong>Pontos Acumulados: </strong>{{ request.user.utilizador.num_pontos }}</p>
+
+    {% elif request.user.staff %}
+        <p><strong>Username: </strong>{{ request.user.username }}</p>
+        <p><strong>Primeiro Nome: </strong>{{ request.user.utilizador.primeiro_nome }}</p>
+        <p><strong>Apelido: </strong>{{ request.user.utilizador.apelido }}</p>
+        <p><strong>Data de Nascimento: </strong>{{ request.user.utilizador.data_nascimento }}</p>
+        <p><strong>Morada: </strong>{{ request.user.utilizador.morada }}</p>
+        <p><strong>Email: </strong>{{ request.user.email }}</p>
+        <p><strong>Número de Télemovel: </strong>{{ request.user.utilizador.numero_telemovel }}</p>
+        <p><strong>Número de Cartão de Cidadão (CC): </strong>{{ request.user.utilizador.num_cartao_cidadao }}</p>
+        <p><strong>Tag: </strong>Staff</p>
+
+    {% elif request.user.is_superuser %}
+        <p><strong>Username: </strong>{{ user.username }}</p>
+        <p><strong>Email: </strong>{{ user.email }}</p>
+        <p><strong>Tag: </strong>Admin</p>
+
+    {% endif %}
+
+
+</body>
+</html>
