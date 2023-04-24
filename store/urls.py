@@ -16,6 +16,6 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('addProduct_view/', views.addProduct, name='addProduct'),
     path('add_Product/', views.redirectAddProduct, name='redirectAddProduct'),
-    path('tshirts/', views.tshirts_view, name='tshirt')
-
+    path('tshirts/', views.tshirts_view, name='tshirt'),
+    path('<int:produto_id>/detail/',views.detail_view,name='detail'),
 ]

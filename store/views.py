@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from store.models import Produto, Utilizador, Staff
 from django.urls import reverse
+from django.shortcuts import get_object_or_404
 
 
 def home(request):
@@ -134,6 +135,12 @@ def tshirts_view(request):
             arr_produto_unico.append(product)
     context = {'product_list': arr_produto_unico}
     return render(request, 'sweatshirts.html', context)
+
+def detail_view(request,produto_id):
+    produto = get_object_or_404(Produto, pk=produto_id)
+    context={'produto': produto}
+    return render(request,'detail.html',context)
+
 
 
 

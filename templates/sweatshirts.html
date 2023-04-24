@@ -5,14 +5,14 @@
         {% if product_list %}
             <ul class="product_list">
                 {% for product in product_list %}
-                    <li>
+                   <a href="{% url 'detail' produto_id=product.pk %}"><li>
                         <img src="{{ product.image_url }}" alt="{{ product.name }}">
                         <h3>{{ product.name }}</h3>
                         <p>Cor: {{ product.cor }} €</p>
                         <p>Tamanho: {{ product.tamanho }} €</p>
                         <p>Preço: {{ product.preco }} €</p>
                         <p>Pontos: {{ product.num_pontos }} €</p>
-                    </li>
+                    </li></a>
                 {% endfor %}
             </ul>
         {% else %}
