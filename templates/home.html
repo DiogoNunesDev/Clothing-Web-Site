@@ -2,53 +2,98 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Pescada Store</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>{% block title %}Pescada Store{% endblock %}</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'store/css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-    <header>
-        <form action="{% url 'profile' %}" method="post">
-            {% csrf_token %}
-            <input type="submit" value="Profile">
-        </form>
-        <form action="{% url 'cart_view' %}" method="post">
-            {% csrf_token %}
-            <input type="submit" value="Carrinho">
-        </form>
-    </header>
-    <h1>Home Page for Pescada Store</h1>
+        <header>
+        <div class="logo">
+            <a href={% url 'home' %}><img src="{% static "store/images/whiteLogo.png" %}"></a>
+        </div>
+        <div>
+            <form action="{% url 'profile' %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Profile">
+            </form>
+            <form action="{% url 'cart_view' %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Carrinho">
+            </form>
+        </div>
 
-    <form action="{% url 'full_collection' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Full Collection">
-    </form>
+        </header>
 
-    <form action="{% url 'redirectLogin' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Login">
-    </form>
+    <nav>
+        {% block nav_list %}
+            <ul class="nav_list">
+            <li>
+                <form action="{% url 'full_collection' %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Full Collection">
+                </form>
+            </li>
+            {% if not request.user.is_authenticated %}
+                <li>
+                    <form action="{% url 'redirectLogin' %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Login">
+                    </form>
+                </li>
+                <li>
+                    <form action="{% url 'redirectSignup' %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Signup">
+                    </form>
+                </li>
+            {% else %}
+                <li>
+                    <form action="{% url 'logout_view' %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Logout">
+                    </form>
+                </li>
+            {% endif %}
+            <li>
+                <form action="{% url 'sweatshirts' %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Sweatshirts">
+                </form>
+            </li>
+            <li>
+                <form action="{% url 'tshirt' %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="T-Shirts">
+                </form>
+            </li>
+            {% if request.user.is_superuser %}
+                <li>
+                    <form action="{% url 'redirectAddStaff' %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Adicionar Staff">
+                    </form>
+                </li>
+            {% endif %}
+            {% if request.user.staff %}
+                <li>
+                    <form action="{% url 'redirectAddProduct' %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Adicionar Produtos">
+                    </form>
+                </li>
+            {% endif %}
+            </ul>
+        {% endblock %}
+    </nav>
+    <main>
+        {% block conteudo %}
+            <h1>Home Page for Pescada Store</h1>
+            Pescada Store:
+            Fundada em 1900, após obtenção de uma pescada originária de Maputo.
+        {% endblock %}
+    </main>
 
-    <form action="{% url 'redirectSignup' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Signup">
-    </form>
-
-    <form action="{% url 'sweatshirts' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Sweatshirts">
-    </form>
-
-    <form action="{% url 'redirectAddStaff' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Adicionar Staff">
-    </form>
-
-    <form action="{% url 'logout_view' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Logout">
-    </form>
 
 </body>
 </html>

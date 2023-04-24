@@ -1,12 +1,67 @@
 body {
-    background-image: url('../images/sea2.jpeg');
+    background-image: url('../images/sea.jpeg');
     background-size: cover;
+    color: ghostwhite;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-img{
-    width: 20%;
+.logo {
+    float: left;
+    padding-left: 0%;
+
 }
 
-header{
-    background-color: aquamarine;
+.logo img{
+    width: 25%;
+    height: 25%;
+}
+
+header {
+    font-family: 'Operator Mono', 'Source Code Pro', Menlo, Monaco, Consolas, Courier New, monospace;
+    background-color: #004957;
+    color: ghostwhite;
+    margin: 0px;
+}
+
+nav {
+    background-color: black;
+    padding: 10px;
+    margin-bottom: 30px;
+}
+ul {
+    word-spacing: 0px;
+    display: grid;
+}
+
+.nav_list{
+    display: flex;
+    margin: 0;
+    padding: 0;
+
+}
+.nav_list li {
+    padding-right: 10px;
+    display: inline;
+}
+main{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 80px;
+
+}
+.container {
+    width: 99%;
+    margin: 0 auto;
+    overflow: auto;
+    color: whitesmoke;
+    text-align: right;
+}
+
+.product_list{
+
 }
