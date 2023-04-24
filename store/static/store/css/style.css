@@ -66,18 +66,6 @@ ul {
     background-color: #43c1d2;
 }
 
-.full-collection-button{
-    background-color: antiquewhite;
-}
-
-.sweatshirts-button{
-    background-color: antiquewhite;
-}
-
-.tshirt-button{
-    background-color: antiquewhite;
-}
-
 main{
     display: grid;
     justify-content: center;
@@ -86,6 +74,7 @@ main{
     padding-bottom: 80px;
 
 }
+
 .container {
     width: 99%;
     margin: 0 auto;
@@ -146,4 +135,24 @@ main{
 .product_list li img{
     max-width: 100%;
     height: auto;
+}
+
+.form_type {
+    background-color: coral;
+    color: black;
+    padding: 50px;
+    margin: auto;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 65px;
+    display: inline-block;
+    text-align: left;
+    border-radius: 50px;
+    overflow: hidden;
+    margin-bottom: 10px;
+
+}
+
+.div_formulario{
+    text-align: center;
 }

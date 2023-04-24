@@ -1,9 +1,9 @@
 {% extends "home.html" %}
-    {% block title %}Signup Page{% endblock %}
+    {% block title %}Pescada Store: Signup Page{% endblock %}
 
     {% block conteudo %}
-        <div class="container">
-            <form action="{% url 'signup_view' %}" method="post">
+        <div class="div_formulario">
+            <form action="{% url 'signup_view' %}" method="post" class="form_type">
                 <h1>Signup:</h1>
                 {% csrf_token %}
                 <p><strong>Username: </strong></p>

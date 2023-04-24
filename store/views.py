@@ -113,14 +113,15 @@ def redirectAddProduct(request):
 
 
 def sweatshirts_view(request):
-    product_list = Produto.objects.filter(categoria='Sweatshirt').order_by('referencia').values_list('referencia','preco','categoria',flat=False).distinct()
-    context = {'product_list': product_list}
+    product_list = Produto.objects.filter(categoria='Sweatshirt').order_by('cor')
+    arr_produto_unico = []
+    cores_vistas = set()
+    for product in product_list:
+        if product.cor not in cores_vistas:
+            cores_vistas.add(product.cor)
+            arr_produto_unico.append(product)
+    context = {'product_list': arr_produto_unico}
     return render(request, 'sweatshirts.html', context)
-
-def productdetail_view(request):
-    render(request, 'productdetail.html')
-
-
 
 
 def tshirts_view(request):
@@ -133,7 +134,6 @@ def tshirts_view(request):
             arr_produto_unico.append(product)
     context = {'product_list': arr_produto_unico}
     return render(request, 'sweatshirts.html', context)
-
 
 
 

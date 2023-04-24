@@ -1,9 +1,9 @@
 {% extends "home.html" %}
-    {% block title %}Adicionar Staff Members{% endblock %}
+    {% block title %}Pescada Store: Adicionar Staff Members{% endblock %}
 
     {% block conteudo %}
-        <div>
-            <form action="{% url 'addStaff' %}" method="post">
+        <div class="div_formulario">
+            <form action="{% url 'addStaff' %}" method="post" class="form_type">
                 <h1>Signup:</h1>
                 {% csrf_token %}
                 <p><strong>Username: </strong></p>

@@ -1,12 +1,12 @@
 {% extends "home.html" %}
-    {% block title %}Login Page{% endblock %}
+    {% block title %}Pescada Store: Login Page{% endblock %}
 
     {% block conteudo %}
         {% if msg_erro %}
             <h2> {{ msg_erro }} </h2>
         {% endif %}
-        <div>
-            <form action="{% url 'login_view' %}" method="post">
+        <div class="div_formulario">
+            <form action="{% url 'login_view' %}" method="post" class="form_type">
                 <h1>Login:</h1>
                 {% csrf_token %}
                 <p>Username:</p>
@@ -15,10 +15,6 @@
                 <input type="password" name="password">
                 <br>
                 <input type="submit" value="Submit">
-            </form>
-            <form action="{% url 'redirectSignup' %}" method="post">
-                {% csrf_token %}
-                <input type="submit" value="Signup">
             </form>
         </div>
     {% endblock %}
