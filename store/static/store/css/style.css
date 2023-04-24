@@ -1,12 +1,149 @@
 body {
-    background-image: url('../images/sea2.jpeg');
+    background-image: url('../images/sea.jpeg');
     background-size: cover;
+    color: ghostwhite;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-img{
-    width: 20%;
+.logo {
+    float: left;
+    padding-left: 0%;
 }
 
-header{
+.logo img{
+    width: 15%;
+    height: auto;
+}
+
+header {
+    font-family: 'Operator Mono', 'Source Code Pro', Menlo, Monaco, Consolas, Courier New, monospace;
+    background-color: #004957;
+    color: ghostwhite;
+    margin: 0px;
+}
+
+nav {
+    background-color: black;
+    padding: 5px;
+    margin-bottom: 30px;
+}
+ul {
+    word-spacing: 0px;
+    display: grid;
+}
+
+.nav_list{
+    display: flex;
+    justify-content: center; /* NOVO */
+    margin: 0;
+    padding: 0;
+    list-style: none; /* NOVO */
+}
+.nav_list li {
+    padding: 0 35px;
+    display: inline;
+}
+
+.nav-button{
+    background-color: antiquewhite;
+    color: black;
+    border: none;
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 150px;
+}
+
+.nav-button:hover{
+    background-color: #43c1d2;
+}
+
+.full-collection-button{
+    background-color: antiquewhite;
+}
+
+.sweatshirts-button{
+    background-color: antiquewhite;
+}
+
+.tshirt-button{
+    background-color: antiquewhite;
+}
+
+main{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 80px;
+
+}
+.container {
+    width: 99%;
+    margin: 0 auto;
+    overflow: auto;
+    color: whitesmoke;
+    text-align: right;
+}
+
+.header-buttons{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+
+}
+
+.header-buttons form{
+    margin-left: 10px;
+}
+
+.header-buttons input[type="submit"]{
     background-color: aquamarine;
+    color: #004957;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.header-buttons input[type="submit"]:hover{
+    background-color: azure;
+}
+
+.product_list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+    list-style: none;
+}
+
+.product_list li{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    margin: 10px;
+    background-color: brown;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.product_list li img{
+    max-width: 100%;
+    height: auto;
 }

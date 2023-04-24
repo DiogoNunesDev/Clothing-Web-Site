@@ -40,11 +40,6 @@
         <input type="submit" value="Sweatshirts">
     </form>
 
-    <form action="{% url 'tshirt' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Tshirts">
-    </form>
-
     <form action="{% url 'redirectAddStaff' %}" method="post">
         {% csrf_token %}
         <input type="submit" value="Adicionar Staff">

@@ -1,28 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login Page</title>
-</head>
-<body>
-    {% if msg_erro %}
-        <h2> {{ msg_erro }} </h2>
-    {% endif %}
-    <div>
-        <form action="{% url 'login_view' %}" method="post">
-            <h1>Login:</h1>
-            {% csrf_token %}
-            <p>Username:</p>
-            <input type="text" name="username" autofocus>
-            <p>Password</p>
-            <input type="password" name="password">
-            <br>
-            <input type="submit" value="Submit">
-        </form>
-        <form action="{% url 'redirectSignup' %}" method="post">
-            {% csrf_token %}
-            <input type="submit" value="Signup">
-        </form>
-    </div>
-</body>
-</html>
+{% extends "home.html" %}
+    {% block title %}Login Page{% endblock %}
+
+    {% block conteudo %}
+        {% if msg_erro %}
+            <h2> {{ msg_erro }} </h2>
+        {% endif %}
+        <div>
+            <form action="{% url 'login_view' %}" method="post">
+                <h1>Login:</h1>
+                {% csrf_token %}
+                <p>Username:</p>
+                <input type="text" name="username" autofocus>
+                <p>Password</p>
+                <input type="password" name="password">
+                <br>
+                <input type="submit" value="Submit">
+            </form>
+            <form action="{% url 'redirectSignup' %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Signup">
+            </form>
+        </div>
+    {% endblock %}

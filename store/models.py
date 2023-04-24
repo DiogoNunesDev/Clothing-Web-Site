@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.db import models
-from decimal import Decimal
 from django.core.validators import MaxValueValidator #delimita o numero de 'digitos' (maximo numero possivel aceite)
 
 class Produto(models.Model):
