@@ -141,6 +141,55 @@ def detail_view(request,produto_id):
     context={'produto': produto}
     return render(request,'detail.html',context)
 
+def redirectEditProfile(request):
+    return render(request, 'editProfile.html')
+
+def edit_profile(request):
+    if request.method == 'POST':
+        utilizador = request.user.utilizador
+        user = request.user
+        user.email = request.POST['email']
+        user.save()
+        utilizador.primeiro_nome = request.POST['primeiro_nome']
+        utilizador.apelido = request.POST['apelido']
+        utilizador.data_nascimento = request.POST['data_nascimento']
+        utilizador.morada = request.POST['morada']
+        utilizador.email = request.POST['email']
+        utilizador.numero_telemovel = request.POST['numero_telemovel']
+        utilizador.num_cartao_cidadao = request.POST['num_cartao_cidadao']
+        utilizador.nif = request.POST['nif']
+        utilizador.save()
+        return render(request, 'profile.html')
+    else:
+        return render(request, 'edit_profile.html')
 
 
+"""
+NÃO APAGUEM ISTO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+def edit_profile(request):
+    if request.method == 'POST':
+        utilizador = request.user.utilizador
+        user = request.user
+        if request.POST.get('email', '') != '':
+            user.email = request.POST['email']
+            user.save()
+        if request.POST.get('primeiro_nome', '') != '':
+            utilizador.primeiro_nome = request.POST['primeiro_nome']
+        if request.POST.get('apelido', '') != '':
+            utilizador.apelido = request.POST['apelido']
+        if request.POST.get('data_nascimento', '') != '':
+            utilizador.data_nascimento = request.POST['data_nascimento']
+        if request.POST.get('morada', '') != '':
+            utilizador.morada = request.POST['morada']
+        if request.POST.get('numero_telemovel', '') != '':
+            utilizador.numero_telemovel = request.POST['numero_telemovel']
+        if request.POST.get('num_cartao_cidadao', '') != '':
+            utilizador.num_cartao_cidadao = request.POST['num_cartao_cidadao']
+        if request.POST.get('nif', '') != '':
+            utilizador.nif = request.POST['nif']
+        utilizador.save()
+        return render(request, 'profile.html')
+    else:
+        return render(request, 'edit_profile.html')
+"""

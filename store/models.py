@@ -54,3 +54,28 @@ class Staff(models.Model):
     def __str__(self):
         return self.primeiro_nome + " " + self.apelido + " - " + str(self.num_cartao_cidadao)
 
+
+
+
+"""
+Funções para dar reset a base de dados, caso seja preciso
+
+
+from django.db import connection
+
+def reset_sequence_staff(new_value):
+    with connection.cursor() as cursor:
+        cursor.execute(f"UPDATE sqlite_sequence SET seq = {new_value} WHERE name = 'store_staff'")
+
+
+def reset_sequence_user(new_value):
+    with connection.cursor() as cursor:
+        cursor.execute(f"UPDATE sqlite_sequence SET seq = {new_value} WHERE name = 'auth_user'")
+
+
+def reset_sequence_utilizador(new_value):
+    with connection.cursor() as cursor:
+        cursor.execute(f"UPDATE sqlite_sequence SET seq = {new_value} WHERE name = 'store_utilizador'")
+  
+
+"""

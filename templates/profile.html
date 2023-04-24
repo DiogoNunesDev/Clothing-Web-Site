@@ -5,7 +5,8 @@
         <div class="div_formulario">
         <h1>Profile</h1>
         {% if request.user.utilizador %}
-            <form class="form_type">
+            <form action="{% url 'redirectEditProfile' %}" class="form_type" method="post">
+                {% csrf_token %}
                 <p><strong>Username: </strong>{{ request.user.username }}</p>
                 <p><strong>Primeiro Nome: </strong>{{ request.user.utilizador.primeiro_nome }}</p>
                 <p><strong>Apelido: </strong>{{ request.user.utilizador.apelido }}</p>
@@ -16,6 +17,7 @@
                 <p><strong>Número de Cartão de Cidadão (CC): </strong>{{ request.user.utilizador.num_cartao_cidadao }}</p>
                 <p><strong>Número de Identificação Fiscal (NIF): </strong>{{ request.user.utilizador.nif }}</p>
                 <p><strong>Pontos Acumulados: </strong>{{ request.user.utilizador.num_pontos }}</p>
+                <input type="submit" value="Editar">
             </form>
         {% elif request.user.staff %}
             <form class="form_type">

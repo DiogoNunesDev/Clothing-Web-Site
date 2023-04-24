@@ -17,5 +17,9 @@ urlpatterns = [
     path('addProduct_view/', views.addProduct, name='addProduct'),
     path('add_Product/', views.redirectAddProduct, name='redirectAddProduct'),
     path('tshirts/', views.tshirts_view, name='tshirt'),
-    path('<int:produto_id>/detail/',views.detail_view,name='detail'),
+    path('<int:produto_id>/detail/', views.detail_view, name='detail'),
+    path('edit_Profile/', views.redirectEditProfile, name="redirectEditProfile"),
+    path('editProfile_view/', views.edit_profile, name="edit_profile"),
+
+
 ]
