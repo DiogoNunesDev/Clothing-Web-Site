@@ -1,12 +1,17 @@
 {% extends "home.html" %}
-    {% block title %}Tshirts{% endblock %}
+    {% block title %}Sweatshirts{% endblock %}
     {% block conteudo %}
-        <h1> Tshirts </h1>
+        <h1> Sweatshirts </h1>
         {% if product_list %}
             <ul class="product_list">
                 {% for product in product_list %}
                     <li>
-                        {{ product }}
+                        <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                        <h3>{{ product.name }}</h3>
+                        <p>Cor: {{ product.cor }} €</p>
+                        <p>Tamanho: {{ product.tamanho }} €</p>
+                        <p>Preço: {{ product.preco }} €</p>
+                        <p>Pontos: {{ product.num_pontos }} €</p>
                     </li>
                 {% endfor %}
             </ul>

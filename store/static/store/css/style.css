@@ -11,12 +11,11 @@ body {
 .logo {
     float: left;
     padding-left: 0%;
-
 }
 
 .logo img{
-    width: 25%;
-    height: 25%;
+    width: 15%;
+    height: auto;
 }
 
 header {
@@ -28,7 +27,7 @@ header {
 
 nav {
     background-color: black;
-    padding: 10px;
+    padding: 5px;
     margin-bottom: 30px;
 }
 ul {
@@ -38,14 +37,47 @@ ul {
 
 .nav_list{
     display: flex;
+    justify-content: center; /* NOVO */
     margin: 0;
     padding: 0;
-
+    list-style: none; /* NOVO */
 }
 .nav_list li {
-    padding-right: 10px;
+    padding: 0 35px;
     display: inline;
 }
+
+.nav-button{
+    background-color: antiquewhite;
+    color: black;
+    border: none;
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 150px;
+}
+
+.nav-button:hover{
+    background-color: #43c1d2;
+}
+
+.full-collection-button{
+    background-color: antiquewhite;
+}
+
+.sweatshirts-button{
+    background-color: antiquewhite;
+}
+
+.tshirt-button{
+    background-color: antiquewhite;
+}
+
 main{
     display: grid;
     justify-content: center;
@@ -62,6 +94,56 @@ main{
     text-align: right;
 }
 
-.product_list{
+.header-buttons{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
 
+}
+
+.header-buttons form{
+    margin-left: 10px;
+}
+
+.header-buttons input[type="submit"]{
+    background-color: aquamarine;
+    color: #004957;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.header-buttons input[type="submit"]:hover{
+    background-color: azure;
+}
+
+.product_list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+    list-style: none;
+}
+
+.product_list li{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    margin: 10px;
+    background-color: brown;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.product_list li img{
+    max-width: 100%;
+    height: auto;
 }

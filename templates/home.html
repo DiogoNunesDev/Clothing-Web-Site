@@ -12,7 +12,7 @@
         <div class="logo">
             <a href={% url 'home' %}><img src="{% static "store/images/whiteLogo.png" %}"></a>
         </div>
-        <div>
+        <div class="header-buttons">
             <form action="{% url 'profile' %}" method="post">
                 {% csrf_token %}
                 <input type="submit" value="Profile">
@@ -21,8 +21,30 @@
                 {% csrf_token %}
                 <input type="submit" value="Carrinho">
             </form>
-        </div>
 
+            {% if not request.user.is_authenticated %}
+                <div>
+                    <form action="{% url 'redirectLogin' %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Login">
+                    </form>
+                </div>
+                <div>
+                    <form action="{% url 'redirectSignup' %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Signup">
+                    </form>
+                </div>
+            {% else %}
+                <div>
+                    <form action="{% url 'logout_view' %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="Logout">
+                    </form>
+                </div>
+            {% endif %}
+
+        </div>
         </header>
 
     <nav>
@@ -31,40 +53,20 @@
             <li>
                 <form action="{% url 'full_collection' %}" method="post">
                     {% csrf_token %}
-                    <input type="submit" value="Full Collection">
+                    <input type="submit" value="Full Collection" class="nav-button full-collection-button">
                 </form>
             </li>
-            {% if not request.user.is_authenticated %}
-                <li>
-                    <form action="{% url 'redirectLogin' %}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" value="Login">
-                    </form>
-                </li>
-                <li>
-                    <form action="{% url 'redirectSignup' %}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" value="Signup">
-                    </form>
-                </li>
-            {% else %}
-                <li>
-                    <form action="{% url 'logout_view' %}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" value="Logout">
-                    </form>
-                </li>
-            {% endif %}
+
             <li>
                 <form action="{% url 'sweatshirts' %}" method="post">
                     {% csrf_token %}
-                    <input type="submit" value="Sweatshirts">
+                    <input type="submit" value="Sweatshirts" class="nav-button sweatshirts-button">
                 </form>
             </li>
             <li>
                 <form action="{% url 'tshirt' %}" method="post">
                     {% csrf_token %}
-                    <input type="submit" value="T-Shirts">
+                    <input type="submit" value="T-Shirts" class="nav-button tshirt-button">
                 </form>
             </li>
             {% if request.user.is_superuser %}
