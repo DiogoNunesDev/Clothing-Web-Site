@@ -9,10 +9,10 @@ class Produto(models.Model):
     num_pontos = models.IntegerField(default=0)
     categoria = models.CharField(max_length=50)
     referencia = models.CharField(max_length=4, default="0")
-    #image = models.ImageField(upload_to="images/")
+    image = models.CharField(max_length=255, default="whiteLogo.png")
 
     def __str__(self):
-        return self.categoria + " - " + self.cor + " - " + self.tamanho + " - " + str(self.preco)
+        return self.categoria + " - " + self.cor + " -> " + str(self.preco) + "€"
 
     def makeProduct(t, c, p, np, cat):
         product = Produto(tamanho=t, cor=c, preco=p, num_pontos=np, categoria=cat)

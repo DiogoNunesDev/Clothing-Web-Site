@@ -1,13 +1,20 @@
 {% extends "home.html" %}
+    {% load static %}
     {% block title %}Pescada Store: Products{% endblock %}
 
     {% block conteudo %}
-    <h1> Lista de Produtos </h1>
+        <div class="tittle-container">
+            <h1> Full Collection </h1>
+        </div>
+
     {% if product_list %}
         <ul class="product_list">
             {% for product in product_list %}
                 <li>
-                    {{ product }}
+                    <a href="{% url 'detail' produto_id=product.pk %}">
+                        <img src="{% static "store/images/" %}{{ product.image }}" alt="{{ product }}">
+                    </a>
+                    <strong>{{ product }}</strong>
                 </li>
             {% endfor %}
         </ul>
