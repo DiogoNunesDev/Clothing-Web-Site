@@ -1,21 +1,27 @@
 {% extends "home.html" %}
+    {% load static %}
     {% block title %}Pescada Store: Sweatshirts{% endblock %}
     {% block conteudo %}
-        <h1> Pescada Store: Sweatshirts </h1>
+        <div class="tittle-container">
+            <h1> Sweatshirts </h1>
+        </div>
         {% if product_list %}
             <ul class="product_list">
                 {% for product in product_list %}
                    <a href="{% url 'detail' produto_id=product.pk %}"><li>
-                        <img src="{{ product.image_url }}" alt="{{ product.name }}">
-                        <h3>{{ product.name }}</h3>
-                        <p>Cor: {{ product.cor }} </p>
-                        <p>Tamanho: {{ product.tamanho }} </p>
-                        <p>Preço: {{ product.preco }} €</p>
-                        <p>Pontos: {{ product.num_pontos }} </p>
+                       {% if product.cor == 'Azul' %}
+                            <img src="{% static "store/images/blueSS.png" %}" alt="Sweatshirt Azul">
+                       {% elif product.cor == 'Branco' %}
+                            <img src="{% static "store/images/whiteSS.png" %}" alt="Sweatshirt Branca">
+                       {% elif product.cor == 'Cinzento' %}
+                            <img src="{% static "store/images/greySS.png" %}" alt="Sweatshirt Cinzenta">
+                       {% elif product.cor == 'Preto' %}
+                            <img src="{% static "store/images/blackSS.png" %}" alt="Sweatshirt Preta">
+                       {% endif %}
                    </a>
                 {% endfor %}
             </ul>
         {% else %}
-            <p>Não há tshirts disponíveis.</p>
+            <p>Não há sweatshirts disponíveis.</p>
         {% endif %}
     {% endblock %}

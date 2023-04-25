@@ -48,7 +48,8 @@ ul {
 }
 
 .nav-button{
-    background-color: antiquewhite;
+    font-family: 'Montserrat', sans-serif;
+    background-color: white;
     color: black;
     border: none;
     padding: 4px 8px;
@@ -59,11 +60,11 @@ ul {
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 4px;
-    width: 150px;
+    width: 180px;
 }
 
 .nav-button:hover{
-    background-color: #43c1d2;
+    background-color: aquamarine;
 }
 
 main{
@@ -84,6 +85,7 @@ main{
 }
 
 .header-buttons{
+    font-family: 'Montserrat', sans-serif;
     position: absolute;
     top: 10px;
     right: 10px;
@@ -107,6 +109,7 @@ main{
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 4px;
+    width: 100px;
 }
 
 .header-buttons input[type="submit"]:hover{
@@ -125,9 +128,9 @@ main{
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 200px;
-    margin: 10px;
-    background-color: brown;
+    width: 250px;
+    margin: 20px;
+    background-color: white;
     border-radius: 5px;
     padding: 10px;
 }
@@ -138,8 +141,8 @@ main{
 }
 
 .form_type {
-    background-color: coral;
-    color: black;
+    background-color: #004957;
+    color: white;
     padding: 50px;
     margin: auto;
     margin-top: 0px;
@@ -155,4 +158,36 @@ main{
 
 .div_formulario{
     text-align: center;
+}
+
+.tittle-container{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.centered-main{
+    text-align: center;
+    margin-bottom: 30px;
+
+}
+
+.centered-main h1{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 50px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 2px;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+
+.tittle-container h1{
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 50px;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>{% block title %}Pescada Store{% endblock %}</title>
     {% load static %}
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'store/css/style.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -16,7 +17,7 @@
             {% if request.user.is_authenticated %}
                 <form action="{% url 'profile' %}" method="post">
                     {% csrf_token %}
-                    <input type="submit" value="Profile">
+                    <input type="submit" value="Perfil">
                 </form>
             {% endif %}
             {% if not request.user.is_authenticated %}
@@ -90,9 +91,17 @@
     </nav>
     <main>
         {% block conteudo %}
-            <h1>Home Page for Pescada Store</h1>
-            Pescada Store:
-            Fundada em 1900, após obtenção de uma pescada originária de Maputo.
+            <div class="centered-main">
+                <h1>Pescada clothes</h1>
+                <p> </p>
+                <div class="form_type">
+                    <p>Bem-vindo à Pescada, a loja de roupa para adolescentes que amam o mar, o surf e uma boa noitada.</p>
+                    <p>Na Pescada, acreditamos que a moda e o estilo podem estar em harmonia com a natureza e, portanto, dedicamos-nos a produzir roupa que reflitam essa mesma filosofia.</p>
+                    <p>A nossa coleção é inspirada no estilo de vida à beira-mar, e todos os nossos produtos são feitos com materiais de qualidade e amigos do ambiente.</p>
+                    <p>Mas a Pescada não é apenas uma loja de roupa, temos um compromisso com a preservação das pescadas mundiais, uma espécie de peixe que está sob ameaça de extinção devido à pesca excessiva.</p>
+                    <p>Como parte do nosso compromisso com a sustentabilidade, doamos cerca de 20% dos nossos lucros para organizações de proteção das pescadas em todo o mundo.</p>
+                </div>
+            </div>
         {% endblock %}
     </main>
 

@@ -3,7 +3,7 @@
 
     {% block conteudo %}
         <div class="div_formulario">
-        <h1>Profile</h1>
+        <h1>Perfil</h1>
         {% if request.user.utilizador %}
             <form action="{% url 'redirectEditProfile' %}" class="form_type" method="post">
                 {% csrf_token %}
