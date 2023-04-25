@@ -280,3 +280,17 @@ figure {
     padding: 10px;
     font-family: arial, sans-serif;
 }
+
+.left-div {
+    width: 50%;
+    float: left;
+}
+.right-div {
+    width: 50%;
+    float: right;
+}
+
+.container img {
+  max-width: 100%;
+  max-height: 100%;
+}

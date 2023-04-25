@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Detalhe</title>
-</head>
-<body>
-Detalhes page
-</body>
-</html>
+{% extends 'home.html' %}
+ {% load static %}
+
+{% block title %}
+     Detalhe - {{ block.super }}
+{% endblock %}
+
+{% block conteudo %}
+ <!-- <h1>{{ produto.categoria }} - {{ produto.referencia }}</h1>
+  <p>Cor: {{ produto.cor }}</p>
+  <p>Tamanho: {{ produto.tamanho }}</p>
+  <p>Preço: €{{ produto.preco }}</p>
+  <p>Número de pontos: {{ produto.num_pontos }}</p>
+    <img src="{% static "store/images/" %}{{ produto.image }}" alt="{{ product }}">-->
+
+
+    <div class="left-div">
+    <img src="{% static "store/images/" %}{{ produto.image }}" alt="{{ product }}">
+    </div>
+
+    <div class="right-div">
+    <p>rightdiv</p>
+    </div>
+{% endblock %}
+
+
+
+
