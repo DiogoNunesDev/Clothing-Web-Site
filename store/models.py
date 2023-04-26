@@ -8,14 +8,14 @@ class Produto(models.Model):
     preco = models.DecimalField(max_digits=8, decimal_places=2)
     num_pontos = models.IntegerField(default=0)
     categoria = models.CharField(max_length=50)
-    referencia = models.CharField(max_length=4, default="0")
+    referencia = models.CharField(max_length=4)
     image = models.CharField(max_length=255, default="whiteLogo.png")
 
     def __str__(self):
         return self.categoria + " - " + self.cor + " -> " + str(self.preco) + "€"
 
-    def makeProduct(t, c, p, np, cat):
-        product = Produto(tamanho=t, cor=c, preco=p, num_pontos=np, categoria=cat)
+    def makeProduct(tamanho, cor, preco, num_pontos, categoria, referencia, image):
+        product = Produto(tamanho=tamanho, cor=cor, preco=preco, num_pontos=num_pontos, categoria=categoria, referencia=referencia, image=image)
         product.save()
 class CarrinhoCompras(models.Model):
     num_itens = models.IntegerField(default=0)

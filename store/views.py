@@ -104,14 +104,21 @@ def profile(request):
 
 def addProduct(request):
     if request.user.staff:
-        tamanho = request.POST['tamanho']
-        cor = request.POST['cor']
-        preco = request.POST['preco']
-        num_pontos = request.POST['num_pontos']
-        categoria = request.POST['categoria']
-        referencia = request.POST['referencia']
-        image = cor+referencia
-        Produto.makeProduct(tamanho, cor, preco, num_pontos, categoria, image)
+        if request.method == 'POST':
+            num_items = int(request.POST.get('num_items', 0))
+            tamanho = request.POST.get('tamanho', '')
+            cor = request.POST.get('cor', '')
+            preco = request.POST.get('preco', 0)
+            num_pontos = request.POST.get('num_pontos', 0)
+            categoria = request.POST.get('categoria', '')
+            referencia = request.POST.get('referencia', '')
+            print(referencia)
+            print(num_items)
+            image = cor + referencia + '.png'
+
+            for i in range(num_items):
+                Produto.makeProduct(tamanho, cor, preco, num_pontos, categoria, referencia, image)
+            return render(request, 'addProduct.html', {'msg': 'Produtos Inseridos!'})
     else:
         return redirect('login_view')
 
