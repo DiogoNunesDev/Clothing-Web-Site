@@ -2,60 +2,59 @@
     {% block title %}Pescada Store: Signup Page{% endblock %}
 
     {% block conteudo %}
-        <div class="signup">
-            <form action="{% url 'signup_view' %}" method="post" class="form_type">
-                <h1>Signup:</h1>
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col">
-                        <p><strong>Username: </strong></p>
-                        <input type="text" name="username" autofocus>
-                        <p><strong>Password: </strong></p>
-                        <input type="password" name="password">
-                        <p><strong>Primeiro Nome: </strong></p>
-                        <input type="text" name="primeiro_nome">
-                        <p><strong>Apelido: </strong></p>
-                        <input type="text" name="apelido">
-                        <p><strong>Email: </strong></p>
-                        <input type="email" name="email">
-                    </div>
-                    <div class="col">
-                        <p><strong>Data de Nascimento: </strong></p>
-                        <input type="date" name="data_nascimento">
-                        <p><strong>Morada: </strong></p>
-                        <input type="text" name="morada">
-                        <p><strong>Número de Télemovel: </strong></p>
-                        <input type="number" name="numero_telemovel">
-                        <p><strong>Número de Cartão Cidadão (CC): </strong></p>
-                        <input type="number" name="num_cartao_cidadao">
-                        <p><strong>Número de Identificação Fiscal (NIF): </strong></p>
-                        <input type="number" name="nif">
-                    </div>
+    <div class="signup">
+        <form action="{% url 'signup_view' %}" method="post">
+            <h2>Signup</h2>
+            <div class="content">
+                <div class="input-box">
+                    <label for="username">Username</label>
+                    <input type="text" placeholder="Enter Username" name="username" required>
                 </div>
-                <div class="mb-3">
-                        <input class="btn w-100" type="submit" value="Submit">
+                <div class="input-box">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" required>
                 </div>
-            </form>
-        </div>
-
-
-
-
-
-
-                <p></p>
-
-
-            <script>
-                const form = document.querySelector("form")
-                form.addEventListener('submit', e => {
-                    if (!form.checkValidity()) {
-                        e.preventDefault()
-                    }
-                    form.classList.add('was-validated')
-                })
-            </script>
-        </div>
-
+                <div class="input-box">
+                    <label for="apelido">Apelido</label>
+                    <input type="text" placeholder="Apelido" name="apelido" required>
+                </div>
+                <div class="input-box">
+                    <label for="email">Email</label>
+                    <input type="email" placeholder="Email@gmail.com" name="email" required>
+                </div>
+                <div class="input-box">
+                    <label for="data_nascimento">Data de Nascimento</label>
+                    <input type="date" name="data_nascimento" required>
+                </div>
+                <div class="input-box">
+                    <label for="numero_telemovel">Numero de Télemovel</label>
+                    <input type="number" placeholder="919191919" name="numero_telemovel" required>
+                </div>
+                <div class="input-box">
+                    <label for="num_cartao_cidadao">Número de Cartão Cidadão (CC)</label>
+                    <input type="number" placeholder="124135167" name="num_cartao_cidadao" required>
+                </div>
+                <div class="input-box">
+                    <label for="nif">Número de Identificação Fiscal (NIF)</label>
+                    <input type="number" placeholder="263254243" name="nif" required>
+                </div>
+            </div>
+            <div class="alert">
+                <p>Ao clicar, está a concordar com os nossos <a href="#">Termos e Condições</a>, a nossa <a
+                        href="#">Política de Privacidade</a> e de <a href="#">Cookies</a>.</p>
+            </div>
+            <div class="button-container">
+                <button type="submit">Signup</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        const form = document.querySelector("form")
+        form.addEventListener('submit', e => {
+            if (!form.checkValidity()) {
+                e.preventDefault()
+            }
+            form.classList.add('was-validated')})
+    </script>
 
 {% endblock %}

@@ -54,44 +54,83 @@
         </div>
     </header>
 
-    <nav>
+    <nav class="dropdownmenu">
         {% block nav_list %}
             <ul class="nav_list">
-            <li>
-                <form action="{% url 'full_collection' %}" method="post">
-                    {% csrf_token %}
-                    <input type="submit" value="Full Collection" class="nav-button ">
-                </form>
-            </li>
-
-            <li>
-                <form action="{% url 'sweatshirts' %}" method="post">
-                    {% csrf_token %}
-                    <input type="submit" value="Sweatshirts" class="nav-button">
-                </form>
-            </li>
-            <li>
-                <form action="{% url 'tshirt' %}" method="post">
-                    {% csrf_token %}
-                    <input type="submit" value="T-Shirts" class="nav-button">
-                </form>
-            </li>
-            {% if request.user.is_superuser %}
-                <li>
-                    <form action="{% url 'redirectAddStaff' %}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" value="Adicionar Staff" class="nav-button">
-                    </form>
-                </li>
-            {% endif %}
-            {% if request.user.staff %}
-                <li>
-                    <form action="{% url 'redirectAddProduct' %}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" value="Adicionar Produtos" class="nav-button">
-                    </form>
-                </li>
-            {% endif %}
+                <div class="row">
+                    <div class="col">
+                        <li>
+                            <form action="{% url 'full_collection' %}" method="post">
+                                {% csrf_token %}
+                                <input type="submit" value="Full Collection" class="nav-button ">
+                            </form>
+                            <ul id="submenu">
+                                <li>
+                                    <form action="{% url 'sweatshirts' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Sweatshirts" class="nav-button">
+                                    </form>
+                                </li>
+                                <li>
+                                    <form action="{% url 'tshirt' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="submit" value="T-Shirts" class="nav-button">
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </div>
+                    <div class="col">
+                        <li>
+                            <form action="{% url 'sweatshirts' %}" method="post">
+                                {% csrf_token %}
+                                <input type="submit" value="Sweatshirts" class="nav-button">
+                            </form>
+                            <ul id="submenu">
+                                <li>
+                                    <form action="{% url 'sweatshirts' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Sweatshirt com Capuz" class="nav-button">
+                                    </form>
+                                </li>
+                                <li>
+                                    <form action="{% url 'tshirt' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="submit" value="Sweatshirt sem Capuz" class="nav-button">
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </div>
+                    <div class="col">
+                        <li>
+                            <form action="{% url 'tshirt' %}" method="post">
+                                {% csrf_token %}
+                                <input type="submit" value="T-Shirts" class="nav-button">
+                            </form>
+                        </li>
+                    </div>
+                    <div class="col">
+                        {% if request.user.is_superuser %}
+                            <li>
+                                <form action="{% url 'redirectAddStaff' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Adicionar Staff" class="nav-button">
+                                </form>
+                            </li>
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        {% if request.user.staff %}
+                            <li>
+                                <form action="{% url 'redirectAddProduct' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Adicionar Produtos" class="nav-button">
+                                </form>
+                            </li>
+                        {% endif %}
+                    </div>
+                </div>
             </ul>
         {% endblock %}
     </nav>

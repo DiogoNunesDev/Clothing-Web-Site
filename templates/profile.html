@@ -22,13 +22,13 @@
         {% elif request.user.staff %}
             <form class="form_type">
                 <p><strong>Username: </strong>{{ request.user.username }}</p>
-                <p><strong>Primeiro Nome: </strong>{{ request.user.utilizador.primeiro_nome }}</p>
-                <p><strong>Apelido: </strong>{{ request.user.utilizador.apelido }}</p>
-                <p><strong>Data de Nascimento: </strong>{{ request.user.utilizador.data_nascimento }}</p>
-                <p><strong>Morada: </strong>{{ request.user.utilizador.morada }}</p>
+                <p><strong>Primeiro Nome: </strong>{{ request.user.staff.primeiro_nome }}</p>
+                <p><strong>Apelido: </strong>{{ request.user.staff.apelido }}</p>
+                <p><strong>Data de Nascimento: </strong>{{ request.user.staff.data_nascimento }}</p>
+                <p><strong>Morada: </strong>{{ request.user.staff.morada }}</p>
                 <p><strong>Email: </strong>{{ request.user.email }}</p>
-                <p><strong>Número de Télemovel: </strong>{{ request.user.utilizador.numero_telemovel }}</p>
-                <p><strong>Número de Cartão de Cidadão (CC): </strong>{{ request.user.utilizador.num_cartao_cidadao }}</p>
+                <p><strong>Número de Télemovel: </strong>{{ request.user.staff.numero_telemovel }}</p>
+                <p><strong>Número de Cartão de Cidadão (CC): </strong>{{ request.user.staff.num_cartao_cidadao }}</p>
                 <p><strong>Tag: </strong>Staff</p>
             </form>
         {% elif request.user.is_superuser %}
