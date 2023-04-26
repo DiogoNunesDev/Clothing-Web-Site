@@ -2,6 +2,7 @@
     {% block title %}Pescada Store: Login Page{% endblock %}
 
     {% block conteudo %}
+<<<<<<< HEAD
 
         <div class="login">
             <div>
@@ -31,6 +32,23 @@
                     </div>
                 </form>
             </div>
+=======
+        {% if msg_erro %}
+            <h2> {{ msg_erro }} </h2>
+        {% endif %}
+
+        <div class="div_formulario">
+            <form action="{% url 'login_view' %}" method="post" class="form_type">
+                <h1>Login</h1>
+                {% csrf_token %}
+                <p>Username</p>
+                <input type="text" name="username" autofocus>
+                <p>Password</p>
+                <input type="password" name="password">
+                <br>
+                <input type="submit" value="Submeter">
+            </form>
+>>>>>>> e5781caf3a8d04a4ca6358c2e4a0ca029fb2719b
         </div>
 
     {% endblock %}
