@@ -29,5 +29,14 @@
                 <p></p>
                 <input type="submit" value="Submit">
             </form>
+            <script>
+                const form = document.querySelector("form")
+                form.addEventListener('submit', e => {
+                    if (!form.checkValidity()) {
+                        e.preventDefault()
+                    }
+                    form.classList.add('was-validated')
+                })
+            </script>
         </div>
     {% endblock %}
