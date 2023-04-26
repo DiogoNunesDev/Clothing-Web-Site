@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 * {
   margin: 0;
   padding: 0;
@@ -14,10 +15,11 @@ body {
     background-position: center center;
     background-attachment: fixed;
     color: ghostwhite;
-    font-family: Arial, sans-serif;
     display: flex;
+    align-items: center;
     flex-direction: column;
     height: 100%;
+    width: 100%;
     margin: 0;
 }
 
@@ -36,12 +38,14 @@ header {
     background-color: #004957;
     color: ghostwhite;
     margin: 0px;
+    width: 100%;
 }
 
 nav {
     background-color: black;
     padding: 5px;
     margin-bottom: 30px;
+    width: 100%;
 }
 ul {
     word-spacing: 0px;
@@ -219,33 +223,6 @@ footer {
   font-size: 16px;
 }
 
-.box{
-    background-color: #004957;
-    min-height: 50px;
-    font-size: 2rem;
-    text-align: left;
-}
-
-.box ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.box ul li {
-    margin-bottom: 10px;
-    font-size: 14px;
-}
-
-.box a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.box a:hover {
-  color: deepskyblue;
-}
-
 strong {
     font-weight: bold;
 }
@@ -281,3 +258,41 @@ figure {
   float: left;
   margin-right: 10px;
 }
+
+.login{
+    width: 360px;
+    height: min-content;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: white;
+}
+
+.login h1{
+    font-size: 36px;
+    margin-bottom: 25px;
+}
+
+.login form{
+    font-size: 20px;
+}
+
+.login form form-group{
+    margin-bottom: 12px;
+
+}
+
+.login form input[type="submit"]{
+    font-size: 20px;
+    margin-top: 15px;
+    background: #004957;
+    border: 2px solid #004957;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    color: white;
+}
+.login form input[type="text"], input[type="password"]{
+    border: 1px solid black;
+
+}
+
+

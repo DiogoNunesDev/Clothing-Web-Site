@@ -10,6 +10,7 @@
 
         <div class="div_formulario">
             <form action="{% url 'addProduct' %}" method="post" class="form_type">
+                <h2>Adicionar Produtos</h2>
                 {% csrf_token %}
                 <select class="form-select" name="tamanho" required>
                   <option selected disabled></option>

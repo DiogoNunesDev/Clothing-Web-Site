@@ -2,19 +2,35 @@
     {% block title %}Pescada Store: Login Page{% endblock %}
 
     {% block conteudo %}
-        {% if msg_erro %}
-            <h2> {{ msg_erro }} </h2>
-        {% endif %}
-        <div class="div_formulario">
-            <form action="{% url 'login_view' %}" method="post" class="form_type">
-                <h1>Login</h1>
-                {% csrf_token %}
-                <p>Username</p>
-                <input type="text" name="username" autofocus>
-                <p>Password</p>
-                <input type="password" name="password">
-                <br>
-                <input type="submit" value="Submeter">
-            </form>
+
+        <div class="login">
+            <div>
+                <h4 class="title text-center mt-4">Login into account</h4>
+                <form class="form-box px-3" action="{% url 'login_view' %}" method="post">
+                    <div class="alert-danger">
+                        {% if msg %}
+                            <h2> {{ msg }} </h2>
+                        {% endif %}
+                    </div>
+                    {% csrf_token %}
+                    <div class="form-input">
+                        <label class="form-label" for="user">Username</label>
+                        <input class="form-control" type="text" name="username" for="user" required>
+                    </div>
+                    <div class="form-input">
+                        <label class="form-label" for="pass">Password</label>
+                        <input class="form-control" type="password" name="password" for="pass" required>
+                    </div>
+                    <hr class="my-4">
+                    <div class="text-center mb-2">
+                        Don't have an account?
+                        <a href="{% url 'signup_view' %}">Signup</a>
+                    </div>
+                    <div class="mb-3">
+                        <input class="btn w-100" type="submit" value="Login">
+                    </div>
+                </form>
+            </div>
         </div>
+
     {% endblock %}
