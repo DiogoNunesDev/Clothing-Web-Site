@@ -50,23 +50,26 @@ def logout_view(request):
 
 def signup_view(request):
     if request.method == 'POST':
-        name = request.POST['username']
-        password = request.POST['password']
-        email = request.POST['email']
-        user = User.objects.create_user(username=name, password=password, email=email)
+        name = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        email = request.POST.get('email', '')
+        primeiro_nome = request.POST.get('primeiro_nome', '')
+        apelido = request.POST.get('apelido', '')
+        data_nascimento = request.POST.get('data_nascimento', '')
+        morada = request.POST.get('morada', '')
+        numero_telemovel = request.POST.get('numero_telemovel', 0)
+        num_cartao_cidadao = request.POST.get('num_cartao_cidadao', 0)
+        nif = request.POST.get('nif', 0)
+        user = User(username=name, password=password, email=email)
         user.save()
-        primeiro_nome = request.POST['primeiro_nome']
-        apelido = request.POST['apelido']
-        data_nascimento = request.POST['data_nascimento']
-        morada = request.POST['morada']
-        numero_telemovel = request.POST['numero_telemovel']
-        num_cartao_cidadao = request.POST['num_cartao_cidadao']
-        nif = request.POST['nif']
-        utilizador = Utilizador(user=user, primeiro_nome=primeiro_nome, apelido=apelido, data_nascimento=data_nascimento, morada=morada,
-                                numero_telemovel=numero_telemovel, num_cartao_cidadao=num_cartao_cidadao, nif=nif, num_pontos=0, email=email)
+        utilizador = Utilizador(user=user, primeiro_nome=primeiro_nome, apelido=apelido, data_nascimento=data_nascimento,
+                                morada=morada, numero_telemovel=numero_telemovel, num_cartao_cidadao=num_cartao_cidadao,
+                                nif=nif, num_pontos=0, email=email)
         utilizador.save()
         login(request, user)
-        return render(request, 'home.html')
+        return redirect('home', {'msg', 'Bem vindo à Pescada Store!'})
+    else:
+        return render(request, 'signup.html')
 
 
 def redirectSignup(request):

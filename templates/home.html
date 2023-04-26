@@ -14,6 +14,11 @@
         <div class="logo">
             <a href={% url 'home' %}><img src="{% static "store/images/whiteLogo.png" %}"></a>
         </div>
+        <div>
+            {% if msg %}
+                <p><strong>{{ msg }}</strong></p>
+            {% endif %}
+        </div>
         <div class="header-buttons">
             {% if request.user.is_authenticated %}
                 <form action="{% url 'profile' %}" method="post">
