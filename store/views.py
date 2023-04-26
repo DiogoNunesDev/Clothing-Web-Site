@@ -5,6 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from store.models import Produto, Utilizador, Staff
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 def home(request):
@@ -75,7 +77,7 @@ def signup_view(request):
 def redirectSignup(request):
     return render(request, 'signup.html')
 
-
+@login_required(login_url="login.html")
 def addStaff(request):
     if request.method == 'POST':
         name = request.POST['username']
@@ -98,13 +100,13 @@ def addStaff(request):
 def redirectAddStaff(request):
     return render(request, 'addStaff.html')
 
-
+@login_required(login_url="login.html")
 def profile(request):
     if not request.user.is_authenticated:
         return render(request, 'login.html', {'msg_erro':'Utilizador não autenticado'})
 
     return render(request, 'profile.html')
-
+@login_required(login_url="store/login_view")
 def addProduct(request):
     if request.user.staff:
         if request.method == 'POST':
@@ -122,9 +124,21 @@ def addProduct(request):
             for i in range(num_items):
                 Produto.makeProduct(tamanho, cor, preco, num_pontos, categoria, referencia, image)
             return render(request, 'addProduct.html', {'msg': 'Produtos Inseridos!'})
+
+    if request.user.is_authenticated and request.user.staff:
+        tamanho = request.POST['tamanho']
+        cor = request.POST['cor']
+        preco = request.POST['preco']
+        num_pontos = request.POST['num_pontos']
+        categoria = request.POST['categoria']
+        referencia = request.POST['referencia']
+        image = cor+referencia
+        Produto.makeProduct(tamanho, cor, preco, num_pontos, categoria, image)
+
     else:
         return redirect('login_view')
 
+@login_required(login_url="login_view")
 def redirectAddProduct(request):
     return render(request, 'addProduct.html')
 
@@ -160,7 +174,7 @@ def detail_view(request,produto_id):
 def redirectEditProfile(request):
     return render(request, 'editProfile.html')
 
-
+@login_required(login_url="login.html")
 def edit_profile(request):
     if request.method == 'POST':
         user = request.user
