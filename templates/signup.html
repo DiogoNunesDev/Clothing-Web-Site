@@ -2,7 +2,7 @@
     {% block title %}Pescada Store: Signup Page{% endblock %}
 
     {% block conteudo %}
-        <div class="div_formulario">
+        <!--<div class="div_formulario">
             <form action="{% url 'signup_view' %}" method="post" class="form_type">
                 <h1>Signup:</h1>
                 {% csrf_token %}
@@ -38,5 +38,74 @@
                     form.classList.add('was-validated')
                 })
             </script>
+        </div>-->
+
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+          <form action="{% url 'signup_view' %}" method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+            <h1 class="text-center mb-4">Signup</h1>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-floating mb-3">
+                  <input type="text" name="primeiro_nome" class="form-control" id="floatingFirstName" placeholder=" " required>
+                  <label for="floatingFirstName">Primeiro Nome</label>
+                  <div class="invalid-feedback">
+                    O Primeiro Nome é obrigatório.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-floating mb-3">
+                  <input type="text" name="apelido" class="form-control" id="floatingLastName" placeholder=" " required>
+                  <label for="floatingLastName">Apelido</label>
+                  <div class="invalid-feedback">
+                    O Apelido é obrigatório.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="email" name="email" class="form-control" id="floatingEmail" placeholder=" " required>
+              <label for="floatingEmail">Email</label>
+              <div class="invalid-feedback">
+                O Email é obrigatório.
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-floating mb-3">
+                  <input type="date" name="data_nascimento" class="form-control" id="floatingBirthDate" placeholder=" " required>
+                  <label for="floatingBirthDate">Data de Nascimento</label>
+                  <div class="invalid-feedback">
+                    A Data de Nascimento é obrigatória.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-floating mb-3">
+                  <input type="number" name="numero_telemovel" class="form-control" id="floatingPhoneNumber" placeholder=" " required>
+                  <label for="floatingPhoneNumber">Número de Télemovel</label>
+                  <div class="invalid-feedback">
+                    O Número de Télemovel é obrigatório.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="number" name="num_cartao_cidadao" class="form-control" id="floatingCC" placeholder=" " required>
+              <label for="floatingCC">Número de Cartão Cidadão (CC)</label>
+              <div class="invalid-feedback">
+                O Número de Cartão Cidadão (CC) é obrigatório.
+              </div>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="number" name="nif" class="form-control" id="floatingNIF" placeholder=" " required>
+              <label for="floatingNIF">Número de Identificação Fiscal (NIF)</label>
+            </div>
+          </form>
         </div>
-    {% endblock %}
+      </div>
+    </div>
+{% endblock %}
