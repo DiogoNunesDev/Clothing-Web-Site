@@ -355,13 +355,17 @@ figure {
 
 }
 
-.signup{
+.formulario{
     max-width: 650px;
     padding: 28px;
     margin: 0 28px;
     box-shadow: 1px 15px 20px 20px darkslategrey;
-    background: none;
+    background: #004957;
     border-radius: 8px;
+}
+
+.formulario h2, label{
+    color: white;
 }
 
 .content {
@@ -369,6 +373,8 @@ figure {
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 20px 0;
+    height: 100%;
+    width: 100%;
 
 }
 

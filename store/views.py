@@ -194,7 +194,6 @@ def edit_profile(request):
 
         if request.POST['email']:
             user.email = request.POST['email']
-            user.save()
             utilizador.email = request.POST['email']
 
         if request.POST['numero_telemovel']:
@@ -206,6 +205,13 @@ def edit_profile(request):
         if request.POST['nif']:
             utilizador.nif = request.POST['nif']
 
+        if request.POST['password'] & request.POST['confirm_password']:
+            if request.POST['password'] == request.POST['confirm_password']:
+                user.password = request.POST['password']
+            else:
+                return render(request, 'edit_profile.html', {'msg': 'Password confirmada incorretamente'})
+
+        user.save()
         utilizador.save()
 
         return render(request, 'profile.html')

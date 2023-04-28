@@ -2,36 +2,87 @@
     {% block title %}Pescada Store: Signup Page{% endblock %}
 
     {% block conteudo %}
-        <div class="div_formulario">
-            <form action="{% url 'edit_profile' %}" method="post" class="form_type">
-                <h1>Edit Profile:</h1>
+        <div class="formulario">
+            <form action="{% url 'edit_profile' %}" method="post">
                 {% csrf_token %}
-                <p><strong>Username: </strong>{{ request.user.username }}</p>
-                <p><strong>Primeiro Nome: </strong>{{ request.user.utilizador.primeiro_nome }}
-                    <input type="text" name="primeiro_nome">
-                </p>
-                <p><strong>Apelido: </strong>{{ request.user.utilizador.apelido }}
-                    <input type="text" name="apelido">
-                </p>
-                <p><strong>Data de Nascimento: </strong>{{ request.user.utilizador.data_nascimento }}
-                    <input type="date" name="data_nascimento">
-                </p>
-                <p><strong>Morada: </strong>{{ request.user.utilizador.morada }}
-                    <input type="text" name="morada">
-                </p>
-                <p><strong>Email: </strong>{{ request.user.email }}
-                    <input type="email" name="email">
-                </p>
-                <p><strong>Número de Télemovel: </strong>{{ request.user.utilizador.numero_telemovel }}
-                    <input type="number" name="numero_telemovel">
-                </p>
-                <p><strong>Número de Cartão de Cidadão (CC): </strong>{{ request.user.utilizador.num_cartao_cidadao }}
-                    <input type="number" name="num_cartao_cidadao">
-                </p>
-                <p><strong>Número de Identificação Fiscal (NIF): </strong>{{ request.user.utilizador.nif }}
-                    <input type="number" name="nif">
-                </p>
-                <input type="submit" value="Save">
+                <h2>Edit Profile:</h2>
+                <div class="alert-danger">
+                    {% if msg %}
+                        <p><strong>{{ msg }}</strong></p>
+                    {% endif %}
+                </div>
+                <div class="content">
+
+                    <!--<p><strong>Username: </strong>{{ request.user.username }}</p>
+                    <p><strong>Primeiro Nome: </strong>{{ request.user.utilizador.primeiro_nome }}
+                        <input type="text" name="primeiro_nome">
+                    </p>
+                    <p><strong>Apelido: </strong>{{ request.user.utilizador.apelido }}
+                        <input type="text" name="apelido">
+                    </p>
+                    <p><strong>Data de Nascimento: </strong>{{ request.user.utilizador.data_nascimento }}
+                        <input type="date" name="data_nascimento">
+                    </p>
+                    <p><strong>Morada: </strong>{{ request.user.utilizador.morada }}
+                        <input type="text" name="morada">
+                    </p>
+                    <p><strong>Email: </strong>{{ request.user.email }}
+                        <input type="email" name="email">
+                    </p>
+                    <p><strong>Número de Télemovel: </strong>{{ request.user.utilizador.numero_telemovel }}
+                        <input type="number" name="numero_telemovel">
+                    </p>
+                    <p><strong>Número de Cartão de Cidadão (CC): </strong>{{ request.user.utilizador.num_cartao_cidadao }}
+                        <input type="number" name="num_cartao_cidadao">
+                    </p>
+                    <p><strong>Número de Identificação Fiscal (NIF): </strong>{{ request.user.utilizador.nif }}
+                        <input type="number" name="nif">
+                    </p>-->
+
+                    <div class="input-box">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="email">Email</label>
+                        <input type="email" placeholder="Email@gmail.com" name="email" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="confirm_password">Confirm Password</label>
+                        <input type="password" name="confirm_password" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="primeiro_nome">Primeiro Nome</label>
+                        <input type="text" placeholder="Primeiro Nome" name="primeiro_nome" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="apelido">Apelido</label>
+                        <input type="text" placeholder="Apelido" name="apelido" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="data_nascimento">Data de Nascimento</label>
+                        <input type="date" name="data_nascimento" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="numero_telemovel">Numero de Télemovel</label>
+                        <input type="number" placeholder="919191919" name="numero_telemovel" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="num_cartao_cidadao">Número de Cartão Cidadão (CC)</label>
+                        <input type="number" placeholder="124135167" name="num_cartao_cidadao" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="nif">Número de Identificação Fiscal (NIF)</label>
+                        <input type="number" placeholder="263254243" name="nif" required>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button type="submit">Save</button>
+                </div>
             </form>
         </div>
     {% endblock %}

@@ -2,30 +2,39 @@
     {% block title %}Pescada Store: Adicionar Staff Members{% endblock %}
 
     {% block conteudo %}
-        <div class="div_formulario">
-            <form action="{% url 'addStaff' %}" method="post" class="form_type">
-                <h1>Signup:</h1>
-                {% csrf_token %}
-                <p><strong>Username: </strong></p>
-                <input type="text" name="username" autofocus>
-                <p><strong>Password: </strong></p>
-                <input type="password" name="password">
-                <p><strong>Primeiro Nome: </strong></p>
-                <input type="text" name="primeiro_nome">
-                <p><strong>Apelido: </strong></p>
-                <input type="text" name="apelido">
-                <p><strong>Email: </strong></p>
-                <input type="email" name="email">
-                <p><strong>Data de Nascimento: </strong></p>
-                <input type="date" name="data_nascimento">
-                <p><strong>Morada: </strong></p>
-                <input type="text" name="morada">
-                <p><strong>Número de Télemovel: </strong></p>
-                <input type="number" name="numero_telemovel">
-                <p><strong>Número de Cartão Cidadão (CC): </strong></p>
-                <input type="number" name="num_cartao_cidadao">
-                <p></p>
-                <input type="submit" value="Submit">
-            </form>
-        </div>
+    <div class="formulario">
+        <form action="{% url 'addStaff' %}" method="post" class="">
+            {% csrf_token %}
+            <h2>Adicionar Staff</h2>
+            <div class="content">
+                <div class="input-box">
+                    <label for="username">Username</label>
+                    <input type="text" placeholder="Enter Username" name="username" required>
+                </div>
+                <div class="input-box">
+                    <label for="password">Password</label>
+                    <input type="password" placeholder="Enter Password" name="password" required>
+                </div>
+                <div class="input-box">
+                    <label for="apelido">Apelido</label>
+                    <input type="text" placeholder="Apelido" name="apelido" required>
+                </div>
+                <div class="input-box">
+                    <label for="email">Email</label>
+                    <input type="email" placeholder="Email@gmail.com" name="email" required>
+                </div>
+                <div class="input-box">
+                    <label for="data_nascimento">Data de Nascimento</label>
+                    <input type="date" name="data_nascimento" required>
+                </div>
+                <div class="input-box">
+                    <label for="numero_telemovel">Número de Télemovel</label>
+                    <input type="number" placeholder="919191919" name="numero_telemovel" required>
+                </div>
+            </div>
+            <div class="button-container">
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </div>
     {% endblock %}

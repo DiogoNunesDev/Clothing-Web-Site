@@ -7,55 +7,70 @@
         {% if msg %}
             <p><strong>{{ msg }}</strong></p>
         {% endif %}
-
-        <div class="div_formulario">
-            <form action="{% url 'addProduct' %}" method="post" class="form_type">
-                <h2>Adicionar Produtos</h2>
+        <div class="formulario">
+            <form action="{% url 'addProduct' %}" method="post">
                 {% csrf_token %}
-                <select class="form-select" name="tamanho" required>
-                  <option selected disabled></option>
-                  <option value="S">S</option>
-                  <option value="M">M</option>
-                  <option value="L">L</option>
-                </select>
-                <p><strong>Cor: </strong></p>
-                <div class="form-check form-check-inline">
-                    <input type="radio" name="cor" class="form-check-input" value="Azul" required>
-                    <label for="cor" class="form-check-label">Azul</label>
+                <h2>Signup</h2>
+                <label>Cor:</label>
+                <div class="content">
+                        <div class="form-check form-check-inline">
+                            <input type="radio" name="cor" class="form-check-input" value="Azul" required>
+                            <label for="cor" class="form-check-label">Azul</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" name="cor" class="form-check-input" value="Branco" required>
+                            <label for="cor" class="form-check-label">Branco</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" name="cor" class="form-check-input" value="Cinzento" required>
+                            <label for="cor" class="form-check-label">Cinzento</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" name="cor" class="form-check-input" value="Preto" required>
+                            <label for="cor" class="form-check-label">Preto</label>
+                        </div>
+                    <div class="input-box">
+                        <label for="username">Tamanho:</label>
+                        <select class="form-select" name="tamanho" required>
+                          <option selected disabled></option>
+                          <option value="S">S</option>
+                          <option value="M">M</option>
+                          <option value="L">L</option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <label for="preco">Preco:</label>
+                        <input type="number" name="preco" step="0.01" min="1" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="categoria">Categoria:</label>
+                        <select class="form-select" name="categoria" required>
+                            <option selected disabled></option>
+                            <option>Sweatshirst</option>
+                            <option>T-Shirt</option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <label for="num_pontos">Número de Pontos:</label>
+                        <input type="number" name="num_pontos" min="1" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="referencia">Referencia:</label>
+                        <select class="form-select" name="referencia" required>
+                            <option selected disabled></option>
+                            <option>SS01</option>
+                            <option>SS02</option>
+                            <option>TS01</option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <label for="num_items">Número de Items:</label>
+                        <input type="number" name="num_items" min="1" required>
+                    </div>
                 </div>
-                <div class="form-check form-check-inline">
-                    <input type="radio" name="cor" class="form-check-input" value="Branco" required>
-                    <label for="cor" class="form-check-label">Branco</label>
+                <div class="button-container">
+                    <button type="submit">Signup</button>
                 </div>
-                <div class="form-check form-check-inline">
-                    <input type="radio" name="cor" class="form-check-input" value="Cinzento" required>
-                    <label for="cor" class="form-check-label">Cinzento</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input type="radio" name="cor" class="form-check-input" value="Preto" required>
-                    <label for="cor" class="form-check-label">Preto</label>
-                </div>
-                <p><strong>Preço: </strong></p>
-                <input type="number" name="preco" step="0.01" min="1" required>
-                <p><strong>Número de Pontos: </strong></p>
-                <input type="number" name="num_pontos" min="1" required>
-                <p><strong>Categoria: </strong></p>
-                <select class="form-select" name="categoria" required>
-                    <option selected disabled></option>
-                    <option>Sweatshirst</option>
-                    <option>T-Shirt</option>
-                </select>
-                <p><strong>Referencia: </strong></p>
-                <select class="form-select" name="referencia" required>
-                    <option selected disabled></option>
-                    <option>SS01</option>
-                    <option>SS02</option>
-                    <option>TS01</option>
-                </select>
-                <p><strong>Number of Items: </strong></p>
-                <input type="number" name="num_items" min="1" required>
-                <br>
-                <input type="submit" value="Sumbit">
             </form>
         </div>
     {% endblock %}
