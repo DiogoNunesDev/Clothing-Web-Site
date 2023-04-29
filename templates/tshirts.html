@@ -9,12 +9,22 @@
         {% if product_list %}
             <ul class="product_list">
                 {% for product in product_list %}
-                   <li>
+                    <li>
                         <a href="{% url 'detail' produto_id=product.pk %}">
-                            <img src="{% static "store/images/" %}{{ product.image }}" alt="{{ product }}">
+                            {% if product.cor == 'Azul' %}
+                                <img src="{% static "store/images/AzulTS01.png" %}" alt="T-Shirt Azul">
+                            {% elif product.cor == 'Cinzento' %}
+                                <img src="{% static "store/images/CinzentoTS01.png" %}" alt="T-Shirt Cinzenta">
+                            {% elif product.cor == 'Preto' %}
+                                <img src="{% static "store/images/PretoTS01.png" %}" alt="T-Shirt Preta">
+                            {% elif product.cor == 'Branco' %}
+                                <img src="{% static "store/images/BrancoTS01.png" %}" alt="T-Shirt Branca">
+                            {% else %}
+                                <img src="{{ produtc.image_url }}" alt="{{ product.name }}">
+                            {% endif %}
                         </a>
                         <strong>{{ product }}</strong>
-                   </li>
+                    </li>
                 {% endfor %}
             </ul>
         {% else %}
