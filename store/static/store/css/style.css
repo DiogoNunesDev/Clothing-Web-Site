@@ -8,12 +8,22 @@ html{
     height: 100%;
     margin: 0;
 }
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: papayawhip;
+  margin-bottom: 30px;
+  z-index: 1;
+}
 body {
-    background-image: url('../images/sea.jpeg');
+    background-image: url('../images/FundoHome.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
+    background-position: top center;
+    background-attachment: scroll;
     color: ghostwhite;
     display: flex;
     align-items: center;
@@ -21,7 +31,14 @@ body {
     height: 100%;
     width: 100%;
     margin: 0;
+    padding-top: 500px;
 }
+
+homescreen{
+    background-image: url('../images/FundoHome.jpg');
+}
+
+
 
 .logo {
     float: left;
@@ -224,8 +241,8 @@ main{
 }
 
 .form_type {
-    background-color: #004957;
-    color: white;
+    background-color: #ffffff;
+    color: black;
     padding: 50px;
     margin: auto;
     margin-top: 0px;
@@ -233,7 +250,6 @@ main{
     padding-top: 65px;
     display: inline-block;
     text-align: left;
-    border-radius: 50px;
     overflow: hidden;
     margin-bottom: 10px;
 
@@ -246,6 +262,7 @@ main{
 .tittle-container{
     text-align: center;
     margin-bottom: 30px;
+
 }
 
 .centered-main{
@@ -258,7 +275,7 @@ main{
     font-family: 'Montserrat', sans-serif;
     font-size: 50px;
     font-weight: 700;
-    color: white;
+    color: black;
     letter-spacing: 2px;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
@@ -269,7 +286,7 @@ main{
     font-family: 'Montserrat', sans-serif;
     font-size: 50px;
     font-weight: 700;
-    color: white;
+    color: black;
     text-transform: uppercase;
     letter-spacing: 2px;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
