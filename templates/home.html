@@ -147,7 +147,16 @@
                         {% endif %}
                     </div>
                 </div>
-
+                <div class="col">
+                    {% if request.user.staff %}
+                        <li>
+                            <form action="{% url 'redirectRemoveProduct' %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Remover Produto" class="nav-button">
+                            </form>
+                        </li>
+                    {% endif %}
+                </div>
                 <div class="col">
                     {% if request.user.is_superuser %}
                         <li>
