@@ -31,7 +31,8 @@ body {
     height: 100%;
     width: 100%;
     margin: 0;
-    padding-top: 500px;
+    padding-top: 400px;
+
 }
 
 homescreen{
@@ -188,10 +189,12 @@ main{
     font-family: 'Montserrat', sans-serif;
     position: absolute;
     top: 10px;
-    right: 10px;
+    right: 20px;
     display: flex;
 
 }
+
+
 
 .header-buttons form{
     margin-left: 10px;
@@ -252,6 +255,8 @@ main{
     text-align: left;
     overflow: hidden;
     margin-bottom: 10px;
+    box-sizing: border-box;
+    width: 100%;
 
 }
 
@@ -462,4 +467,9 @@ figure {
     .input-box:nth-child(2n){
         justify-content: space-between;
     }
+}
+
+ion-icon {
+  font-size: 40px;
+  margin-right: 10px;
 }
