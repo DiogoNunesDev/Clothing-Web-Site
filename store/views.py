@@ -79,7 +79,7 @@ def redirectSignup(request):
 
 
 @login_required(login_url="login.html")
-def staff_list(request):
+def redirectDeleteStaff(request):
     staff_list = Staff.objects.all()
     context = {'staff_list': staff_list}
     return render(request, 'staffList.html', context)
@@ -89,7 +89,7 @@ def delete_staff(request, staff_id):
     staff = get_object_or_404(Staff, user_id=staff_id)
     staff.user.delete()
     messages.success(request, 'Colaborador removido com sucesso.')
-    return HttpResponseRedirect(reverse('staff_list'))
+    return render(request, 'staffList.html')
 
 
 @login_required(login_url="login.html")

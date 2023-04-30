@@ -149,11 +149,11 @@
                 </div>
 
                 <div class="col">
-                    {% if request.user.staff %}
+                    {% if request.user.is_superuser %}
                         <li>
-                            <form action="{% url 'staff_list' %}" method="post">
+                            <form action="{% url 'redirectDeleteStaff' %}" method="post">
                                 {% csrf_token %}
-                                <input type="submit" value="Colaboradores" class="nav-button">
+                                <input type="submit" value="Remover Staff" class="nav-button">
                             </form>
                         </li>
                     {% endif %}
