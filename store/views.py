@@ -121,6 +121,28 @@ def profile(request):
         return render(request, 'login.html', {'msg_erro':'Utilizador não autenticado'})
 
     return render(request, 'profile.html')
+
+@login_required(login_url="login.html")
+def removeProduct(request):
+    if request.user.staff:
+        if request.method == 'POST':
+            produto_id = request.POST.get('produto_id')
+            produto = get_object_or_404(Produto, pk=produto_id)
+            produto.delete()
+            messages.success(request, 'Produto removido com sucesso.')
+            return redirect('removeProduto')
+        else:
+            products = Produto.objects.all()
+            return render(request, 'removeProduct.html', {'produtos': products})
+    else:
+        return redirect('login_view')
+
+@login_required(login_url="login.html")
+def redirectRemoveProduct(request):
+    products = Produto.objects.all()
+    return render(request, 'removeProduct.html', {'products': products})
+
+
 @login_required(login_url="store/login_view")
 def addProduct(request):
     if request.user.staff:
