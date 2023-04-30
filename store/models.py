@@ -55,7 +55,10 @@ class Staff(models.Model):
         return self.primeiro_nome + " " + self.apelido + " - " + str(self.num_cartao_cidadao)
 
 
-
+class Comentario(models.Model):
+    utilizador = models.OneToOneField(Utilizador, on_delete=models.CASCADE)
+    descricao = models.CharField(max_length=2000)
+    data = models.DateField()
 
 """
 Funções para dar reset a base de dados, caso seja preciso

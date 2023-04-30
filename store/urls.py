@@ -22,5 +22,6 @@ urlpatterns = [
     path('editProfile_view/', views.edit_profile, name="edit_profile"),
     path('redirectDeleteStaff/', views.redirectDeleteStaff, name='redirectDeleteStaff'),
     path('delete_staff/<int:staff_id>/', views.delete_staff, name='delete_staff'),
+    path('comentarios', views.comentarios, name='comentarios'),
 
 ]

@@ -2,7 +2,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from store.models import Produto, Utilizador, Staff
+from store.models import Produto, Utilizador, Staff, Comentario
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -82,14 +82,14 @@ def redirectSignup(request):
 def redirectDeleteStaff(request):
     staff_list = Staff.objects.all()
     context = {'staff_list': staff_list}
-    return render(request, 'staffList.html', context)
+    return render(request, 'removeStaff.html', context)
 
 @login_required(login_url="login.html")
 def delete_staff(request, staff_id):
     staff = get_object_or_404(Staff, user_id=staff_id)
     staff.user.delete()
     messages.success(request, 'Colaborador removido com sucesso.')
-    return render(request, 'staffList.html')
+    return render(request, 'removeStaff.html')
 
 
 @login_required(login_url="login.html")
@@ -232,3 +232,8 @@ def edit_profile(request):
         return render(request, 'profile.html')
     else:
         return render(request, 'edit_profile.html')
+
+
+def comentarios(request):
+    comentarios = Comentario.objects.all().order_by('data')
+    return render(request, 'comentarios.html', context = {'comentarios_list': comentarios})

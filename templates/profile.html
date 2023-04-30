@@ -22,7 +22,7 @@
                     </div>
                 </form>
             {% elif request.user.staff %}
-                <form class="form_type">
+                <form>
                     <p><strong>Username: </strong>{{ request.user.username }}</p>
                     <p><strong>Primeiro Nome: </strong>{{ request.user.staff.primeiro_nome }}</p>
                     <p><strong>Apelido: </strong>{{ request.user.staff.apelido }}</p>
@@ -34,7 +34,7 @@
                     <p><strong>Tag: </strong>Staff</p>
                 </form>
             {% elif request.user.is_superuser %}
-                <form class="form_type">
+                <form>
                     <p><strong>Username: </strong>{{ user.username }}</p>
                     <p><strong>Email: </strong>{{ user.email }}</p>
                     <p><strong>Tag: </strong>Admin</p>
