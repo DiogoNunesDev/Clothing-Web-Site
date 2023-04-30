@@ -1,0 +1,29 @@
+{% extends 'home.html' %}
+    {% block title %}Pescada Store: Remover Staff Members{% endblock %}
+    {% block conteudo %}
+        <h2>Staff</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for staff in staff_list %}
+                <tr>
+                    <td>{{ staff.primeiro_nome }} {{ staff.apelido }}</td>
+                    <td>{{ staff.email }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'delete_staff' staff.user.id %}">
+                            {% csrf_token %}
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock %}
+

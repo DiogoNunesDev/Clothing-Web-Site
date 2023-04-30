@@ -20,6 +20,7 @@ urlpatterns = [
     path('<int:produto_id>/detail/', views.detail_view, name='detail'),
     path('edit_Profile/', views.redirectEditProfile, name="redirectEditProfile"),
     path('editProfile_view/', views.edit_profile, name="edit_profile"),
-
+    path('staff_list/', views.staff_list, name='staff_list'),
+    path('delete_staff/<int:staff_id>/', views.delete_staff, name='delete_staff'),
 
 ]
