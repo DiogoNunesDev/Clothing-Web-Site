@@ -12,9 +12,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JavaScript library -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-D+i3tq3hEJl18DtlG9Xy/B+t5ve5vJ1ta4K4t4a4/F2QcWfOOvPmGKjJZSb8doA" crossorigin="anonymous"></script>
 </head>
 <body>
-
     <header style="visibility: visible">
         <div class="logo">
              <a href={% url 'home' %}><img src="{% static "store/images/whiteLogo.png" %}" id="logo-img"></a>
@@ -22,22 +26,36 @@
         <div class="header-buttons">
             {% if request.user.is_authenticated %}
                 <!-- colocar profile -->
+                <form action="{% url 'profile' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" style="background:none; border:none; padding:0; margin:0; cursor:pointer;">
+                       <ion-icon name="person-circle-outline"></ion-icon>
+                    </button>
+                </form>
+                <!-- colocar logout -->
+                <form action="{% url 'logout_view' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" style="background:none; border:none; padding:0; margin:0; cursor:pointer;">
+                       <ion-icon name="log-out-outline"></ion-icon>
+                    </button>
+                </form>
+                <!-- colocar cart -->
+                 <form action="{% url 'cart_view' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" style="background:none; border:none; padding:0; margin:0; cursor:pointer;">
+                        <ion-icon name="cart-outline"></ion-icon>
+                    </button>
+                </form>
             {% endif %}
             {% if not request.user.is_authenticated %}
                 <!-- botao Login -->
                 <form action="{% url 'redirectLogin' %}" method="post">
                     {% csrf_token %}
                     <button type="submit" style="background:none; border:none; padding:0; margin:0; cursor:pointer;">
-                        <ion-icon name="log-in-outline"></ion-icon>
+                        <ion-icon name="person-circle-outline"></ion-icon>
                     </button>
                 </form>
-                <!-- botao registar -->
-                <form action="{% url 'redirectSignup' %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" style="background:none; border:none; padding:0; margin:0; cursor:pointer;">
-                        <ion-icon name="add-circle-outline"></ion-icon>
-                    </button>
-                </form>
+                <!-- botao registar nao e necesario! -->
                 <!-- botao cart -->
                 <form action="{% url 'cart_view' %}" method="post">
                     {% csrf_token %}
@@ -45,60 +63,32 @@
                         <ion-icon name="cart-outline"></ion-icon>
                     </button>
                 </form>
-
-            {% endif %}
-
-
-
-
-
-        </div>
-    </header>
-    <header style="visibility: hidden">
-        <div class="logo">
-            <a href={% url 'home' %}><img src="{% static "store/images/whiteLogo.png" %}"></a>
-        </div>
-        <div>
-            {% if msg %}
-                <p><strong>{{ msg }}</strong></p>
             {% endif %}
         </div>
-        <div class="header-buttons">
-            {% if request.user.is_authenticated %}
-                <form action="{% url 'profile' %}" method="post">
-                    {% csrf_token %}
-                    <input type="submit" value="Perfil">
-                </form>
-            {% endif %}
-            {% if not request.user.is_authenticated %}
-                <div>
-                    <form action="{% url 'redirectLogin' %}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" value="Login">
-                    </form>
-                </div>
-                <div>
-                    <form action="{% url 'redirectSignup' %}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" value="Signup">
-                    </form>
-                </div>
-            {% else %}
-                <div>
-                    <form action="{% url 'logout_view' %}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" value="Logout">
-                    </form>
-                </div>
-            {% endif %}
-            <form action="{% url 'cart_view' %}" method="post">
-                {% csrf_token %}
-                <input type="submit" value="Carrinho">
-            </form>
-        </div>
+        <nav style="float: left; align-items: center; display: flex; justify-content: center;" class="btn-group">
+         <div style="float: left; align-items: center; display: flex; justify-content: center;" class="btn-group">
+<a href="{% url 'full_collection' %}">
+  <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn btn-outline-primary">Full Collection</button>
+</a>
+<a href="{% url 'sweatshirts' %}" >
+    <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn btn-outline-primary">Sweatshirts</button>
+</a>
+<a href="{% url 'tshirt' %}">
+   <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn btn-outline-primary">T-shirts</button>
+</a>
+
+  <div class="dropdown">
+    <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown menu</button>
+    <div class="dropdown-menu dropdown-hover" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" href="https://www.facebook.com/">Facebook</a>
+      <a class="dropdown-item" href="https://twitter.com/">Twitter</a>
+    </div>
+  </div>
+</div>
+
+        </nav>
 
     </header>
-
     <nav class="dropdownmenu" style="visibility: hidden">
         {% block nav_list %}
             <ul class="nav_list">
