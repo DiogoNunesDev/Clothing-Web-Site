@@ -10,25 +10,8 @@
         <div class="formulario">
             <form action="{% url 'addProduct' %}" method="post">
                 {% csrf_token %}
-                <h2>Signup</h2>
-                <label>Cor:</label>
+                <h2>Adicionar Produtos</h2>
                 <div class="content">
-                        <div class="form-check form-check-inline">
-                            <input type="radio" name="cor" class="form-check-input" value="Azul" required>
-                            <label for="cor" class="form-check-label">Azul</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input type="radio" name="cor" class="form-check-input" value="Branco" required>
-                            <label for="cor" class="form-check-label">Branco</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input type="radio" name="cor" class="form-check-input" value="Cinzento" required>
-                            <label for="cor" class="form-check-label">Cinzento</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input type="radio" name="cor" class="form-check-input" value="Preto" required>
-                            <label for="cor" class="form-check-label">Preto</label>
-                        </div>
                     <div class="input-box">
                         <label for="username">Tamanho:</label>
                         <select class="form-select" name="tamanho" required>
@@ -67,9 +50,26 @@
                         <label for="num_items">Número de Items:</label>
                         <input type="number" name="num_items" min="1" required>
                     </div>
+                    <label>Cor:</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" name="cor" class="form-check-input" value="Azul" required>
+                            <label for="cor" class="form-check-label">Azul</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" name="cor" class="form-check-input" value="Branco" required>
+                            <label for="cor" class="form-check-label">Branco</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" name="cor" class="form-check-input" value="Cinzento" required>
+                            <label for="cor" class="form-check-label">Cinzento</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" name="cor" class="form-check-input" value="Preto" required>
+                            <label for="cor" class="form-check-label">Preto</label>
+                        </div>
                 </div>
                 <div class="button-container">
-                    <button type="submit">Signup</button>
+                    <button type="submit">Adicionar</button>
                 </div>
             </form>
         </div>

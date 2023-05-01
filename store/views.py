@@ -2,7 +2,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from store.models import Produto, Utilizador, Staff
+from store.models import Produto, Utilizador, Staff, Comentario
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -77,6 +77,21 @@ def signup_view(request):
 def redirectSignup(request):
     return render(request, 'signup.html')
 
+
+@login_required(login_url="login.html")
+def redirectDeleteStaff(request):
+    staff_list = Staff.objects.all()
+    context = {'staff_list': staff_list}
+    return render(request, 'removeStaff.html', context)
+
+@login_required(login_url="login.html")
+def delete_staff(request, staff_id):
+    staff = get_object_or_404(Staff, user_id=staff_id)
+    staff.user.delete()
+    messages.success(request, 'Colaborador removido com sucesso.')
+    return render(request, 'removeStaff.html')
+
+
 @login_required(login_url="login.html")
 def addStaff(request):
     if request.method == 'POST':
@@ -106,6 +121,28 @@ def profile(request):
         return render(request, 'login.html', {'msg_erro':'Utilizador não autenticado'})
 
     return render(request, 'profile.html')
+
+@login_required(login_url="login.html")
+def removeProduct(request):
+    if request.user.staff:
+        if request.method == 'POST':
+            produto_id = request.POST.get('produto_id')
+            produto = get_object_or_404(Produto, pk=produto_id)
+            produto.delete()
+            messages.success(request, 'Produto removido com sucesso.')
+            return redirect('removeProduto')
+        else:
+            products = Produto.objects.all()
+            return render(request, 'removeProduct.html', {'produtos': products})
+    else:
+        return redirect('login_view')
+
+@login_required(login_url="login.html")
+def redirectRemoveProduct(request):
+    products = Produto.objects.all()
+    return render(request, 'removeProduct.html', {'products': products})
+
+
 @login_required(login_url="store/login_view")
 def addProduct(request):
     if request.user.staff:
@@ -217,3 +254,8 @@ def edit_profile(request):
         return render(request, 'profile.html')
     else:
         return render(request, 'edit_profile.html')
+
+
+def comentarios(request):
+    comentarios = Comentario.objects.all().order_by('data')
+    return render(request, 'comentarios.html', context = {'comentarios_list': comentarios})

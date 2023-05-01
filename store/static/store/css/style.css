@@ -456,6 +456,14 @@ figure {
     background-image: linear-gradient(to right, purple, beige);
 }
 
+.profile {
+
+}
+.profile strong {
+    font-weight: bold;
+    color: black;
+}
+
 @media(max-width: 600px) {
     .container{
         min-width: 280px;

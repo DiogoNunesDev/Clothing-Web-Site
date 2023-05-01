@@ -1,0 +1,24 @@
+{% extends "home.html" %}
+    {% load static %}
+    {% block title %}Comentários{% endblock %}
+
+    {% block conteudo %}
+        <div class="tittle-container">
+            <h1> Comentários </h1>
+        </div>
+
+    {% if product_list %}
+        <ul class="product_list">
+            {% for comentario in comentarios %}
+                <li>
+                <div>
+                    <title>{{ comentario.Utilizador.username }}</title>
+                     {{ comentario }}
+                </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Não há produtos disponíveis.</p>
+    {% endif %}
+    {% endblock %}
