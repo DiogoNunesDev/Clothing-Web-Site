@@ -56,9 +56,10 @@ class Staff(models.Model):
 
 
 class Comentario(models.Model):
-    utilizador = models.OneToOneField(Utilizador, on_delete=models.CASCADE)
+    utilizador = models.ForeignKey(Utilizador, on_delete=models.CASCADE)
     descricao = models.CharField(max_length=2000)
     data = models.DateField()
+    image = models.CharField(max_length=255, default="pescadaDraw.png")
 
 """
 Funções para dar reset a base de dados, caso seja preciso

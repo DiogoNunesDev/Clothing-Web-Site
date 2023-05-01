@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.utils import timezone
 
 
 def home(request):
@@ -215,10 +216,12 @@ def tshirts_view(request):
     context = {'product_list': arr_produto_unico}
     return render(request, 'tshirts.html', context)
 
-def detail_view(request,produto_id):
+def detail_view(request, produto_id):
     produto = get_object_or_404(Produto, pk=produto_id)
-    context={'produto': produto}
-    return render(request,'detail.html',context)
+    comentarios = Comentario.objects.filter(image=produto.image).order_by('-data')
+    context = {'produto': produto, 'comentarios': comentarios}
+    return render(request, 'detail.html', context)
+
 
 def redirectEditProfile(request):
     return render(request, 'editProfile.html')
@@ -271,3 +274,19 @@ def edit_profile(request):
 def comentarios(request):
     comentarios = Comentario.objects.all().order_by('data')
     return render(request, 'comentarios.html', context = {'comentarios_list': comentarios})
+
+def comment(request):
+        if not hasattr(request.user, 'utilizador'):
+            return redirect('login_view')
+        if request.user.is_authenticated:
+            if request.method == 'POST':
+                produto_id = request.POST.get('produto_id')
+                descricao = request.POST.get('comment', '')
+                utilizador = request.user.utilizador
+                data = timezone.now()
+                image = request.POST.get('image')
+                comment = Comentario(descricao=descricao, utilizador=utilizador, data=data, image=image)
+                comment.save()
+                return redirect('detail', produto_id=produto_id)
+        else:
+            return render(request, 'login.html', {'msg': 'Não está logado'})

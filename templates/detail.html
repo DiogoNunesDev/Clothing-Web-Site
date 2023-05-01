@@ -31,7 +31,39 @@
         <h3>Descrição</h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dui vel erat accumsan sodales. Morbi et libero nunc. Quisque ipsum lectus, semper vehicula odio non, lacinia fringilla felis. </p>
         <button class=" btn btn-success">Adicionar ao carrinho</button>
+        <form action="{% url 'comment' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group position-relative">
+              <label for="comment">Comment</label>
+              <input type="hidden" name="produto_id" value="{{ produto.id }}">
+              <input type="hidden" name="image" value="{{ produto.image }}">
+              <textarea class="form-control" name="comment" rows="5" placeholder="Enter your comment"></textarea>
+              <button type="submit" class="btn btn-primary position-relative">
+                  <span class="btn-text">Send</span>
+                  <span class="btn-arrow"></span>
+              </button>
+            </div>
+        </form>
     </div>
+  </div>
+  <div class="row">
+      <div class="col-md-12">
+        <h3>Comentários:</h3>
+        <hr>
+        {% if comentarios %}
+          {% for comentario in comentarios %}
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">{{ comentario.utilizador.user.username }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ comentario.data }}</h6>
+                <p class="card-text">{{ comentario.descricao }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>No comments yet.</p>
+        {% endif %}
+      </div>
   </div>
 </div>
 

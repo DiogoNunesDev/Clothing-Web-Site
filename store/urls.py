@@ -26,5 +26,6 @@ urlpatterns = [
     path('removeProduct/', views.removeProduct, name='removeProduct'),
     path('remove_Product', views.redirectRemoveProduct, name='redirectRemoveProduct'),
     path('comentarios', views.comentarios, name='comentarios'),
+    path('comment', views.comment, name='comment'),
 
 ]

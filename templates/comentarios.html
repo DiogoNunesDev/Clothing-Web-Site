@@ -5,20 +5,27 @@
     {% block conteudo %}
         <div class="tittle-container">
             <h1> Comentários </h1>
+            <hr>
         </div>
-
-    {% if product_list %}
-        <ul class="product_list">
-            {% for comentario in comentarios %}
-                <li>
-                <div>
-                    <title>{{ comentario.Utilizador.username }}</title>
-                     {{ comentario }}
-                </div>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Não há produtos disponíveis.</p>
-    {% endif %}
+        <div class="container">
+            {% if comentarios_list %}
+                {% for comentario in comentarios_list %}
+                    <div class="card mb-6">
+                        <div class="card-body">
+                            <div class="col-md-6">
+                                <h5 class="card-title">{{ comentario.utilizador.user.username }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">{{ comentario.data }}</h6>
+                                <p class="card-text">{{ comentario.descricao }}</p>
+                            </div>
+                            <div class="col-md-6 position-relative">
+                                <img src="{% static 'store/images/' %}{{ comentario.image }}" alt="{{ produto }}" class="card-img" style="width: 20%; float: right">
+                                <div class="line"></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Sem comentários.</p>
+            {% endif %}
+        </div>
     {% endblock %}
