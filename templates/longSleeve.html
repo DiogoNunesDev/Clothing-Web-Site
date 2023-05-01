@@ -1,0 +1,33 @@
+{% extends "home.html" %}
+    {% load static %}
+    {% block title %}Pescada Store: Long Sleeves{% endblock %}
+
+    {% block conteudo %}
+        <div class="tittle-container">
+            <h1> Long Sleeves </h1>
+        </div>
+        {% if product_list %}
+            <ul class="product_list">
+                {% for product in product_list %}
+                    <li>
+                        <a href="{% url 'detail' produto_id=product.pk %}">
+                            {% if product.cor == 'Azul' %}
+                                <img src="{% static "store/images/AzulLS01.png" %}" alt="Long Sleeve Azul">
+                            {% elif product.cor == 'Cinzento' %}
+                                <img src="{% static "store/images/CinzentoLS01.png" %}" alt="Long Sleeve Cinzenta">
+                            {% elif product.cor == 'Preto' %}
+                                <img src="{% static "store/images/PretoLS01.png" %}" alt="Long Sleeve Preta">
+                            {% elif product.cor == 'Branco' %}
+                                <img src="{% static "store/images/BrancoLS01.png" %}" alt="Long Sleeve Branca">
+                            {% else %}
+                                <img src="{{ produtc.image_url }}" alt="{{ product.name }}">
+                            {% endif %}
+                        </a>
+                        <strong>{{ product }}</strong>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Não há Long Sleeves disponíveis.</p>
+        {% endif %}
+    {% endblock %}

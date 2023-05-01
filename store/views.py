@@ -192,6 +192,18 @@ def sweatshirts_view(request):
     return render(request, 'sweatshirts.html', context)
 
 
+def longSleeves_view(request):
+    product_list = Produto.objects.filter(categoria='Long Sleeve').order_by('cor')
+    arr_produto_unico = []
+    cores_vistas = set()
+    for product in product_list:
+        if product.cor not in cores_vistas:
+            cores_vistas.add(product.cor)
+            arr_produto_unico.append(product)
+    context = {'product_list': arr_produto_unico}
+    return render(request, 'longSleeve.html', context)
+
+
 def tshirts_view(request):
     product_list = Produto.objects.filter(categoria='T-Shirt').order_by('cor')
     arr_produto_unico = []
