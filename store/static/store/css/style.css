@@ -481,3 +481,9 @@ ion-icon {
   font-size: 40px;
   margin-right: 10px;
 }
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: brightness(0%) saturate(100%) invert(27%) sepia(44%) saturate(2942%) hue-rotate(116deg) brightness(100%) contrast(100%);
+}
+

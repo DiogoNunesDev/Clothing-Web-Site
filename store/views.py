@@ -217,7 +217,8 @@ def tshirts_view(request):
 
 def detail_view(request,produto_id):
     produto = get_object_or_404(Produto, pk=produto_id)
-    context={'produto': produto}
+    referencia = produto.referencia
+    context={'produto': produto, 'referencia': referencia}
     return render(request,'detail.html',context)
 
 def redirectEditProfile(request):
