@@ -394,6 +394,7 @@ ion-icon {
   margin-right: 10px;
 }
 
+<<<<<<< HEAD
 button-lgn{
     background:none;
     border:none;
@@ -401,3 +402,10 @@ button-lgn{
     margin:0;
     cursor:pointer;
 }
+=======
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: brightness(0%) saturate(100%) invert(27%) sepia(44%) saturate(2942%) hue-rotate(116deg) brightness(100%) contrast(100%);
+}
+
+>>>>>>> 194e14e19a46e8509242321b460e20e9c6cc493b
