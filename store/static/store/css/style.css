@@ -9,15 +9,18 @@ html{
     margin: 0;
 }
 
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: papayawhip;
-  margin-bottom: 30px;
-  z-index: 1;
+
+.dropdown-hover:hover .dropdown-menu {
+  display: block;
 }
+.dropdown-menu {
+  display: none;
+}
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+
 body {
     background-image: url('../images/FundoHome.jpg');
     background-size: cover;
@@ -42,125 +45,38 @@ homescreen{
 
 
 .logo {
-    float: left;
-    padding-left: 0%;
+    float:left;
+    padding-left: 44%;
+    align-items: center;
+    justify-content: center;
 }
 
 .logo img{
-    width: 15%;
+    width: 21%;
     height: auto;
-}
-
-header {
-    font-family: 'Operator Mono', 'Source Code Pro', Menlo, Monaco, Consolas, Courier New, monospace;
-    background-color: #004957;
-    color: ghostwhite;
-    margin: 0px;
-    width: 100%;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
 }
 
 nav {
-    background-color: papayawhip;
-    margin-bottom: 30px;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
-ul {
-    word-spacing: 0px;
-    display: grid;
-
-}
-
-.dropdownmenu ul, .dropdownmenu li{
-    margin: 0;
-    padding: 0;
-
-}
-.dropdownmenu ul{
-    background: papayawhip;
-    list-style: none;
-    width: 100%;
-
-}
-.dropdownmenu li{
-    float: left;
-    position: relative;
-    width: auto;
-
-
-}
-
-.dropdownmenu form{
-    background: none;
-    color: white;
-    display: block;
-    font-weight: bold;
-    font-size: 13px;
-    font-family: 'Poppins', sans-serif;
-    padding: 15px 55px;
-    text-align: center;
-    text-decoration: none;
-    transition: all 0.25s ease;
-    height: 100%;
-}
-
-.dropdownmenu li:hover form{
-    background: navajowhite;
-}
-
-#submenu{
-    left: 0;
-    opacity: 0;
-    position: absolute;
-    top: 35px;
-    visibility: hidden;
-    z-index: 1;
-
-}
-
-#submenu form:hover{
-    background: #004957;
-}
-
-li:hover ul#submenu{
-    opacity: 90%;
-    top: 70px;
-    visibility: visible;
-    border: none;
+header {
+    position:fixed;
+    top:0;left:0;right:0;
+    background: #484bf8;
+    display:flex;
+    align-items: center;
+    justify-content: flex-start;
+    width:100%;
 
 }
 
 
-.nav_list{
-    display: flex;
-    justify-content: center; /* NOVO */
-    margin: 0;
-    padding: 0;
-    list-style: none; /* NOVO */
-}
-.nav_list li {
-    padding: 0px;
-    display: inline;
-    border-left: 1px solid;
-    border-right: 1px solid;
-
-}
-
-.nav-button{
-    font-family: 'Montserrat', sans-serif;
-    background: none;
-    color: black;
-    border: none;
-    padding: 4px 8px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 4px;
-    width: 180px;
-    font-weight: bold;
-}
 
 main{
     display: grid;
@@ -192,6 +108,12 @@ main{
     right: 20px;
     display: flex;
 
+}
+
+#icon{
+    position: absolute;
+    top: 10px;
+    right: 0px;
 }
 
 
@@ -312,7 +234,6 @@ strong {
 
 
 figure {
-    float: right;
     background-color: ivory;
     color: black;
     border: 4px solid black;
@@ -322,14 +243,6 @@ figure {
     font-family: arial, sans-serif;
 }
 
-.left-div {
-    width: 50%;
-    float: left;
-}
-.right-div {
-    width: 50%;
-    float: right;
-}
 
 .container img {
   max-width: 100%;
@@ -381,8 +294,7 @@ figure {
     max-width: 650px;
     padding: 28px;
     margin: 0 28px;
-    box-shadow: 1px 15px 20px 20px darkslategrey;
-    background: #004957;
+    background: whitesmoke;
     border-radius: 8px;
 }
 
@@ -482,6 +394,7 @@ ion-icon {
   margin-right: 10px;
 }
 
+
 .line {
   border-left: 1px solid black;
   height: 100%;
@@ -489,3 +402,17 @@ ion-icon {
   top: 0;
   left: 50%;
 }
+
+button-lgn{
+    background:none;
+    border:none;
+    padding:0;
+    margin:0;
+    cursor:pointer;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: brightness(0%) saturate(100%) invert(27%) sepia(44%) saturate(2942%) hue-rotate(116deg) brightness(100%) contrast(100%);
+}
+

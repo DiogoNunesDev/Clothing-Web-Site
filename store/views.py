@@ -222,7 +222,6 @@ def detail_view(request, produto_id):
     context = {'produto': produto, 'comentarios': comentarios}
     return render(request, 'detail.html', context)
 
-
 def redirectEditProfile(request):
     return render(request, 'editProfile.html')
 
