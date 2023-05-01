@@ -15,17 +15,46 @@
 </head>
 <body>
 
-    <header style="visibility: hidden">
+    <header style="visibility: visible">
         <div class="logo">
              <a href={% url 'home' %}><img src="{% static "store/images/whiteLogo.png" %}" id="logo-img"></a>
         </div>
         <div class="header-buttons">
-            <ion-icon name="log-in-outline"></ion-icon>
-            <ion-icon name="cart-outline"></ion-icon>
-            <ion-icon name="add-circle-outline"></ion-icon>
+            {% if request.user.is_authenticated %}
+                <!-- colocar profile -->
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+                <!-- botao Login -->
+                <form action="{% url 'redirectLogin' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" style="background:none; border:none; padding:0; margin:0; cursor:pointer;">
+                        <ion-icon name="log-in-outline"></ion-icon>
+                    </button>
+                </form>
+                <!-- botao registar -->
+                <form action="{% url 'redirectSignup' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" style="background:none; border:none; padding:0; margin:0; cursor:pointer;">
+                        <ion-icon name="add-circle-outline"></ion-icon>
+                    </button>
+                </form>
+                <!-- botao cart -->
+                <form action="{% url 'cart_view' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" style="background:none; border:none; padding:0; margin:0; cursor:pointer;">
+                        <ion-icon name="cart-outline"></ion-icon>
+                    </button>
+                </form>
+
+            {% endif %}
+
+
+
+
+
         </div>
     </header>
-    <header>
+    <header style="visibility: hidden">
         <div class="logo">
             <a href={% url 'home' %}><img src="{% static "store/images/whiteLogo.png" %}"></a>
         </div>
@@ -70,7 +99,7 @@
 
     </header>
 
-    <nav class="dropdownmenu">
+    <nav class="dropdownmenu" style="visibility: hidden">
         {% block nav_list %}
             <ul class="nav_list">
                 <div class="row">
