@@ -10,12 +10,12 @@ class Produto(models.Model):
     categoria = models.CharField(max_length=50)
     referencia = models.CharField(max_length=4)
     image = models.CharField(max_length=255, default="whiteLogo.png")
-
+    stock = models.IntegerField(default=0)
     def __str__(self):
         return self.categoria + " - " + self.cor + " -> " + str(self.preco) + "€"
 
-    def makeProduct(tamanho, cor, preco, num_pontos, categoria, referencia, image):
-        product = Produto(tamanho=tamanho, cor=cor, preco=preco, num_pontos=num_pontos, categoria=categoria, referencia=referencia, image=image)
+    def makeProduct(tamanho, cor, preco, num_pontos, categoria, referencia, image, stock):
+        product = Produto(tamanho=tamanho, cor=cor, preco=preco, num_pontos=num_pontos, categoria=categoria, referencia=referencia, image=image, stock=stock)
         product.save()
 class CarrinhoCompras(models.Model):
     num_itens = models.IntegerField(default=0)

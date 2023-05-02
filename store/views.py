@@ -1,5 +1,6 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from store.models import Produto, Utilizador, Staff, Comentario
@@ -146,35 +147,27 @@ def redirectRemoveProduct(request):
 
 @login_required(login_url="store/login_view")
 def addProduct(request):
-    if request.user.staff:
+    if request.user.is_authenticated and hasattr(request.user,'staff'):
         if request.method == 'POST':
-            num_items = int(request.POST.get('num_items', 0))
             tamanho = request.POST.get('tamanho', '')
             cor = request.POST.get('cor', '')
             preco = request.POST.get('preco', 0)
             num_pontos = request.POST.get('num_pontos', 0)
             categoria = request.POST.get('categoria', '')
             referencia = request.POST.get('referencia', '')
-            print(referencia)
-            print(num_items)
             image = cor + referencia + '.png'
-
-            for i in range(num_items):
-                Produto.makeProduct(tamanho, cor, preco, num_pontos, categoria, referencia, image)
-            return render(request, 'addProduct.html', {'msg': 'Produtos Inseridos!'})
-
-    if request.user.is_authenticated and request.user.staff:
-        tamanho = request.POST['tamanho']
-        cor = request.POST['cor']
-        preco = request.POST['preco']
-        num_pontos = request.POST['num_pontos']
-        categoria = request.POST['categoria']
-        referencia = request.POST['referencia']
-        image = cor+referencia
-        Produto.makeProduct(tamanho, cor, preco, num_pontos, categoria, image)
+            stock = int(request.POST.get('stock', 0))
+            try:
+                produto = Produto.objects.get(cor=cor, referencia=referencia, tamanho=tamanho, num_pontos=num_pontos, categoria=categoria)
+                produto.stock = produto.stock + stock
+                produto.save()
+                return render(request, 'addProduct.html', {'msg': 'Stock atualizado !'})
+            except ObjectDoesNotExist:
+                Produto.makeProduct(tamanho, cor, preco, num_pontos, categoria, referencia, image, stock)
+                return render(request, 'addProduct.html', {'msg': 'Produtos Inseridos!'})
 
     else:
-        return redirect('login_view')
+        return redirect('login_view', {'msg': 'Não está logado como Staff'})
 
 @login_required(login_url="login_view")
 def redirectAddProduct(request):
