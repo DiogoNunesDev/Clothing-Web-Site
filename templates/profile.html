@@ -5,12 +5,13 @@
     {% block conteudo %}
         <div class="formulario">
             <h1>Perfil</h1>
-            <div class="fotografiaPerfil">
-                <img class="border-image" src="{% static "store/images/pescadaDraw2.png" %}" style="border-color: {{ border_color }};">
-            </div>
             {% if request.user.utilizador %}
                 <form action="{% url 'redirectEditProfile' %}" class="profile" method="post">
                     {% csrf_token %}
+                    <div class="fotografiaPerfil">
+                        <img class="border-image" src="{% static "store/images/pescadaDraw2.png" %}" style="border-color: {{ border_color }};">
+                    </div>
+                    <span class="badge badge-info" style="float: right; scale: 120%;">User</span>
                     <p><strong>Username: </strong>{{ request.user.username }}</p>
                     <p><strong>Primeiro Nome: </strong>{{ request.user.utilizador.primeiro_nome }}</p>
                     <p><strong>Apelido: </strong>{{ request.user.utilizador.apelido }}</p>
@@ -27,6 +28,7 @@
                 </form>
             {% elif request.user.staff %}
                 <form>
+                    <span class="badge badge-dark" style="float: right; scale: 120%;">Staff</span>
                     <p><strong>Username: </strong>{{ request.user.username }}</p>
                     <p><strong>Primeiro Nome: </strong>{{ request.user.staff.primeiro_nome }}</p>
                     <p><strong>Apelido: </strong>{{ request.user.staff.apelido }}</p>
@@ -35,13 +37,13 @@
                     <p><strong>Email: </strong>{{ request.user.email }}</p>
                     <p><strong>Número de Télemovel: </strong>{{ request.user.staff.numero_telemovel }}</p>
                     <p><strong>Número de Cartão de Cidadão (CC): </strong>{{ request.user.staff.num_cartao_cidadao }}</p>
-                    <p><strong>Tag: </strong>Staff</p>
+
                 </form>
             {% elif request.user.is_superuser %}
                 <form>
+                    <span class="badge badge-warning" style="float: right; scale: 120%;">Admin</span>
                     <p><strong>Username: </strong>{{ user.username }}</p>
                     <p><strong>Email: </strong>{{ user.email }}</p>
-                    <p><strong>Tag: </strong>Admin</p>
                 </form>
             {% endif %}
         </div>

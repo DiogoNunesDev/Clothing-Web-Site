@@ -122,9 +122,12 @@ def redirectAddStaff(request):
 def profile(request):
     if not request.user.is_authenticated:
         return render(request, 'login.html', {'msg_erro':'Utilizador não autenticado'})
-
-    border_color = get_border_color(request.user.utilizador.num_pontos)
-    return render(request, 'profile.html', {'border_color': border_color})
+    else:
+        if hasattr(request.user,'utilizador'):
+            border_color = get_border_color(request.user.utilizador.num_pontos)
+            return render(request, 'profile.html', {'border_color': border_color})
+        else:
+            return render(request, 'profile.html')
 
 def get_border_color(num_pontos):
     if num_pontos <= 500:
