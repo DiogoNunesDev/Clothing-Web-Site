@@ -122,12 +122,21 @@ def redirectAddStaff(request):
 def profile(request):
     if not request.user.is_authenticated:
         return render(request, 'login.html', {'msg_erro':'Utilizador não autenticado'})
-    border_color =
-    return render(request, 'profile.html')
 
+    border_color = get_border_color(request.user.utilizador.num_pontos)
+    return render(request, 'profile.html', {'border_color': border_color})
 
-
-
+def get_border_color(num_pontos):
+    if num_pontos <= 500:
+        return '#cd7f32'
+    elif num_pontos <= 1000:
+        return '#c0c0c0'
+    elif num_pontos <= 1500:
+        return '#ffd700'
+    elif num_pontos <= 2500:
+        return '#50c878'
+    else:
+        return '#e0115f'
 
 @login_required(login_url="login.html")
 def removeProduct(request):

@@ -165,26 +165,7 @@ main{
     height: auto;
 }
 
-.form_type {
-    background-color: #ffffff;
-    color: black;
-    padding: 50px;
-    margin: auto;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    padding-top: 65px;
-    display: inline-block;
-    text-align: left;
-    overflow: hidden;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-    width: 100%;
 
-}
-
-.div_formulario{
-    text-align: center;
-}
 
 .tittle-container{
     text-align: center;
@@ -300,6 +281,10 @@ figure {
 
 .formulario h2, label{
     color: black;
+}
+
+.formulario h1 {
+    text-align: center;
 }
 
 .content {
@@ -431,3 +416,19 @@ button-lgn{
     color: #ffffff;
 }
 
+.border-image {
+    border: 5px solid;
+    border-radius: 10px;
+
+}
+
+.fotografiaPerfil{
+    margin: 2px auto;
+    width: 110px;
+    height: 110px;
+    margin-bottom: 17px;
+}
+
+.fotografiaPerfil img {
+    width: 100%;
+}
