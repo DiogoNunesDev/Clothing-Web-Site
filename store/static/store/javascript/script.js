@@ -9,8 +9,3 @@ window.addEventListener('scroll', function() {
   }
 
 });
-
-  const dropdownBtn = document.querySelector('.dropdown-toggle');
-  dropdownBtn.addEventListener('click', () => {
-    window.location.href = 'https://www.google.com';
-  });

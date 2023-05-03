@@ -175,14 +175,13 @@ def redirectAddProduct(request):
 
 
 def sweatshirts_view(request):
-    product_list = Produto.objects.filter(categoria='Sweatshirt').order_by('cor')
-    arr_produto_unico = []
-    cores_vistas = set()
-    for product in product_list:
-        if product.cor not in cores_vistas:
-            cores_vistas.add(product.cor)
-            arr_produto_unico.append(product)
-    context = {'product_list': arr_produto_unico}
+    produtos = Produto.objects.filter(categoria__in=['Long Sleeve','Sweatshirt']).order_by('cor')
+    produtos_unicos = {}
+    for produto in produtos:
+        chave = (produto.categoria, produto.cor, produto.categoria)
+        if chave not in produtos_unicos:
+            produtos_unicos[chave] = produto
+    context = {'product_list': list(produtos_unicos.values())}
     return render(request, 'sweatshirts.html', context)
 
 
@@ -196,6 +195,17 @@ def longSleeves_view(request):
             arr_produto_unico.append(product)
     context = {'product_list': arr_produto_unico}
     return render(request, 'longSleeve.html', context)
+
+def hoodies_view(request):
+    product_list = Produto.objects.filter(categoria='Sweatshirt').order_by('cor')
+    arr_produto_unico = []
+    cores_vistas = set()
+    for product in product_list:
+        if product.cor not in cores_vistas:
+            cores_vistas.add(product.cor)
+            arr_produto_unico.append(product)
+    context = {'product_list': arr_produto_unico}
+    return render(request, 'hoodies.html', context)
 
 
 def tshirts_view(request):

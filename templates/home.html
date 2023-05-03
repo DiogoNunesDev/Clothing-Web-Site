@@ -67,29 +67,32 @@
         </div>
         <nav style="float: left; align-items: center; display: flex; justify-content: center;" class="btn-group">
          <div style="float: left; align-items: center; display: flex; justify-content: center;" class="btn-group">
-            <a href="{% url 'full_collection' %}">
-              <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn btn-outline-primary">Full Collection</button>
-            </a>
-            <a href="{% url 'sweatshirts' %}" >
-                <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn btn-outline-primary">Sweatshirts</button>
-            </a>
-            <a href="{% url 'tshirt' %}">
-               <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn btn-outline-primary">T-shirts</button>
-            </a>
             {% if request.user.staff %}
                 <a href="{% url 'redirectAddProduct' %}">
                    <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn btn-outline-primary">Add Product</button>
                 </a>
+                <a href="{% url 'redirectRemoveProduct' %}">
+                   <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn btn-outline-primary">Remove Product</button>
+                </a>
             {% endif %}
+         <a href="{% url 'full_collection' %}">
+              <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn btn-outline-primary">Full Collection</button>
+            </a>
+            <a href="{% url 'tshirt' %}">
+               <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn btn-outline-primary">T-shirts</button>
+            </a>
 
-            <div class="dropdown">
-                <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown menu</button>
-                <div class="dropdown-menu dropdown-hover" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="https://www.facebook.com/">Facebook</a>
-                    <a class="dropdown-item" href="https://twitter.com/">Twitter</a>
-                </div>
-            </div>
-        </div>
+             <div class="dropdown">
+                 <button onclick="window.location.href='{% url 'sweatgeral' %}'" style="color: white; font-family: 'Helvetica Neue', sans-serif;"
+                         class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown"
+                         aria-haspopup="true" aria-expanded="false">Sweatshirts
+                 </button>
+                 <div class="dropdown-menu dropdown-hover" aria-labelledby="dropdownMenuButton">
+                     <a class="dropdown-item" href='{% url 'longSleeves' %}'>Long Sleeves</a>
+                     <a class="dropdown-item" href='{% url 'hoodies' %}'>Hoodies</a>
+                 </div>
+             </div>
+         </div>
 
         </nav>
 
@@ -106,7 +109,7 @@
                             </form>
                             <ul id="submenu">
                                 <li>
-                                    <form action="{% url 'sweatshirts' %}" method="post">
+                                    <form action="{% url 'sweatgeral' %}" method="post">
                                     {% csrf_token %}
                                     <input type="submit" value="Sweatshirts" class="nav-button">
                                     </form>
@@ -122,13 +125,13 @@
                     </div>
                     <div class="col">
                         <li>
-                            <form action="{% url 'sweatshirts' %}" method="post">
+                            <form action="{% url 'sweatgeral' %}" method="post">
                                 {% csrf_token %}
                                 <input type="submit" value="Sweatshirts" class="nav-button">
                             </form>
                             <ul id="submenu">
                                 <li>
-                                    <form action="{% url 'sweatshirts' %}" method="post">
+                                    <form action="{% url 'sweatgeral' %}" method="post">
                                     {% csrf_token %}
                                     <input type="submit" value="Sweatshirt com Capuz" class="nav-button">
                                     </form>
