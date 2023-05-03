@@ -122,8 +122,12 @@ def redirectAddStaff(request):
 def profile(request):
     if not request.user.is_authenticated:
         return render(request, 'login.html', {'msg_erro':'Utilizador não autenticado'})
-
+    border_color =
     return render(request, 'profile.html')
+
+
+
+
 
 @login_required(login_url="login.html")
 def removeProduct(request):
