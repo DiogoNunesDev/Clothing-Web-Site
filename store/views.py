@@ -3,10 +3,10 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from store.models import Produto, Utilizador, Staff, Comentario
+from store.models import Produto, Utilizador, Staff, Comentario, carrinhoItem, CarrinhoCompras
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.utils import timezone
 
@@ -27,6 +27,23 @@ def full_collection(request):
 def cart_view(request):
     return render(request, 'cart.html')
 
+
+def addToCart(request):
+    produto_id = request.POST.get("produto_id", 0)
+    produto = get_object_or_404(Produto, id=produto_id)
+    carrinho, created = CarrinhoCompras.objects.get_or_create(utilizador=request.user.utilizador, defaults={'num_itens': 0, 'valor_total': 0})
+
+    item_do_carrinho, item_criado = carrinhoItem.objects.get_or_create(produto=produto, carrinho=carrinho)
+
+    if not item_criado:
+        item_do_carrinho.quantidade += 1
+        item_do_carrinho.save()
+
+    carrinho.num_itens += 1
+    carrinho.valor_total += produto.preco
+    carrinho.save()
+
+    return redirect('detail', produto_id=produto_id)
 
 def login_view(request):
 
@@ -86,7 +103,8 @@ def redirectDeleteStaff(request):
     context = {'staff_list': staff_list}
     return render(request, 'removeStaff.html', context)
 
-@login_required(login_url="login.html")
+
+@permission_required('store.delete_staff', login_url='login.html')
 def delete_staff(request, staff_id):
     staff = get_object_or_404(Staff, user_id=staff_id)
     staff.user.delete()
@@ -94,7 +112,7 @@ def delete_staff(request, staff_id):
     return render(request, 'removeStaff.html')
 
 
-@login_required(login_url="login.html")
+@permission_required('store.addStaff', login_url='login.html')
 def addStaff(request):
     if request.user.is_superuser:
         if request.method == 'POST':
@@ -143,7 +161,7 @@ def get_border_color(num_pontos):
 
 @login_required(login_url="login.html")
 def removeProduct(request):
-    if request.user.staff:
+    if request.user.is_authenticated and hasattr(request.user, 'staff'):
         if request.method == 'POST':
             produto_id = request.POST.get('produto_id')
             produto = get_object_or_404(Produto, pk=produto_id)

@@ -17,12 +17,6 @@ class Produto(models.Model):
     def makeProduct(tamanho, cor, preco, num_pontos, categoria, referencia, image, stock):
         product = Produto(tamanho=tamanho, cor=cor, preco=preco, num_pontos=num_pontos, categoria=categoria, referencia=referencia, image=image, stock=stock)
         product.save()
-class CarrinhoCompras(models.Model):
-    num_itens = models.IntegerField(default=0)
-    valor_total = models.DecimalField(max_digits=8, decimal_places=2)
-
-    def __str__(self):
-        return str(self.num_itens) + " - " + str(self.valor_total)
 
 class Utilizador(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -39,6 +33,22 @@ class Utilizador(models.Model):
 
     def __str__(self):
         return self.primeiro_nome + " " + self.apelido + " - " + str(self.num_cartao_cidadao) + " - " + str(self.num_pontos)
+
+class CarrinhoCompras(models.Model):
+    utilizador = models.ForeignKey(Utilizador, on_delete=models.CASCADE, default=None)
+    num_itens = models.IntegerField(default=0)
+    valor_total = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+
+    def __str__(self):
+        return str(self.num_itens) + " - " + str(self.valor_total)
+
+class carrinhoItem(models.Model):
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    carrinho = models.ForeignKey(CarrinhoCompras, on_delete=models.CASCADE)
+    quantidade = models.IntegerField(default=1)
+
+    def __str__(self):
+        return f'{self.produto} (x{self.quantidade})'
 
 
 class Staff(models.Model):
