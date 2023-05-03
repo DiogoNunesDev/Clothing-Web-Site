@@ -56,7 +56,7 @@ def login_view(request):
             # reverse: quando estou dentro dos templates vai procurar o index e vai gerar o url correspondente
             return HttpResponseRedirect(reverse('home'))
         else:
-            return render(request, 'login.html', {'msg_erro':'Credenciais inválidas, tente novamente.'})
+            return render(request, 'login.html', {'msg':'Credenciais inválidas, tente novamente.'})
     else:
         #Mostrar o formulario de login
         return render(request, 'login.html')

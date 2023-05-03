@@ -12,7 +12,7 @@ class Produto(models.Model):
     image = models.CharField(max_length=255, default="whiteLogo.png")
     stock = models.IntegerField(default=0)
     def __str__(self):
-        return self.categoria + " - " + self.cor + " -> " + str(self.preco) + "€"
+        return self.categoria + " - " + self.tamanho + " - " + self.cor + " -> " + str(self.preco) + "€"
 
     def makeProduct(tamanho, cor, preco, num_pontos, categoria, referencia, image, stock):
         product = Produto(tamanho=tamanho, cor=cor, preco=preco, num_pontos=num_pontos, categoria=categoria, referencia=referencia, image=image, stock=stock)

@@ -66,7 +66,7 @@
                 </form>
             {% endif %}
         </div>
-        <nav style="float: left; align-items: center; display: flex; justify-content: center;" class="btn-group">
+        <!--<nav style="float: left; align-items: center; display: flex; justify-content: center;" class="btn-group">
          <div style="float: left; align-items: center; display: flex; justify-content: center;" class="btn-group">
             {% if request.user.staff %}
                 <a href="{% url 'redirectAddProduct' %}">
@@ -76,7 +76,15 @@
                    <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn btn-outline-primary">Remove Product</button>
                 </a>
             {% endif %}
-         <a href="{% url 'full_collection' %}">
+            {% if request.user.is_superuser %}
+                <a href="{% url 'redirectAddStaff' %}">
+                   <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn btn-outline-primary">Adicionar Staff</button>
+                </a>
+                    <a href="{% url 'redirectDeleteStaff' %}">
+                   <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn btn-outline-primary">Remover Staff</button>
+                </a>
+            {% endif %}
+            <a href="{% url 'full_collection' %}">
               <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn btn-outline-primary">Full Collection</button>
             </a>
             <a href="{% url 'tshirt' %}">
@@ -95,112 +103,66 @@
              </div>
          </div>
 
+        </nav>-->
+        <nav class="nav_bar nav_bar-1">
+         <ul>
+            {% if request.user.staff %}
+            <li>
+                 <a href="{% url 'redirectAddProduct' %}">
+                   <button class="btn" style="color: white; font-family: 'Helvetica Neue', sans-serif;">Add Product</button>
+                 </a>
+            </li>
+            <li>
+                <a href="{% url 'redirectRemoveProduct' %}">
+                   <button class="btn" style="color: white; font-family: 'Helvetica Neue', sans-serif;">Remove Product</button>
+                </a>
+             </li>
+            {% endif %}
+            {% if request.user.is_superuser %}
+            <li>
+                <a href="{% url 'redirectAddStaff' %}">
+                   <button class="btn" style="color: white; font-family: 'Helvetica Neue', sans-serif;">Adicionar Staff</button>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'redirectDeleteStaff' %}">
+                   <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn">Remover Staff</button>
+                </a>
+            </li>
+            {% endif %}
+            <li>
+                <a href="{% url 'full_collection' %}">
+                    <button class="btn" style="color: white; font-family: 'Helvetica Neue', sans-serif;">Full Collection</button>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'tshirt' %}">
+                    <button class="btn" style="color: white; font-family: 'Helvetica Neue', sans-serif;">T-shirts</button>
+                </a>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <a>
+                        <button onclick="window.location.href='{% url 'sweatgeral' %}'" style="color: white; font-family: 'Helvetica Neue', sans-serif;"
+                             class="btn dropdown-toggle" type="button" data-toggle="dropdown"
+                             aria-haspopup="true" aria-expanded="false">Sweatshirts
+                        </button>
+                    </a>
+                    <div class="dropdown-menu dropdown-hover" aria-labelledby="dropdownMenuButton">
+                        <a>
+                            <button class="dropdown-item" onclick="window.location.href='{% url 'longSleeves' %}'" >Long Sleeves</button>
+                        </a>
+                        <a>
+                            <button class="dropdown-item" onclick="window.location.href='{% url 'hoodies' %}'" type="button">Hoodies</button>
+                        </a>
+                    </div>
+                </div>
+            </li>
+         </ul>
         </nav>
-
     </header>
-    <nav class="dropdownmenu" style="visibility: hidden">
-        {% block nav_list %}
-            <ul class="nav_list">
-                <div class="row">
-                    <div class="col">
-                        <li>
-                            <form action="{% url 'full_collection' %}" method="post">
-                                {% csrf_token %}
-                                <input type="submit" value="Full Collection" class="nav-button ">
-                            </form>
-                            <ul id="submenu">
-                                <li>
-                                    <form action="{% url 'sweatgeral' %}" method="post">
-                                    {% csrf_token %}
-                                    <input type="submit" value="Sweatshirts" class="nav-button">
-                                    </form>
-                                </li>
-                                <li>
-                                    <form action="{% url 'tshirt' %}" method="post">
-                                        {% csrf_token %}
-                                        <input type="submit" value="T-Shirts" class="nav-button">
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    </div>
-                    <div class="col">
-                        <li>
-                            <form action="{% url 'sweatgeral' %}" method="post">
-                                {% csrf_token %}
-                                <input type="submit" value="Sweatshirts" class="nav-button">
-                            </form>
-                            <ul id="submenu">
-                                <li>
-                                    <form action="{% url 'sweatgeral' %}" method="post">
-                                    {% csrf_token %}
-                                    <input type="submit" value="Sweatshirt com Capuz" class="nav-button">
-                                    </form>
-                                </li>
-                                <li>
-                                    <form action="{% url 'longSleeves' %}" method="post">
-                                        {% csrf_token %}
-                                        <input type="submit" value="Long Sleeves" class="nav-button">
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    </div>
-                    <div class="col">
-                        <li>
-                            <form action="{% url 'tshirt' %}" method="post">
-                                {% csrf_token %}
-                                <input type="submit" value="T-Shirts" class="nav-button">
-                            </form>
-                        </li>
-                    </div>
-                    <div class="col">
-                        {% if request.user.is_superuser %}
-                            <li>
-                                <form action="{% url 'redirectAddStaff' %}" method="post">
-                                    {% csrf_token %}
-                                    <input type="submit" value="Adicionar Staff" class="nav-button">
-                                </form>
-                            </li>
-                        {% endif %}
-                    </div>
-                    <div class="col">
-                        {% if request.user.staff %}
-                            <li>
-                                <form action="{% url 'redirectAddProduct' %}" method="post">
-                                    {% csrf_token %}
-                                    <input type="submit" value="Adicionar Produtos" class="nav-button">
-                                </form>
-                            </li>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="col">
-                    {% if request.user.staff %}
-                        <li>
-                            <form action="{% url 'redirectRemoveProduct' %}" method="post">
-                            {% csrf_token %}
-                            <input type="submit" value="Remover Produto" class="nav-button">
-                            </form>
-                        </li>
-                    {% endif %}
-                </div>
-                <div class="col">
-                    {% if request.user.is_superuser %}
-                        <li>
-                            <form action="{% url 'redirectDeleteStaff' %}" method="post">
-                                {% csrf_token %}
-                                <input type="submit" value="Remover Staff" class="nav-button">
-                            </form>
-                        </li>
-                    {% endif %}
-                </div>
-            </ul>
-        {% endblock %}
-    </nav>
     <main>
         {% block conteudo %}
-
             <div class="centered-main tittle-container">
                 <div class="form_type">
                     <p>Bem-vindo à Pescada Store, a loja de roupa para adolescentes que amam o mar, o surf e uma boa noitada.</p>
