@@ -346,11 +346,11 @@ figure {
     font-size: 20px;
     color: white;
     border: none;
-    background-image: linear-gradient(to right, beige, purple);
+    background-image: linear-gradient(to right, #5de0e6, #004aad);
 }
 
 .button-container button:hover{
-    background-image: linear-gradient(to right, purple, beige);
+    background-image: linear-gradient(to right, #004aad, #5de0e6);
 }
 
 .profile {
