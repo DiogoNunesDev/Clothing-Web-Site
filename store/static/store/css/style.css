@@ -416,3 +416,18 @@ button-lgn{
     filter: brightness(0%) saturate(100%) invert(27%) sepia(44%) saturate(2942%) hue-rotate(116deg) brightness(100%) contrast(100%);
 }
 
+.footer_a{
+    text-decoration: none;
+    color: whitesmoke;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.footer_a:hover {
+    background-color: black;
+    color: #ffffff;
+}
+

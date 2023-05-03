@@ -6,6 +6,11 @@
         <form action="{% url 'addStaff' %}" method="post" class="">
             {% csrf_token %}
             <h2>Adicionar Staff</h2>
+            <div class="alert-danger">
+                {% if msg %}
+                    <h2> {{ msg }} </h2>
+                {% endif %}
+            </div>
             <div class="content">
                 <div class="input-box">
                     <label for="username">Username</label>

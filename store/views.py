@@ -96,23 +96,24 @@ def delete_staff(request, staff_id):
 
 @login_required(login_url="login.html")
 def addStaff(request):
-    if request.method == 'POST':
-        name = request.POST['username']
-        password = request.POST['password']
-        email = request.POST['email']
-        user = User.objects.create_user(username=name, password=password, email=email)
-        user.save()
-        primeiro_nome = request.POST['primeiro_nome']
-        apelido = request.POST['apelido']
-        data_nascimento = request.POST['data_nascimento']
-        morada = request.POST['morada']
-        numero_telemovel = request.POST['numero_telemovel']
-        num_cartao_cidadao = request.POST['num_cartao_cidadao']
-        staff = Staff(user=user, primeiro_nome=primeiro_nome, apelido=apelido, data_nascimento=data_nascimento, morada=morada,
-                        numero_telemovel=numero_telemovel, num_cartao_cidadao=num_cartao_cidadao, email=email)
-        staff.save()
-        return render(request, 'home.html')
-    return render(request, 'addStaff.html')
+    if request.user.is_superuser:
+        if request.method == 'POST':
+            name = request.POST.get('username', '')
+            password = request.POST.get('password','')
+            email = request.POST.get('email','')
+            user = User.objects.create_user(username=name, password=password, email=email)
+            user.save()
+            primeiro_nome = request.POST.get('primeiro_nome','')
+            apelido = request.POST.get('apelido','')
+            data_nascimento = request.POST.get('data_nascimento','')
+            morada = request.POST.get('morada','')
+            numero_telemovel = request.POST.get('numero_telemovel',0)
+            num_cartao_cidadao = request.POST.get('num_cartao_cidadao',0)
+            staff = Staff(user=user, primeiro_nome=primeiro_nome, apelido=apelido, data_nascimento=data_nascimento, morada=morada,
+                            numero_telemovel=numero_telemovel, num_cartao_cidadao=num_cartao_cidadao, email=email)
+            staff.save()
+            return render(request, 'addStaff.html', {'msg': 'Staff Adicionado'})
+    return render(request, 'addStaff.html', {'msg': 'Não está logado como Super User!'})
 
 def redirectAddStaff(request):
     return render(request, 'addStaff.html')
@@ -278,17 +279,15 @@ def comentarios(request):
     return render(request, 'comentarios.html', context = {'comentarios_list': comentarios})
 
 def comment(request):
-        if not hasattr(request.user, 'utilizador'):
-            return redirect('login_view')
-        if request.user.is_authenticated:
-            if request.method == 'POST':
-                produto_id = request.POST.get('produto_id')
-                descricao = request.POST.get('comment', '')
-                utilizador = request.user.utilizador
-                data = timezone.now()
-                image = request.POST.get('image')
-                comment = Comentario(descricao=descricao, utilizador=utilizador, data=data, image=image)
-                comment.save()
-                return redirect('detail', produto_id=produto_id)
-        else:
-            return render(request, 'login.html', {'msg': 'Não está logado'})
+    if not hasattr(request.user, 'utilizador'):
+        return redirect('login_view', {'msg': 'Não está logado como User'})
+    else:
+        if request.method == 'POST':
+            produto_id = request.POST.get('produto_id')
+            descricao = request.POST.get('comment', '')
+            utilizador = request.user.utilizador
+            data = timezone.now()
+            image = request.POST.get('image')
+            comment = Comentario(descricao=descricao, utilizador=utilizador, data=data, image=image)
+            comment.save()
+            return redirect('detail', produto_id=produto_id)
