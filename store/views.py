@@ -9,13 +9,14 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.utils import timezone
+from django.core.paginator import Paginator
 
 
 def home(request):
     return render(request, 'home.html')
 
+"""
 def full_collection(request):
-    products = Produto.objects.all()
     unique_pairs = Produto.objects.values('referencia', 'cor').distinct().order_by('referencia', 'cor')
     product_list = []
     for pair in unique_pairs:
@@ -23,6 +24,28 @@ def full_collection(request):
         product_list.append(product[0])
     context = {'product_list': product_list}
     return render(request, 'full_collection.html', context)
+"""
+def full_collection(request):
+    unique_pairs = Produto.objects.values('referencia', 'cor').distinct().order_by('referencia', 'cor')
+    product_list = []
+    for pair in unique_pairs:
+        product = Produto.objects.filter(cor=pair['cor'], referencia=pair['referencia'])
+        product_list.append(product[0])
+
+    # Produtos por página
+    products_per_page = 4
+
+    # Cria o objeto do tipo paginator
+    paginator = Paginator(product_list, products_per_page)
+    page_number = request.GET.get('page')
+
+    # agrupa os produtos da página atual
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'product_list': page_obj,
+    }
+    return render(request, 'full_collection2.html', context)
 
 def cart_view(request):
     return render(request, 'cart.html')
