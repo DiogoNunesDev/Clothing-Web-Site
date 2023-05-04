@@ -1,29 +1,42 @@
 {% extends 'home.html' %}
     {% block title %}Pescada Store: Remover Staff Members{% endblock %}
     {% block conteudo %}
-        <h2>Staff</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for staff in staff_list %}
-                <tr>
-                    <td>{{ staff.primeiro_nome }} {{ staff.apelido }}</td>
-                    <td>{{ staff.email }}</td>
-                    <td>
-                        <form method="POST" action="{% url 'delete_staff' staff.user.id %}">
-                            {% csrf_token %}
-                            <button type="submit">Remover</button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="tittle-container">
+            <h1> Remover Staff </h1>
+        </div>
+
+        <div class="container-xl">
+            <div class="alert-danger">
+                {% if msg %}
+                    <h2> {{ msg }} </h2>
+                {% endif %}
+            </div>
+            <table class="table table-dark table-hover large-table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    {% for staff in staff_list %}
+                    <tr>
+                        <th scope="row">{{ staff.id }}</th>
+                        <td >{{ staff.primeiro_nome }} {{ staff.apelido }}</td>
+                        <td>{{ staff.email }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'delete_staff' staff.user.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Remover</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% endblock %}
 

@@ -2,10 +2,14 @@
     {% block title %}Pescada Store: Adicionar Staff Members{% endblock %}
 
     {% block conteudo %}
+
+    <div class="tittle-container">
+        <h1> Adicionar Staff </h1>
+    </div>
+
     <div class="formulario">
-        <form action="{% url 'addStaff' %}" method="post" class="">
+        <form action="{% url 'addStaff' %}" method="post">
             {% csrf_token %}
-            <h2>Adicionar Staff</h2>
             <div class="alert-danger">
                 {% if msg %}
                     <h2> {{ msg }} </h2>

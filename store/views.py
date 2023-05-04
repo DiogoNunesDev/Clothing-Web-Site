@@ -109,7 +109,7 @@ def delete_staff(request, staff_id):
     staff = get_object_or_404(Staff, user_id=staff_id)
     staff.user.delete()
     messages.success(request, 'Colaborador removido com sucesso.')
-    return render(request, 'removeStaff.html')
+    return render(request, 'removeStaff.html', )
 
 
 @permission_required('store.addStaff', login_url='login.html')
@@ -187,11 +187,19 @@ def addProduct(request):
             tamanho = request.POST.get('tamanho', '')
             cor = request.POST.get('cor', '')
             preco = request.POST.get('preco', 0)
-            num_pontos = request.POST.get('num_pontos', 0)
             categoria = request.POST.get('categoria', '')
             referencia = request.POST.get('referencia', '')
             image = cor + referencia + '.png'
             stock = int(request.POST.get('stock', 0))
+
+            num_pontos = 0
+            if categoria == 'Long Sleeve':
+                num_pontos = 40
+            elif categoria == 'T-Shirt':
+                num_pontos = 20
+            else:
+                num_pontos = 50
+
             try:
                 produto = Produto.objects.get(cor=cor, referencia=referencia, tamanho=tamanho, num_pontos=num_pontos, categoria=categoria)
                 produto.stock = produto.stock + stock
