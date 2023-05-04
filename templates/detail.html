@@ -44,7 +44,7 @@
                     <div class="btn-group" role="group" aria-label="Size">
                         <button type="button" class="btn btn-outline-dark">S</button>
                         <button type="button" class="btn btn-outline-dark">M</button>
-                        <button type="button" class="btn btn-outline-dark">L</button>
+                        <button type="button" name="tamanho" class="btn btn-outline-dark">L</button>
                     </div>
                 </div>
             </form>
@@ -53,7 +53,7 @@
             <form action="{% url 'addToCart' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="produto_id" value="{{ produto.id }}">
-                <button class=" btn btn-success">Adicionar ao carrinho</button>
+                <button type="submit" class=" btn btn-success">Adicionar ao carrinho</button>
             </form>
             <form action="{% url 'comment' %}" method="post">
                 {% csrf_token %}
