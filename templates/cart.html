@@ -3,4 +3,32 @@
 
     {% block conteudo %}
 
+        <h2>Carrinho de Compras</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Produto</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in carrinho.itens.all %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ item.produto }}</td>
+                        <td>{{ item.produto.preco}}€</td>
+                        <td>{{ item.quantidade }}</td>
+                        <td>{{ item.total }}€</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p>Total: {{ carrinho.valor_total }}€</p>
+        <form method="POST" action="{% url 'finalizar_compra' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Efetuar Compra</button>
+        </form>
     {% endblock %}

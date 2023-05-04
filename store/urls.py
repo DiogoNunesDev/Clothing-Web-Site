@@ -11,6 +11,7 @@ urlpatterns = [
     path('signup_view/', views.signup_view, name='signup_view'),
     path('carrinho/', views.cart_view, name='cart_view'),
     path('adicionar_ao_carrinho/', views.addToCart, name='addToCart'),
+    path('finalizar_compra/', views.finalizar_compra, name='finalizar_compra'),
     path('addStaff_view/', views.addStaff, name='addStaff'),
     path('addStaff/', views.redirectAddStaff, name='redirectAddStaff'),
     path('sweatshirts/', views.sweatshirts_view, name='sweatgeral'),

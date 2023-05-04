@@ -32,8 +32,9 @@ def addToCart(request):
     produto_id = request.POST.get("produto_id", 0)
     produto = get_object_or_404(Produto, id=produto_id)
     carrinho, created = CarrinhoCompras.objects.get_or_create(utilizador=request.user.utilizador, defaults={'num_itens': 0, 'valor_total': 0})
+    tamanho = request.POST.get("tamanho", "")
 
-    item_do_carrinho, item_criado = carrinhoItem.objects.get_or_create(produto=produto, carrinho=carrinho)
+    item_do_carrinho, item_criado = carrinhoItem.objects.get_or_create(produto=produto, carrinho=carrinho, tamanho=tamanho)
 
     if not item_criado:
         item_do_carrinho.quantidade += 1
@@ -44,6 +45,50 @@ def addToCart(request):
     carrinho.save()
 
     return redirect('detail', produto_id=produto_id)
+
+
+def finalizar_compra(request):
+    if request.method == 'POST':
+        utilizador = Utilizador.objects.get(user=request.user)
+        carrinho = CarrinhoCompras.objects.get(utilizador=utilizador)
+
+        itens = carrinhoItem.objects.filter(carrinho=carrinho)
+
+        categoria_contagem = {
+            'T-Shirt': 0,
+            'Long Sleeve': 0,
+            'Sweatshirt': 0,
+        }
+
+        pontos = 0
+
+        for item in itens:
+            produto = item.produto
+            quantidade_no_carrinho = item.quantidade
+            produto.stock -= quantidade_no_carrinho
+            pontos += produto.num_pontos
+            produto.save()
+
+            categoria_contagem[produto.categoria] += quantidade_no_carrinho
+            valor_total += produto.preco * quantidade_no_carrinho
+
+        utilizador.num_pontos += pontos
+        utilizador.save()
+
+        nova_compra = Compra.objects.create(
+            utilizador=utilizador,
+            data_compra=timezone.now(),
+            valor_total=valor_total,
+        )
+
+        for item in itens:
+            nova_compra.itens_comprados.add(item)
+
+        carrinho.num_itens = 0
+        carrinho.valor_total = 0
+        carrinho.save()
+
+        return redirect('home.html')
 
 def login_view(request):
 
