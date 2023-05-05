@@ -14,6 +14,11 @@
         <div class="tittle-container">
             <h1> Carrinho </h1>
         </div>
+        <div class="alert-warning">
+            {% if empty %}
+                <strong> {{ empty }} </strong>
+            {% endif %}
+        </div>
         {% if produtos and carrinho and items %}
             <ul class="product_list">
             {% for product in produtos %}

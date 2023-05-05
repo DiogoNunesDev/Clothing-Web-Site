@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from store.models import Produto, Utilizador, Staff, Comentario, carrinhoItem, CarrinhoCompras
+from store.models import Produto, Utilizador, Staff, Comentario, carrinhoItem, CarrinhoCompras, Historico
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
@@ -37,18 +37,25 @@ def full_collection(request):
     }
     return render(request, 'full_collection.html', context)
 
+@login_required(login_url="login_view")
 def cart_view(request):
-    carrinho = CarrinhoCompras.objects.get(utilizador= request.user.utilizador)
-    cart_items = carrinhoItem.objects.filter(carrinho=carrinho)
-    produtos = []
-    for item in cart_items:
-        produto = Produto.objects.get(pk=item.produto.id)
-        produtos.append(produto)
-    context = {'items': list(cart_items.values()), 'produtos': list(produtos), 'carrinho': carrinho}
-    print(list(cart_items.values()))
-    return render(request, 'cart.html', context)
+    if hasattr(request.user, 'utilizador'):
+        try:
+            carrinho = CarrinhoCompras.objects.get(utilizador= request.user.utilizador)
+            cart_items = carrinhoItem.objects.filter(carrinho=carrinho)
+            produtos = []
+            for item in cart_items:
+                produto = Produto.objects.get(pk=item.produto.id)
+                produtos.append(produto)
+            context = {'items': list(cart_items.values()), 'produtos': list(produtos), 'carrinho': carrinho}
+            print(list(cart_items.values()))
+            return render(request, 'cart.html', context)
+        except ObjectDoesNotExist:
+            return render(request, 'cart.html', {'empty': 'O seu carrinho está vazio'})
+    else:
+        return render(request, 'login.html', {'msg': 'Não está logado como User'})
 
-
+@login_required(login_url="login_view")
 def addToCart(request):
     if hasattr(request.user,'utilizador'):
         if request.method == 'POST':
@@ -93,7 +100,7 @@ def addToCart(request):
         return render(request, 'login.html', {'msg': 'Não está logado!'})
 
 
-
+@login_required(login_url="login_view")
 def finalizar_compra(request):
     if hasattr(request.user, 'utilizador'):
         if request.method == 'POST':
@@ -216,17 +223,19 @@ def signup_view(request):
 
 
 def redirectSignup(request):
-    return render(request, 'signup.html')
+    if not request.user.is_authenticated:
+        return render(request, 'signup.html')
+    else:
+        return render(request, 'home.html')
 
-
-@login_required(login_url="login.html")
+@permission_required('store.delete_staff', login_url='login_view')
 def redirectDeleteStaff(request):
     staff_list = Staff.objects.all()
     context = {'staff_list': staff_list}
     return render(request, 'removeStaff.html', context)
 
 
-@permission_required('store.delete_staff', login_url='login.html')
+@permission_required('store.delete_staff', login_url='login_view')
 def delete_staff(request, staff_id):
     staff = get_object_or_404(Staff, user_id=staff_id)
     staff.user.delete()
@@ -234,7 +243,7 @@ def delete_staff(request, staff_id):
     return render(request, 'removeStaff.html', )
 
 
-@permission_required('store.addStaff', login_url='login.html')
+@permission_required('store.addStaff', login_url='login_view')
 def addStaff(request):
     if request.user.is_superuser:
         if request.method == 'POST':
@@ -255,11 +264,11 @@ def addStaff(request):
             return render(request, 'addStaff.html', {'msg': 'Staff Adicionado'})
     return render(request, 'addStaff.html', {'msg': 'Não está logado como Super User!'})
 
-@permission_required('store.redirectAddStaff', login_url='login.html')
+@permission_required('store.redirectAddStaff', login_url='login_view')
 def redirectAddStaff(request):
     return render(request, 'addStaff.html')
 
-@login_required(login_url="login.html")
+@login_required(login_url="login_view")
 def profile(request):
     if not request.user.is_authenticated:
         return render(request, 'login.html', {'msg_erro':'Utilizador não autenticado'})
@@ -282,7 +291,7 @@ def get_border_color(num_pontos):
     else:
         return '#e0115f'
 
-@login_required(login_url="login.html")
+@login_required(login_url="login_view")
 def removeProduct(request):
     if request.user.is_authenticated and hasattr(request.user, 'staff'):
         if request.method == 'POST':
@@ -297,13 +306,16 @@ def removeProduct(request):
     else:
         return redirect('login_view')
 
-@login_required(login_url="login.html")
+@login_required(login_url="login_view")
 def redirectRemoveProduct(request):
-    products = Produto.objects.all()
-    return render(request, 'removeProduct.html', {'products': products})
+    if hasattr(request.user, 'staff'):
+        products = Produto.objects.all()
+        return render(request, 'removeProduct.html', {'products': products})
+    else:
+        return render(request, 'login.html', {'msg': 'Apenas Staff'})
 
 
-@login_required(login_url="store/login_view")
+@login_required(login_url="login_view")
 def addProduct(request):
     if request.user.is_authenticated and hasattr(request.user,'staff'):
         if request.method == 'POST':
@@ -336,7 +348,10 @@ def addProduct(request):
 
 @login_required(login_url="login_view")
 def redirectAddProduct(request):
-    return render(request, 'addProduct.html')
+    if hasattr(request.user, 'staff'):
+        return render(request, 'addProduct.html')
+    else:
+        return render(request, 'login.html', {'msg': 'Apenas Staff'})
 
 
 def sweatshirts_view(request):
@@ -390,53 +405,56 @@ def detail_view(request, produto_id):
     context = {'produto': produto, 'comentarios': comentarios}
     return render(request, 'detail.html', context)
 
+@login_required(login_url="login_view")
 def redirectEditProfile(request):
     return render(request, 'editProfile.html')
 
-@login_required(login_url="login.html")
+@login_required(login_url="login_view")
 def edit_profile(request):
-    if request.method == 'POST':
-        user = request.user
-        utilizador = request.user.utilizador
+    if hasattr(request.user, 'utilizador'):
+        if request.method == 'POST':
+            user = request.user
+            utilizador = request.user.utilizador
 
-        if request.POST['primeiro_nome']:
-            utilizador.primeiro_nome = request.POST['primeiro_nome']
+            if request.POST['primeiro_nome']:
+                utilizador.primeiro_nome = request.POST['primeiro_nome']
 
-        if request.POST['apelido']:
-            utilizador.apelido = request.POST['apelido']
+            if request.POST['apelido']:
+                utilizador.apelido = request.POST['apelido']
 
-        if request.POST['data_nascimento']:
-            utilizador.data_nascimento = request.POST['data_nascimento']
+            if request.POST['data_nascimento']:
+                utilizador.data_nascimento = request.POST['data_nascimento']
 
-        if request.POST['morada']:
-            utilizador.morada = request.POST['morada']
+            if request.POST['morada']:
+                utilizador.morada = request.POST['morada']
 
-        if request.POST['email']:
-            user.email = request.POST['email']
-            utilizador.email = request.POST['email']
+            if request.POST['email']:
+                user.email = request.POST['email']
+                utilizador.email = request.POST['email']
 
-        if request.POST['numero_telemovel']:
-            utilizador.numero_telemovel = request.POST['numero_telemovel']
+            if request.POST['numero_telemovel']:
+                utilizador.numero_telemovel = request.POST['numero_telemovel']
 
-        if request.POST['num_cartao_cidadao']:
-            utilizador.num_cartao_cidadao = request.POST['num_cartao_cidadao']
+            if request.POST['num_cartao_cidadao']:
+                utilizador.num_cartao_cidadao = request.POST['num_cartao_cidadao']
 
-        if request.POST['nif']:
-            utilizador.nif = request.POST['nif']
+            if request.POST['nif']:
+                utilizador.nif = request.POST['nif']
 
-        if request.POST['password'] & request.POST['confirm_password']:
-            if request.POST['password'] == request.POST['confirm_password']:
-                user.password = request.POST['password']
-            else:
-                return render(request, 'edit_profile.html', {'msg': 'Password confirmada incorretamente'})
+            if request.POST['password'] & request.POST['confirm_password']:
+                if request.POST['password'] == request.POST['confirm_password']:
+                    user.password = request.POST['password']
+                else:
+                    return render(request, 'edit_profile.html', {'msg': 'Password confirmada incorretamente'})
 
-        user.save()
-        utilizador.save()
+            user.save()
+            utilizador.save()
 
-        return render(request, 'profile.html')
+            return render(request, 'profile.html')
+        else:
+            return render(request, 'edit_profile.html')
     else:
-        return render(request, 'edit_profile.html')
-
+        return render(request, 'login.html', {'msg': 'não está com conta de User'})
 
 def comentarios(request):
     comentarios = Comentario.objects.all().order_by('data')
