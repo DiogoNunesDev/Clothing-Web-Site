@@ -52,22 +52,33 @@ def cart_view(request):
 
 
 def addToCart(request):
-    produto_id = request.POST.get("produto_id", 0)
-    produto = get_object_or_404(Produto, id=produto_id)
-    carrinho, created = CarrinhoCompras.objects.get_or_create(utilizador=request.user.utilizador, defaults={'num_itens': 0, 'valor_total': 0})
-    tamanho = request.POST.get("tamanho", "")
+    if request.method == 'POST':
+        tamanho = request.POST.get('tamanho', '')
+        cor = request.POST.get('cor', '')
+        categoria = request.POST.get('categoria', '')
+        referencia = request.POST.get('referencia', '')
+        print(str(tamanho) + str(cor) + str(categoria) + str(referencia))
 
-    item_do_carrinho, item_criado = carrinhoItem.objects.get_or_create(produto=produto, carrinho=carrinho, tamanho=tamanho)
+    try:
+        produto = Produto.objects.filter(cor=cor, referencia=referencia, tamanho=tamanho, categoria=categoria)
+        carrinho, created = CarrinhoCompras.objects.get_or_create(utilizador=request.user.utilizador,
+                                                                  defaults={'num_itens': 0, 'valor_total': 0})
 
-    if not item_criado:
-        item_do_carrinho.quantidade += 1
-        item_do_carrinho.save()
+        item_do_carrinho, item_criado = carrinhoItem.objects.get_or_create(produto=produto, carrinho=carrinho)
 
-    carrinho.num_itens += 1
-    carrinho.valor_total += produto.preco
-    carrinho.save()
+        if not item_criado:
+            item_do_carrinho.quantidade += 1
+            item_do_carrinho.save()
 
-    return redirect('detail', produto_id=produto_id)
+        carrinho.num_itens += 1
+        carrinho.valor_total += produto.preco
+        carrinho.save()
+        return redirect('detail', produto_id=produto_id)
+
+
+    except ValueError:
+        return render(request, 'login.html')
+
 
 
 def finalizar_compra(request):

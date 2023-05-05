@@ -46,21 +46,29 @@
             <br>
             <h3>{{ produto.preco }}€</h3>
             <p>Cor: {{ produto.cor }}</p>
-            <form>
+            <form action="{% url 'addToCart' %}" method="post">
+                {% csrf_token %}
                 <div class="form-group">
                     <label  style="color:white" for="size">Tamanho:</label>
                     <div class="btn-group" role="group" aria-label="Size">
-                        <button type="button" class="btn btn-outline-dark">S</button>
-                        <button type="button" class="btn btn-outline-dark">M</button>
-                        <button type="button" name="tamanho" class="btn btn-outline-dark">L</button>
+                        <label class="btn btn-outline-dark">
+                            <input type="radio" name="tamanho" class="btn-check" id="optionS" value="S" required> S
+                        </label>
+                        <label class="btn btn-outline-dark">
+                            <input type="radio" name="tamanho" class="btn-check" id="optionM" value="M" required> M
+                        </label>
+                        <label class="btn btn-outline-dark">
+                            <input type="radio" name="tamanho" class="btn-check" id="optionL" value="L" required> L
+                        </label>
                     </div>
                 </div>
-            </form>
-            <h3>Descrição</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dui vel erat accumsan sodales. Morbi et libero nunc. Quisque ipsum lectus, semper vehicula odio non, lacinia fringilla felis. </p>
-            <form action="{% url 'addToCart' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="produto_id" value="{{ produto.id }}">
+
+                <h3>Descrição</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dui vel erat accumsan sodales. Morbi et libero nunc. Quisque ipsum lectus, semper vehicula odio non, lacinia fringilla felis. </p>
+
+                <input type="hidden" name="cor" value="{{ produto.cor }}">
+                <input type="hidden" name="categoria" value="{{ produto.categoria }}">
+                <input type="hidden" name="referencia" value="{{ produto.referencia }}">
                 <button type="submit" class=" btn btn-success">Adicionar ao carrinho</button>
             </form>
             <br>
