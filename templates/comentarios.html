@@ -27,7 +27,13 @@
                                     <p class="card-text">{{ comentario.descricao }}</p>
                                 </div>
                                 <div class="col">
-                                    <img src="{% static 'store/images/' %}{{ comentario.image }}" alt="{{ produto }}" class="card-img" style="width: 20%; float: right;">
+                                    {% for product in produtos %}
+                                        {% if product.image == comentario.image %}
+                                            <a href="{% url 'detail' produto_id=product.pk %}">
+                                                <img src="{% static 'store/images/' %}{{ comentario.image }}" alt="{{ product }}" class="card-img" style="width: 20%; float: right;">
+                                            </a>
+                                        {% endif %}
+                                    {% endfor %}
                                     <div class="line"></div>
                                 </div>
                             </div>

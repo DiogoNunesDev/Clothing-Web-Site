@@ -15,16 +15,6 @@ from django.core.paginator import Paginator
 def home(request):
     return render(request, 'home.html')
 
-"""
-def full_collection(request):
-    unique_pairs = Produto.objects.values('referencia', 'cor').distinct().order_by('referencia', 'cor')
-    product_list = []
-    for pair in unique_pairs:
-        product = Produto.objects.filter(cor=pair['cor'], referencia=pair['referencia'])
-        product_list.append(product[0])
-    context = {'product_list': product_list}
-    return render(request, 'full_collection.html', context)
-"""
 def full_collection(request):
     unique_pairs = Produto.objects.values('referencia', 'cor').distinct().order_by('referencia', 'cor')
     product_list = []
@@ -48,84 +38,136 @@ def full_collection(request):
     return render(request, 'full_collection.html', context)
 
 def cart_view(request):
-    return render(request, 'cart.html')
+    carrinho = CarrinhoCompras.objects.get(utilizador= request.user.utilizador)
+    cart_items = carrinhoItem.objects.filter(carrinho=carrinho)
+    produtos = []
+    for item in cart_items:
+        produto = Produto.objects.get(pk=item.produto.id)
+        produtos.append(produto)
+    context = {'items': list(cart_items.values()), 'produtos': list(produtos), 'carrinho': carrinho}
+    print(list(cart_items.values()))
+    return render(request, 'cart.html', context)
 
 
 def addToCart(request):
-    if request.method == 'POST':
-        tamanho = request.POST.get('tamanho', '')
-        cor = request.POST.get('cor', '')
-        categoria = request.POST.get('categoria', '')
-        referencia = request.POST.get('referencia', '')
-        print(str(tamanho) + str(cor) + str(categoria) + str(referencia))
+    if hasattr(request.user,'utilizador'):
+        if request.method == 'POST':
+            tamanho = request.POST.get('tamanho', '')
+            cor = request.POST.get('cor', '')
+            categoria = request.POST.get('categoria', '')
+            referencia = request.POST.get('referencia', '')
+            produto_id = request.POST.get('produto_id', 0)
 
-    try:
-        produto = Produto.objects.filter(cor=cor, referencia=referencia, tamanho=tamanho, categoria=categoria)
-        carrinho, created = CarrinhoCompras.objects.get_or_create(utilizador=request.user.utilizador,
-                                                                  defaults={'num_itens': 0, 'valor_total': 0})
-
-        item_do_carrinho, item_criado = carrinhoItem.objects.get_or_create(produto=produto, carrinho=carrinho)
-
-        if not item_criado:
-            item_do_carrinho.quantidade += 1
-            item_do_carrinho.save()
-
-        carrinho.num_itens += 1
-        carrinho.valor_total += produto.preco
-        carrinho.save()
-        return redirect('detail', produto_id=produto_id)
+            try:
+                produto = Produto.objects.filter(cor=cor, referencia=referencia, tamanho=tamanho, categoria=categoria).first()
+                if not produto:
+                    raise ValueError("Produto não existe")
 
 
-    except ValueError:
-        return render(request, 'login.html')
+                if produto.stock == 0:
+                    messages.error(request, 'O Produto escolhido não se encontra em Stock!')
+                    return redirect('detail', produto_id=produto_id)
+
+                carrinho, created = CarrinhoCompras.objects.get_or_create(utilizador=request.user.utilizador,
+                                                                          defaults={'num_itens': 0, 'valor_total': 0})
+
+                item_do_carrinho, item_criado = carrinhoItem.objects.get_or_create(produto=produto, carrinho=carrinho)
+
+                if not item_criado:
+                    item_do_carrinho.quantidade += 1
+                    item_do_carrinho.save()
+
+                carrinho.num_itens += 1
+                carrinho.valor_total += produto.preco
+                carrinho.save()
+                produto.stock -= 1
+                produto.save()
+
+            except ValueError:
+                messages.error(request, 'O Produto escolhido não se encontra em Stock!')
+                return redirect('detail', produto_id=produto_id)
+
+            messages.success(request, 'Produto adicionado ao carrinho')
+            return redirect('detail', produto_id=produto_id)
+    else:
+        return render(request, 'login.html', {'msg': 'Não está logado!'})
 
 
 
 def finalizar_compra(request):
-    if request.method == 'POST':
-        utilizador = Utilizador.objects.get(user=request.user)
-        carrinho = CarrinhoCompras.objects.get(utilizador=utilizador)
+    if hasattr(request.user, 'utilizador'):
+        if request.method == 'POST':
+            try:
+                utilizador = request.user.utilizador
+                carrinho = CarrinhoCompras.objects.get(utilizador=utilizador)
+                items_carrinho = carrinhoItem.objects.filter(carrinho=carrinho)
 
-        itens = carrinhoItem.objects.filter(carrinho=carrinho)
+                #passar compra para o histórico
+                for item in items_carrinho:
+                    historico = Historico(utilizador=utilizador, produto= item.produto, quantidade=item.quantidade)
+                    historico.save()
+                    item.delete()
 
-        categoria_contagem = {
-            'T-Shirt': 0,
-            'Long Sleeve': 0,
-            'Sweatshirt': 0,
-        }
+                carrinho.delete()
 
-        pontos = 0
+                #associar um novo carrinho ao user estando totalmente a zeros
+                new_carrinho = CarrinhoCompras.objects.create(utilizador=utilizador, num_itens=0, valor_total=0)
+                new_carrinho.save()
 
-        for item in itens:
-            produto = item.produto
-            quantidade_no_carrinho = item.quantidade
-            produto.stock -= quantidade_no_carrinho
-            pontos += produto.num_pontos
-            produto.save()
+                return redirect('cart_view')
+            except CarrinhoCompras.DoesNotExist:
+                pass
+    else:
+        return render(request, 'login.html', {'msg': 'Não está logado'})
 
-            categoria_contagem[produto.categoria] += quantidade_no_carrinho
-            valor_total += produto.preco * quantidade_no_carrinho
+"""
+            utilizador = Utilizador.objects.get(user=request.user)
+            carrinho = CarrinhoCompras.objects.get(utilizador=utilizador)
 
-        utilizador.num_pontos += pontos
-        utilizador.save()
+            itens = carrinhoItem.objects.filter(carrinho=carrinho)
 
-        nova_compra = Compra.objects.create(
-            utilizador=utilizador,
-            data_compra=timezone.now(),
-            valor_total=valor_total,
-        )
+            historico_carrinho = HistoricoCarrinho(utilizador=request.user.utilizador, carrinho=carrinho)
+            historico_carrinho.save()
 
-        for item in itens:
-            nova_compra.itens_comprados.add(item)
+            pontos = 0
 
-        carrinho.num_itens = 0
-        carrinho.valor_total = 0
-        carrinho.save()
+            for item in itens:
+                produto = item.produto
+                quantidade_no_carrinho = item.quantidade
+                produto.stock -= quantidade_no_carrinho
+                pontos += produto.num_pontos
+                produto.save()
 
-        return redirect('home.html')
+                categoria_contagem[produto.categoria] += quantidade_no_carrinho
+                valor_total += produto.preco * quantidade_no_carrinho
 
+            utilizador.num_pontos += pontos
+            utilizador.save()
+
+            nova_compra = Compra.objects.create(
+                utilizador=utilizador,
+                data_compra=timezone.now(),
+                valor_total=valor_total,
+            )
+
+            for item in itens:
+                nova_compra.itens_comprados.add(item)
+
+
+            return redirect('home.html')
+    else:
+        return render(request, 'login.html')
+"""
+
+def clear_cart(request):
+    if request.user.is_authenticated and hasattr(request.user,'utilizador'):
+        try:
+            CarrinhoCompras.objects.filter(utilizador=request.user.utilizador).delete()
+        except CarrinhoCompras.DoesNotExist:
+            pass
+    else:
+        return render(request, 'login.html', {'msg': 'Não está logado'})
 def login_view(request):
-
     if request.method == 'POST':
         name = request.POST['username']
         password = request.POST['password']
@@ -145,6 +187,7 @@ def redirectLogin(request):
     return render(request, 'login.html')
 
 def logout_view(request):
+    clear_cart(request)
     logout(request)
     return HttpResponseRedirect(reverse('home'))
 
@@ -212,6 +255,7 @@ def addStaff(request):
             return render(request, 'addStaff.html', {'msg': 'Staff Adicionado'})
     return render(request, 'addStaff.html', {'msg': 'Não está logado como Super User!'})
 
+@permission_required('store.redirectAddStaff', login_url='login.html')
 def redirectAddStaff(request):
     return render(request, 'addStaff.html')
 
@@ -271,7 +315,6 @@ def addProduct(request):
             image = cor + referencia + '.png'
             stock = int(request.POST.get('stock', 0))
 
-            num_pontos = 0
             if categoria == 'Long Sleeve':
                 num_pontos = 40
             elif categoria == 'T-Shirt':
@@ -397,7 +440,8 @@ def edit_profile(request):
 
 def comentarios(request):
     comentarios = Comentario.objects.all().order_by('data')
-    return render(request, 'comentarios.html', context = {'comentarios_list': comentarios})
+    produtos = Produto.objects.all()
+    return render(request, 'comentarios.html', context = {'comentarios_list': comentarios, 'produtos': produtos})
 
 def comment(request):
     if not hasattr(request.user, 'utilizador'):
