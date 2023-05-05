@@ -82,9 +82,11 @@ class Comentario(models.Model):
     data = models.DateField(auto_now_add=True)
     image = models.CharField(max_length=255, default="pescadaDraw.png")
 
-class HistoricoCarrinho(models.Model):
+
+class Historico(models.Model):
     utilizador = models.ForeignKey(Utilizador, on_delete=models.CASCADE)
-    carrinho = models.OneToOneField(CarrinhoCompras, on_delete=models.CASCADE)
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    quantidade = models.IntegerField(default=1)
     data_finalizada = models.DateTimeField(auto_now_add=True)
 
 
