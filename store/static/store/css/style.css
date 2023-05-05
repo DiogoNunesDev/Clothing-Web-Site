@@ -482,3 +482,9 @@ button-lgn{
     font-size: 18px;
 }
 
+input[type="radio"].btn-check:checked + label.btn {
+    background-color: #343a40;
+    color: white;
+    border-color: #343a40;
+}
+

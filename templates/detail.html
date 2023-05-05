@@ -41,28 +41,39 @@
             <form action="{% url 'addToCart' %}" method="post">
                 {% csrf_token %}
                 <div class="form-group">
+
                     <label for="size">Tamanho:</label>
                     <div class="btn-group" role="group" aria-label="Size">
-                        <label class="btn btn-outline-dark">
-                            <input type="radio" name="tamanho" class="btn-check" id="optionS" value="S" required> S
+                        <input type="radio" name="tamanho" class="btn-check" id="optionS" value="S" required>
+                        <label class="btn btn-outline-dark" for="optionS">
+                            S
                         </label>
-                        <label class="btn btn-outline-dark">
-                            <input type="radio" name="tamanho" class="btn-check" id="optionM" value="M" required> M
+                        <input type="radio" name="tamanho" class="btn-check" id="optionM" value="M" required>
+                        <label class="btn btn-outline-dark" for="optionM">
+                            M
                         </label>
-                        <label class="btn btn-outline-dark">
-                            <input type="radio" name="tamanho" class="btn-check" id="optionL" value="L" required> L
+                        <input type="radio" name="tamanho" class="btn-check" id="optionL" value="L" required>
+                        <label class="btn btn-outline-dark" for="optionL">
+                            L
                         </label>
                     </div>
                 </div>
 
                 <h3>Descrição</h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dui vel erat accumsan sodales. Morbi et libero nunc. Quisque ipsum lectus, semper vehicula odio non, lacinia fringilla felis. </p>
-
+                <input type="hidden" name="produto_id" value="{{ produto.id }}">
                 <input type="hidden" name="cor" value="{{ produto.cor }}">
                 <input type="hidden" name="categoria" value="{{ produto.categoria }}">
                 <input type="hidden" name="referencia" value="{{ produto.referencia }}">
                 <button type="submit" class=" btn btn-success">Adicionar ao carrinho</button>
             </form>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert-warning" style="width: 70%; border-radius: 4px; color: black">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
             <form action="{% url 'comment' %}" method="post">
                 {% csrf_token %}
                 <div class="form-group position-relative">

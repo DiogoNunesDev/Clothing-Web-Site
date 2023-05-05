@@ -22,7 +22,7 @@ class Utilizador(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     primeiro_nome = models.CharField(max_length=50)
     apelido = models.CharField(max_length=50)
-    data_nascimento = models.DateField()
+    data_nascimento = models.DateField(auto_now_add=True)
     morada = models.CharField(max_length=150)
     numero_telemovel = models.IntegerField(default=0, validators=[MaxValueValidator(999999999)])
     num_cartao_cidadao = models.IntegerField(default=0, validators=[MaxValueValidator(999999999)])
@@ -66,7 +66,7 @@ class Staff(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     primeiro_nome = models.CharField(max_length=50)
     apelido = models.CharField(max_length=50)
-    data_nascimento = models.DateField()
+    data_nascimento = models.DateField(auto_now_add=True)
     morada = models.CharField(max_length=150)
     numero_telemovel = models.IntegerField(default=0, validators=[MaxValueValidator(999999999)])
     num_cartao_cidadao = models.IntegerField(default=0, validators=[MaxValueValidator(999999999)])
@@ -79,8 +79,14 @@ class Staff(models.Model):
 class Comentario(models.Model):
     utilizador = models.ForeignKey(Utilizador, on_delete=models.CASCADE)
     descricao = models.CharField(max_length=2000)
-    data = models.DateField()
+    data = models.DateField(auto_now_add=True)
     image = models.CharField(max_length=255, default="pescadaDraw.png")
+
+class HistoricoCarrinho(models.Model):
+    utilizador = models.ForeignKey(Utilizador, on_delete=models.CASCADE)
+    carrinho = models.OneToOneField(CarrinhoCompras, on_delete=models.CASCADE)
+    data_finalizada = models.DateTimeField(auto_now_add=True)
+
 
 """
 Funções para dar reset a base de dados, caso seja preciso
