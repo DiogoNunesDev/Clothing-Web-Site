@@ -6,6 +6,14 @@
 {% endblock %}
 
 {% block conteudo %}
+        <script>
+        window.onload = function () {
+            document.body.style.backgroundColor = "#f2f2f2"; // set background color to red
+            document.body.style.paddingTop = "200px"; // set top padding to 50 pixels
+            document.body.style.backgroundImage = "none";
+        }
+
+    </script>
     <div class="container">
       <div class="row">
         <div class="col-md-6">
@@ -31,7 +39,7 @@
                 </button>
             </div>
         </div>
-        <div class="col-md-6 bg-secondary rounded" >
+        <div class="col-md-6 bg-secondary rounded " style="background-color: #004957 !important; padding-bottom: 0px !important;" >
            <h1 class="float-start" >{{ produto.categoria }} - {{ produto.referencia }}</h1>
             <br>
             <br>
@@ -40,7 +48,7 @@
             <p>Cor: {{ produto.cor }}</p>
             <form>
                 <div class="form-group">
-                    <label for="size">Tamanho:</label>
+                    <label  style="color:white" for="size">Tamanho:</label>
                     <div class="btn-group" role="group" aria-label="Size">
                         <button type="button" class="btn btn-outline-dark">S</button>
                         <button type="button" class="btn btn-outline-dark">M</button>
@@ -55,13 +63,15 @@
                 <input type="hidden" name="produto_id" value="{{ produto.id }}">
                 <button type="submit" class=" btn btn-success">Adicionar ao carrinho</button>
             </form>
-            <form action="{% url 'comment' %}" method="post">
+            <br>
+            <form action="{% url 'comment' %}" method="post" class="mb-0">
                 {% csrf_token %}
                 <div class="form-group position-relative">
-                  <label for="comment">Comment</label>
+                  <label style="color:white" for="comment">Comment</label>
                   <input type="hidden" name="produto_id" value="{{ produto.id }}">
                   <input type="hidden" name="image" value="{{ produto.image }}">
                   <textarea class="form-control" name="comment" rows="5" placeholder="Enter your comment"></textarea>
+                    <br>
                   <button type="submit" class="btn btn-primary position-relative">
                       <span class="btn-text">Send</span>
                       <span class="btn-arrow"></span>
@@ -70,8 +80,9 @@
             </form>
         </div>
       </div>
+    <br>
       <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12" style="color:black">
             <h3>Comentários:</h3>
             <hr>
             {% if comentarios %}

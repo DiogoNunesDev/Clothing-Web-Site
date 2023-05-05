@@ -45,7 +45,7 @@ def full_collection(request):
     context = {
         'product_list': page_obj,
     }
-    return render(request, 'full_collection2.html', context)
+    return render(request, 'full_collection.html', context)
 
 def cart_view(request):
     return render(request, 'cart.html')

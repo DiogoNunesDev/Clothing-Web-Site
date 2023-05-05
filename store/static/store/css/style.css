@@ -143,9 +143,10 @@ main{
     justify-content: center;
     padding: 0;
     list-style: none;
+
 }
 
-.product_list li{
+.product_list li {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -187,13 +188,11 @@ main{
 
 .tittle-container h1{
 
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Arial Black', sans-serif;
     font-size: 50px;
-    font-weight: 700;
-    color: black;
+    color: #003841;
     text-transform: uppercase;
     letter-spacing: 2px;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 footer {
@@ -271,7 +270,7 @@ figure {
     max-width: 650px;
     padding: 28px;
     margin: 0 28px;
-    background: whitesmoke;
+    background: white;
     border-radius: 8px;
 }
 
@@ -298,6 +297,7 @@ figure {
     flex-wrap: wrap;
     width: 50%;
     padding-bottom: 15px;
+    background-color:white;
 }
 .input-box:nth-child(2n){
     justify-content: end;
@@ -341,12 +341,13 @@ figure {
     display: block;
     font-size: 20px;
     color: white;
-    border: none;
-    background-image: linear-gradient(to right, #5de0e6, #004aad);
+    border:0;
+    border-radius: 7px;
+    background-color: #004957;
 }
 
 .button-container button:hover{
-    background-image: linear-gradient(to right, #004aad, #5de0e6);
+    background-color: #006a7e;
 }
 
 
@@ -392,7 +393,7 @@ button-lgn{
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    filter: brightness(0%) saturate(100%) invert(27%) sepia(44%) saturate(2942%) hue-rotate(116deg) brightness(100%) contrast(100%);
+    filter: brightness(0%) saturate(100%) invert(27%) sepia(44%) saturate(2942%) hue-rotate(154deg) brightness(100%) contrast(100%);
 }
 
 .footer_a{
