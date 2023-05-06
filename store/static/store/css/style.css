@@ -404,10 +404,7 @@ button-lgn{
     cursor:pointer;
 }
 
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    filter: brightness(0%) saturate(100%) invert(27%) sepia(44%) saturate(2942%) hue-rotate(154deg) brightness(100%) contrast(100%);
-}
+
 
 .footer_a{
     text-decoration: none;
