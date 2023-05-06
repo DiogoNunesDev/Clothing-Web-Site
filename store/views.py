@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from store.models import Produto, Utilizador, Staff, Comentario, carrinhoItem, CarrinhoCompras, Historico
+from store.models import Produto, Utilizador, Staff, Comentario, carrinhoItem, CarrinhoCompras, Historico_item
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
@@ -48,7 +48,6 @@ def cart_view(request):
                 produto = Produto.objects.get(pk=item.produto.id)
                 produtos.append(produto)
             context = {'items': list(cart_items.values()), 'produtos': list(produtos), 'carrinho': carrinho}
-            print(list(cart_items.values()))
             return render(request, 'cart.html', context)
         except ObjectDoesNotExist:
             return render(request, 'cart.html', {'empty': 'O seu carrinho está vazio'})
@@ -127,53 +126,6 @@ def finalizar_compra(request):
     else:
         return render(request, 'login.html', {'msg': 'Não está logado'})
 
-"""
-            utilizador = Utilizador.objects.get(user=request.user)
-            carrinho = CarrinhoCompras.objects.get(utilizador=utilizador)
-
-            itens = carrinhoItem.objects.filter(carrinho=carrinho)
-
-            historico_carrinho = HistoricoCarrinho(utilizador=request.user.utilizador, carrinho=carrinho)
-            historico_carrinho.save()
-
-            pontos = 0
-
-            for item in itens:
-                produto = item.produto
-                quantidade_no_carrinho = item.quantidade
-                produto.stock -= quantidade_no_carrinho
-                pontos += produto.num_pontos
-                produto.save()
-
-                categoria_contagem[produto.categoria] += quantidade_no_carrinho
-                valor_total += produto.preco * quantidade_no_carrinho
-
-            utilizador.num_pontos += pontos
-            utilizador.save()
-
-            nova_compra = Compra.objects.create(
-                utilizador=utilizador,
-                data_compra=timezone.now(),
-                valor_total=valor_total,
-            )
-
-            for item in itens:
-                nova_compra.itens_comprados.add(item)
-
-
-            return redirect('home.html')
-    else:
-        return render(request, 'login.html')
-"""
-
-def clear_cart(request):
-    if request.user.is_authenticated and hasattr(request.user,'utilizador'):
-        try:
-            CarrinhoCompras.objects.filter(utilizador=request.user.utilizador).delete()
-        except CarrinhoCompras.DoesNotExist:
-            pass
-    else:
-        return render(request, 'login.html', {'msg': 'Não está logado'})
 def login_view(request):
     if request.method == 'POST':
         name = request.POST['username']
@@ -194,7 +146,6 @@ def redirectLogin(request):
     return render(request, 'login.html')
 
 def logout_view(request):
-    clear_cart(request)
     logout(request)
     return HttpResponseRedirect(reverse('home'))
 
@@ -240,7 +191,7 @@ def delete_staff(request, staff_id):
     staff = get_object_or_404(Staff, user_id=staff_id)
     staff.user.delete()
     messages.success(request, 'Colaborador removido com sucesso.')
-    return render(request, 'removeStaff.html', )
+    return redirect('redirectRemoveProduct')
 
 
 @permission_required('store.addStaff', login_url='login_view')
@@ -299,7 +250,8 @@ def removeProduct(request):
             produto = get_object_or_404(Produto, pk=produto_id)
             produto.delete()
             messages.success(request, 'Produto removido com sucesso.')
-            return redirect('removeProduto')
+            products = Produto.objects.all()
+            return redirect('redirectRemoveProduct')
         else:
             products = Produto.objects.all()
             return render(request, 'removeProduct.html', {'produtos': products})
@@ -309,7 +261,7 @@ def removeProduct(request):
 @login_required(login_url="login_view")
 def redirectRemoveProduct(request):
     if hasattr(request.user, 'staff'):
-        products = Produto.objects.all()
+        products = Produto.objects.all().order_by('-image')
         return render(request, 'removeProduct.html', {'products': products})
     else:
         return render(request, 'login.html', {'msg': 'Apenas Staff'})
@@ -344,7 +296,7 @@ def addProduct(request):
                 return render(request, 'addProduct.html', {'msg': 'Produtos Inseridos!'})
 
     else:
-        return redirect('login_view', {'msg': 'Não está logado como Staff'})
+        return render(request, 'login_view', {'msg': 'Não está logado como Staff'})
 
 @login_required(login_url="login_view")
 def redirectAddProduct(request):
@@ -457,7 +409,7 @@ def edit_profile(request):
         return render(request, 'login.html', {'msg': 'não está com conta de User'})
 
 def comentarios(request):
-    comentarios = Comentario.objects.all().order_by('data')
+    comentarios = Comentario.objects.all().order_by('-data')
     produtos = Produto.objects.all()
     return render(request, 'comentarios.html', context = {'comentarios_list': comentarios, 'produtos': produtos})
 

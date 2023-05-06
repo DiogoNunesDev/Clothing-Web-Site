@@ -3,14 +3,14 @@
 {% block title %}Pescada Store: Adicionar Produtos{% endblock %}
 
     {% block conteudo %}
-                <script>
+        <script>
         window.onload = function () {
             document.body.style.backgroundColor = "#f2f2f2"; // set background color to red
-            document.body.style.paddingTop = "200px"; // set top padding to 50 pixels
+            document.body.style.paddingTop = "220px"; // set top padding to 50 pixels
             document.body.style.backgroundImage = "none";
         }
 
-    </script>
+        </script>
         <body style="background: cornsilk !important;"></body>
         <div class="tittle-container">
             <h1> Remover Produto </h1>
@@ -25,7 +25,7 @@
                             <img src="{% static "store/images/" %}{{ product.image }}" alt="{{ product }}">
                         </a>
                         <strong>{{ product }}</strong>
-                        <form method="post" action="{% url 'redirectRemoveProduct' %}">
+                        <form action="{% url 'removeProduct' %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="produto_id" value="{{ product.id }}" />
                             <input type="submit" value="Remover" class="btn btn-danger" style="border: 2px solid darkred"/>
