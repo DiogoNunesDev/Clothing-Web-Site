@@ -37,6 +37,13 @@
             {% endfor %}
             </ul>
             <strong>Total: {{ carrinho.valor_total }}€</strong>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert-warning" style="width: 100%; border-radius: 4px; color: black">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
         {% endif %}
         <form method="POST" action="{% url 'finalizar_compra' %}">
             {% csrf_token %}

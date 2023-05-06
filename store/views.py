@@ -66,8 +66,6 @@ def addToCart(request):
 
             try:
                 produto = Produto.objects.filter(cor=cor, referencia=referencia, tamanho=tamanho, categoria=categoria).first()
-                if not produto:
-                    raise ValueError("Produto não existe")
 
 
                 if produto.stock == 0:
@@ -86,8 +84,6 @@ def addToCart(request):
                 carrinho.num_itens += 1
                 carrinho.valor_total += produto.preco
                 carrinho.save()
-                produto.stock -= 1
-                produto.save()
 
             except ValueError:
                 messages.error(request, 'O Produto escolhido não se encontra em Stock!')
@@ -110,8 +106,14 @@ def finalizar_compra(request):
 
                 #passar compra para o histórico
                 for item in items_carrinho:
-                    historico = Historico(utilizador=utilizador, produto= item.produto, quantidade=item.quantidade)
-                    historico.save()
+
+                    if item.produto.stock < item.quantidade:
+                        msg = f'Stock insuficiente do produto [ {item.produto} ], restam apenas {item.produto.stock} itens!'
+                        messages.error(request, msg)
+                        return redirect('cart_view')
+
+                    historico_item = Historico_item(utilizador=utilizador, produto= item.produto, quantidade=item.quantidade)
+                    historico_item.save()
                     item.delete()
 
                 carrinho.delete()
