@@ -49,7 +49,6 @@
             <form action="{% url 'addToCart' %}" method="post">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="size">Tamanho:</label>
                     <label  style="color:white" for="size">Tamanho:</label>
                     <div class="btn-group" role="group" aria-label="Size">
                         <input type="radio" name="tamanho" class="btn-check" id="optionS" value="S" required>

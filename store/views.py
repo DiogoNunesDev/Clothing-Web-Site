@@ -42,6 +42,8 @@ def cart_view(request):
     if hasattr(request.user, 'utilizador'):
         try:
             carrinho = CarrinhoCompras.objects.get(utilizador= request.user.utilizador)
+            if carrinho.num_itens == 0 and carrinho.valor_total == 0:
+                return render(request, 'cart.html', {'empty': 'O seu carrinho está vazio!'})
             cart_items = carrinhoItem.objects.filter(carrinho=carrinho)
             produtos = []
             for item in cart_items:
@@ -50,7 +52,7 @@ def cart_view(request):
             context = {'items': list(cart_items.values()), 'produtos': list(produtos), 'carrinho': carrinho}
             return render(request, 'cart.html', context)
         except ObjectDoesNotExist:
-            return render(request, 'cart.html', {'empty': 'O seu carrinho está vazio'})
+            return render(request, 'cart.html', {'empty': 'Carrinho de compras não encontrado'})
     else:
         return render(request, 'login.html', {'msg': 'Não está logado como User'})
 
@@ -67,8 +69,7 @@ def addToCart(request):
             try:
                 produto = Produto.objects.filter(cor=cor, referencia=referencia, tamanho=tamanho, categoria=categoria).first()
 
-
-                if produto.stock == 0:
+                if produto is None or produto.stock == 0:
                     messages.error(request, 'O Produto escolhido não se encontra em Stock!')
                     return redirect('detail', produto_id=produto_id)
 
@@ -102,6 +103,9 @@ def finalizar_compra(request):
             try:
                 utilizador = request.user.utilizador
                 carrinho = CarrinhoCompras.objects.get(utilizador=utilizador)
+                if carrinho.num_itens == 0 and carrinho.valor_total == 0:
+                    return render(request, 'cart.html', {'empty': 'O seu carrinho está vazio! Adicione itens ao carrinho antes de efetuar uma compra.'})
+
                 items_carrinho = carrinhoItem.objects.filter(carrinho=carrinho)
 
                 #passar compra para o histórico
@@ -125,6 +129,29 @@ def finalizar_compra(request):
                 return redirect('cart_view')
             except CarrinhoCompras.DoesNotExist:
                 pass
+    else:
+        return render(request, 'login.html', {'msg': 'Não está logado'})
+
+
+@login_required(login_url="login_view")
+def empty_cart(request):
+    if hasattr(request.user, 'utilizador'):
+        try:
+            # Encontrar o carrinho do usuário atual
+            carrinho = CarrinhoCompras.objects.get(utilizador=request.user.utilizador)
+
+            # Excluir todos os itens do carrinho
+            carrinhoItem.objects.filter(carrinho=carrinho).delete()
+
+            # Redefinir os valores do carrinho para zero
+            carrinho.num_itens = 0
+            carrinho.valor_total = 0
+            carrinho.save()
+
+            # Redirecionar o usuário para a página do carrinho ou outra página de sua escolha
+            return redirect('cart_view')
+        except CarrinhoCompras.DoesNotExist:
+            return render(request, 'erro.html', {'empty': 'Carrinho de compras não encontrado'})
     else:
         return render(request, 'login.html', {'msg': 'Não está logado'})
 
@@ -412,7 +439,11 @@ def edit_profile(request):
 
 def comentarios(request):
     comentarios = Comentario.objects.all().order_by('-data')
-    produtos = Produto.objects.all()
+    combination_of_atributes = Produto.objects.values('cor', 'referencia', 'categoria').distinct()
+    produtos = []
+    for combination in  combination_of_atributes:
+        produto = Produto.objects.filter(cor=combination['cor'], referencia=combination['referencia'], categoria=combination['categoria']).first()
+        produtos.append(produto)
     return render(request, 'comentarios.html', context = {'comentarios_list': comentarios, 'produtos': produtos})
 
 def comment(request):
