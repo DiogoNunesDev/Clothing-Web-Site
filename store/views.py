@@ -104,9 +104,11 @@ def add_subtract_item(request):
             cart_items = carrinhoItem.objects.filter(carrinho=carrinho)
             for item in cart_items:
                 if item.produto.id == produto_id:
-                    print('made it to the item')
                     item.quantidade +=1
                     item.save()
+                    carrinho.valor_total += item.produto.preco
+                    carrinho.num_itens += 1
+                    carrinho.save()
             return redirect('cart_view')
         if request.POST.get('-',''):
             carrinho = CarrinhoCompras.objects.get(utilizador=request.user.utilizador)
@@ -115,6 +117,9 @@ def add_subtract_item(request):
                 if item.produto.id == produto_id:
                     item.quantidade -= 1
                     item.save()
+                    carrinho.valor_total -= item.produto.preco
+                    carrinho.num_itens -= 1
+                    carrinho.save()
                     if item.quantidade == 0:
                         item.delete()
             return redirect('cart_view')

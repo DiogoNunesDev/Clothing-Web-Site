@@ -23,7 +23,8 @@
                 <a href="{% url 'detail' produto_id=product.pk %}">
                     <img src="{% static "store/images/" %}{{ product.image }}" alt="{{ product }}">
                 </a>
-                <strong>{{ product }}</strong>
+                <strong>{{ product.preco }}</strong>
+                <p>{{ product.categoria }} {{ product.cor }}</p>
             </li>
         {% endfor %}
     </ul>

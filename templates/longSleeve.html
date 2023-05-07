@@ -31,7 +31,8 @@
                                 <img src="{{ produtc.image_url }}" alt="{{ product.name }}">
                             {% endif %}
                         </a>
-                        <strong>{{ product }}</strong>
+                        <strong>{{ product.preco }}</strong>
+                        <p>{{ product.categoria }} {{ product.cor }}</p>
                     </li>
                 {% endfor %}
             </ul>
