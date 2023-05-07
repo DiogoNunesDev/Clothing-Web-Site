@@ -153,7 +153,11 @@ def finalizar_compra(request):
 
                     historico_item = Historico_item(utilizador=utilizador, produto= item.produto, quantidade=item.quantidade)
                     historico_item.save()
+                    produto = item.produto
+                    produto.stock -= item.quantidade
+                    produto.save()
                     item.delete()
+
 
                 carrinho.delete()
 
@@ -161,6 +165,7 @@ def finalizar_compra(request):
                 new_carrinho = CarrinhoCompras.objects.create(utilizador=utilizador, num_itens=0, valor_total=0)
                 new_carrinho.save()
 
+                messages.success(request,'Compra bem sucedida!')
                 return redirect('cart_view')
             except CarrinhoCompras.DoesNotExist:
                 pass
@@ -255,7 +260,7 @@ def delete_staff(request, staff_id):
     staff = get_object_or_404(Staff, user_id=staff_id)
     staff.user.delete()
     messages.success(request, 'Colaborador removido com sucesso.')
-    return redirect('redirectRemoveProduct')
+    return redirect('redirectDeleteStaff')
 
 
 @permission_required('store.addStaff', login_url='login_view')
@@ -314,7 +319,6 @@ def removeProduct(request):
             produto = get_object_or_404(Produto, pk=produto_id)
             produto.delete()
             messages.success(request, 'Produto removido com sucesso.')
-            products = Produto.objects.all()
             return redirect('redirectRemoveProduct')
         else:
             products = Produto.objects.all()
