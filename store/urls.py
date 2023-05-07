@@ -30,6 +30,7 @@ urlpatterns = [
     path('removeProduct/', views.redirectRemoveProduct, name='redirectRemoveProduct'),
     path('comentarios', views.comentarios, name='comentarios'),
     path('comment/', views.comment, name='comment'),
-    path('emptyCart/', views.empty_cart, name='empty_cart')
+    path('emptyCart/', views.empty_cart, name='empty_cart'),
+    path('add_or_subtract_item/', views.add_subtract_item, name='addOrSubtractItem'),
 
 ]

@@ -14,6 +14,13 @@
         <div class="tittle-container">
             <h1> Carrinho </h1>
         </div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert-danger" style="width: 70%; border-radius: 4px; color: black; align-items: center">
+                    <strong>{{ message }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
         <div class="alert-warning">
             {% if empty %}
                 <strong> {{ empty }} </strong>
@@ -26,17 +33,39 @@
                     <a href="{% url 'detail' produto_id=product.pk %}">
                         <img src="{% static "store/images/" %}{{ product.image }}" alt="{{ product }}">
                     </a>
-                    <strong>Tamanho: {{ product.tamanho }}</strong>
-                    {% for item in items %}
-                        {% if item.produto_id == product.id %}
-                            <strong>Número de Itens: {{ item.quantidade }}</strong>
-                        {% endif %}
-                    {% endfor %}
-                    <strong>Preço: {{ product.preco }}</strong>
+                    <div class="row" style="width: 100%">
+                        <div class="col-md-2" style="text-align: center; justify-content: center">
+                            <br>
+                            <form action="{% url 'addOrSubtractItem' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="produto_id" value="{{ product.id }}">
+                                <button type="submit" class="btn btn-dark" style="width: 40px" name="-" value="-"><strong>-</strong></button>
+                            </form>
+
+                        </div>
+                        <div class="col-md-8" style="text-align: center; justify-content: center">
+                            <strong>Tamanho: {{ product.tamanho }}</strong>
+                            <br>
+                            {% for item in items %}
+                                {% if item.produto_id == product.id %}
+                                    <strong>Número de Itens: {{ item.quantidade }}</strong>
+                                {% endif %}
+                            {% endfor %}
+                            <br>
+                            <strong>Preço: {{ product.preco }}</strong>
+                        </div>
+                        <div class="col-md-2" style="text-align: center; justify-content: center">
+                            <br>
+                            <form action="{% url 'addOrSubtractItem' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="produto_id" value="{{ product.id }}">
+                                <button type="submit" class="btn btn-dark" style="width: 40px" name="+" value="+"><strong>+</strong></button>
+                            </form>
+                        </div>
+                    </div>
                 </li>
             {% endfor %}
             </ul>
-            <strong>Total: {{ carrinho.valor_total }}€</strong>
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert-warning" style="width: 100%; border-radius: 4px; color: black">
@@ -44,14 +73,15 @@
                     </div>
                 {% endfor %}
             {% endif %}
-            <div class="row">
-                <div class="col">
+            <div class="row" style="justify-content: center; text-align: center">
+                <div class="col-md-4">
+                    <strong>Total: {{ carrinho.valor_total }}€</strong>
                     <form method="POST" action="{% url 'finalizar_compra' %}">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-success">Efetuar Compra</button>
                     </form>
                 </div>
-                <div class="col">
+                <div class="col-md-4">
                     <form method="POST" action="{% url 'empty_cart' %}">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger">Limpar Carrinho</button>

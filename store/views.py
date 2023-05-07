@@ -30,10 +30,10 @@ def full_collection(request):
     page_number = request.GET.get('page')
 
     # agrupa os produtos da página atual
-    page_obj = paginator.get_page(page_number)
+    page = paginator.get_page(page_number)
 
     context = {
-        'product_list': page_obj,
+        'product_list': page,
     }
     return render(request, 'full_collection.html', context)
 
@@ -94,6 +94,36 @@ def addToCart(request):
             return redirect('detail', produto_id=produto_id)
     else:
         return render(request, 'login.html', {'msg': 'Não está logado!'})
+
+@login_required(login_url="login_view")
+def add_subtract_item(request):
+    if request.method == 'POST':
+        produto_id = int(request.POST.get('produto_id', 0))
+        if request.POST.get('+',''):
+            carrinho = CarrinhoCompras.objects.get(utilizador=request.user.utilizador)
+            cart_items = carrinhoItem.objects.filter(carrinho=carrinho)
+            for item in cart_items:
+                if item.produto.id == produto_id:
+                    print('made it to the item')
+                    item.quantidade +=1
+                    item.save()
+            return redirect('cart_view')
+        if request.POST.get('-',''):
+            carrinho = CarrinhoCompras.objects.get(utilizador=request.user.utilizador)
+            cart_items = carrinhoItem.objects.filter(carrinho=carrinho)
+            for item in cart_items:
+                if item.produto.id == produto_id:
+                    item.quantidade -= 1
+                    item.save()
+                    if item.quantidade == 0:
+                        item.delete()
+            return redirect('cart_view')
+
+        messages.error(request, 'Erro ao adicionar Produto')
+        return redirect('cart_view')
+    else:
+        messages.error(request, 'Critical Error!')
+        return redirect('cart_view')
 
 
 @login_required(login_url="login_view")
