@@ -32,6 +32,9 @@
                     <div class="button-container">
                         <button type="submit">Editar</button>
                     </div>
+                    <div class="button_historico_compras">
+                        <a href="{% url 'historico_compras' %}">Histórico de Compras</a>
+                    </div>
                 </form>
             {% elif request.user.staff %}
                 <form>
