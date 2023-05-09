@@ -158,7 +158,6 @@ def finalizar_compra(request):
                     produto.save()
                     item.delete()
 
-
                 carrinho.delete()
 
                 #associar um novo carrinho ao user estando totalmente a zeros
