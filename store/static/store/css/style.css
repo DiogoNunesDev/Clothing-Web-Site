@@ -364,6 +364,33 @@ figure {
 }
 
 
+
+.button_historico_compras{
+    margin: 15px 0;
+}
+.button_historico_compras button{
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    display: block;
+    font-size: 20px;
+    color: white;
+    border:0;
+    border-radius: 7px;
+    background-color: #004957;
+}
+
+.button_historico_compras button:hover{
+    background-color: #006a7e;
+}
+
+
+
+
+
+
+
+
 .profile strong {
     font-weight: bold;
     color: black;

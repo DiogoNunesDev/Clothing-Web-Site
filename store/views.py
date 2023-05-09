@@ -194,6 +194,35 @@ def empty_cart(request):
     else:
         return render(request, 'login.html', {'msg': 'Não está logado'})
 
+
+
+@login_required(login_url="login_view")
+def historico_compras(request):
+    if hasattr(request.user, 'utilizador'):
+        try:
+            utilizador = request.user.utilizador
+            compras = {}
+            historico_items = Historico_item.objects.filter(utilizador=utilizador).order_by('-data_finalizada')
+            for item in historico_items:
+                data = item.data_finalizada.date()
+                if data in compras:
+                    compras[data]['items'].append(item)
+                    compras[data]['valor_total'] += item.produto.preco * item.quantidade
+                else:
+                    compras[data] = {'items': [item], 'valor_total':item.produto.preco * item.quantidade}
+
+            for data, compra in compras.items():
+                for item in compra['items']:
+                    item.produto.id = item.produto.pk #adiciona o campo "id" com valor da "pk"
+
+        except Historico_item.DoesNotExist:
+            compras = None
+
+        return render(request, 'historico_compras.html', {'compras': compras})
+    else:
+        return render(request, 'login.html', {'msg': 'Não está autenticado'})
+
+
 def login_view(request):
     if request.method == 'POST':
         name = request.POST['username']
