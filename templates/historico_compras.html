@@ -15,31 +15,36 @@
             <h1>Histórico de Compras</h1>
             <hr>
         </div>
+        <div style="justify-content: center; align-items: center">
             {% if compras %}
-                {% with ''|center:8 as spacer %}
-                    {% for data, compra in compras.items %}
-                        <div class="card mb-6">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ data }}</h5>
-                                {% for item in compra.items %}
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <p class="card-text">{{ item.produto.nome }} x{{ item.quantidade }}</p>
-                                            <p class="card-text">Tamanho: {{ item.produto.tamanho }} </p>
-                                        </div>
-                                        <div class="col">
-                                            <a href="{% url 'detail' produto_id=item.produto.id %}">
-                                                <img src="{% static 'store/images/' %}{{ item.produto.image }}" alt="{{ item.produto }}" class="card-img" style="width: 20%; float: right">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                {% endfor %}
-                                <p class="card-text" style="text-align: right"><strong>Valor Total: </strong>{{ compra.valor_total }}€</p>
+                {% for data, compra in compras.items %}
+                    <div class="card mb-6" style="width: 50%; margin-left: 25%; margin-right: 25%">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ data }}</h5>
+                        {% for item in compra.items %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="card-text"><strong>Descrição: </strong></p>
+                                    <p class="card-text"><strong>Item: </strong> {{ item.produto.categoria }} {{ item.produto.cor }}</p>
+                                    <p class="card-text"><strong>Quantidade: </strong>x{{ item.quantidade }}</p>
+                                    <p class="card-text"><strong>Tamanho: </strong>{{ item.produto.tamanho }} </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{% url 'detail' produto_id=item.produto.id %}">
+                                        <img src="{% static 'store/images/' %}{{ item.produto.image }}" alt="{{ item.produto }}" class="card-img" style="width: 50%; float: right">
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
-                {% endwith %}
+                            <hr>
+                        {% endfor %}
+                        <p class="card-text" style="text-align: right"><strong>Valor Total: </strong>{{ compra.valor_total }}€</p>
+                    </div>
+                    </div>
+                    <br>
+                {% endfor %}
+        </div>
+
+
             {% else %}
                 <p>Ainda não efetuou nenhuma compra.</p>
             {% endif %}

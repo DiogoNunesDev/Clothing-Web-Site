@@ -16,9 +16,10 @@
         </div>
         {% if messages %}
             {% for message in messages %}
-                <div class="alert-danger" style="width: 70%; border-radius: 4px; color: black; align-items: center">
+                <div class="alert-primary" style="width: 70%; border-radius: 4px; color: black; align-items: center">
                     <strong>{{ message }}</strong>
                 </div>
+                {% break %}
             {% endfor %}
         {% endif %}
         <div class="alert-warning">

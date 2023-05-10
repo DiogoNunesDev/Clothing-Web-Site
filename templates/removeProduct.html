@@ -9,14 +9,19 @@
             document.body.style.paddingTop = "220px"; // set top padding to 50 pixels
             document.body.style.backgroundImage = "none";
         }
-
         </script>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert-primary" style="width: 70%; border-radius: 4px; color: black; align-items: center">
+                    <strong>{{ message }}</strong>
+                </div>
+                {% break %}
+            {% endfor %}
+        {% endif %}
         <body style="background: cornsilk !important;"></body>
         <div class="tittle-container">
             <h1> Remover Produto </h1>
         </div>
-
-
         {% if products %}
             <ul class="product_list">
                 {% for product in products %}

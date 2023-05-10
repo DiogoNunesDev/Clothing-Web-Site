@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.utils import timezone
 from django.core.paginator import Paginator
+from decimal import Decimal
 
 
 def home(request):
@@ -46,9 +47,17 @@ def cart_view(request):
                 return render(request, 'cart.html', {'empty': 'O seu carrinho está vazio!'})
             cart_items = carrinhoItem.objects.filter(carrinho=carrinho)
             produtos = []
+            total = 0
             for item in cart_items:
                 produto = Produto.objects.get(pk=item.produto.id)
                 produtos.append(produto)
+                total += (produto.preco * item.quantidade)
+                print(str(total))
+
+            total = total * get_desconto(request.user.utilizador.num_pontos)
+            print(str(total))
+            carrinho.valor_total = total
+            carrinho.save()
             context = {'items': list(cart_items.values()), 'produtos': list(produtos), 'carrinho': carrinho}
             return render(request, 'cart.html', context)
         except ObjectDoesNotExist:
@@ -130,6 +139,18 @@ def add_subtract_item(request):
         messages.error(request, 'Critical Error!')
         return redirect('cart_view')
 
+def get_desconto(num_pontos):
+    #descontos
+    if num_pontos <= 500:
+        return Decimal('1')
+    elif num_pontos <= 1000:
+        return Decimal('0.98')
+    elif num_pontos <= 1500:
+        return Decimal('0.95')
+    elif num_pontos <= 2500:
+        return Decimal('0.9')
+    else:
+        return Decimal('0.85')
 
 @login_required(login_url="login_view")
 def finalizar_compra(request):
@@ -156,6 +177,8 @@ def finalizar_compra(request):
                     produto = item.produto
                     produto.stock -= item.quantidade
                     produto.save()
+                    utilizador.num_pontos += (produto.num_pontos * item.quantidade)
+                    utilizador.save()
                     item.delete()
 
                 carrinho.delete()
@@ -190,7 +213,7 @@ def empty_cart(request):
             # Redirecionar o usuário para a página do carrinho ou outra página de sua escolha
             return redirect('cart_view')
         except CarrinhoCompras.DoesNotExist:
-            return render(request, 'erro.html', {'empty': 'Carrinho de compras não encontrado'})
+            return render(request, 'erro.html', {'empty': 'Carrinho de compras vazio'})
     else:
         return render(request, 'login.html', {'msg': 'Não está logado'})
 
@@ -204,7 +227,8 @@ def historico_compras(request):
             compras = {}
             historico_items = Historico_item.objects.filter(utilizador=utilizador).order_by('-data_finalizada')
             for item in historico_items:
-                data = item.data_finalizada.date()
+                data = item.data_finalizada.replace(second=0, microsecond=0, minute=item.data_finalizada.minute // 5 * 5)
+                print(str(data))
                 if data in compras:
                     compras[data]['items'].append(item)
                     compras[data]['valor_total'] += item.produto.preco * item.quantidade
@@ -375,24 +399,38 @@ def addProduct(request):
             image = cor + referencia + '.png'
             stock = int(request.POST.get('stock', 0))
 
-            if categoria == 'Long Sleeve':
-                num_pontos = 40
-            elif categoria == 'T-Shirt':
-                num_pontos = 20
+            if check_product_combination(categoria, referencia):
+                if categoria == 'Long Sleeve':
+                    num_pontos = 40
+                elif categoria == 'T-Shirt':
+                    num_pontos = 20
+                else:
+                    num_pontos = 50
+
+                try:
+                    produto = Produto.objects.get(cor=cor, referencia=referencia, tamanho=tamanho, num_pontos=num_pontos, categoria=categoria)
+                    produto.stock = produto.stock + stock
+                    produto.save()
+                    return render(request, 'addProduct.html', {'msg': 'Stock atualizado !'})
+                except ObjectDoesNotExist:
+                    Produto.makeProduct(tamanho, cor, preco, num_pontos, categoria, referencia, image, stock)
+                    return render(request, 'addProduct.html', {'msg': 'Produtos Inseridos!'})
+
             else:
-                num_pontos = 50
-
-            try:
-                produto = Produto.objects.get(cor=cor, referencia=referencia, tamanho=tamanho, num_pontos=num_pontos, categoria=categoria)
-                produto.stock = produto.stock + stock
-                produto.save()
-                return render(request, 'addProduct.html', {'msg': 'Stock atualizado !'})
-            except ObjectDoesNotExist:
-                Produto.makeProduct(tamanho, cor, preco, num_pontos, categoria, referencia, image, stock)
-                return render(request, 'addProduct.html', {'msg': 'Produtos Inseridos!'})
-
+                messages.error(request, 'Combinação Categoria/Referencia incorreta!')
+                return redirect('redirectAddProduct')
     else:
         return render(request, 'login_view', {'msg': 'Não está logado como Staff'})
+
+
+def check_product_combination(categoria, referencia):
+    combinations = [('Sweatshirt', 'SS01'), ('T-Shirt', 'TS01'), ('Long Sleeve', 'LS01')]
+    combo = (categoria, referencia)
+    if combo not in combinations:
+        return False
+
+    return True
+
 
 @login_required(login_url="login_view")
 def redirectAddProduct(request):

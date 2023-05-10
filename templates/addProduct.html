@@ -10,7 +10,13 @@
         }
 
         </script>
-
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert-danger" style="width: 70%; border-radius: 4px; color: black; align-items: center">
+                    <strong>{{ message }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
 
         <div class="tittle-container">
             <h1> Adicionar Produto </h1>
