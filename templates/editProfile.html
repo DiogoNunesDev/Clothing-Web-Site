@@ -9,6 +9,8 @@
             document.body.style.backgroundImage = "none";
         }
 
+
+
         </script>
         <div class="formulario">
             <form action="{% url 'edit_profile' %}" method="post">
@@ -22,11 +24,11 @@
                 <div class="content">
                     <div class="input-box">
                         <label for="username">Username</label>
-                        <input type="text" name="username" required>
+                        <input type="text" name="username" required value="{{ request.user.utilizador.user }}">
                     </div>
                     <div class="input-box">
                         <label for="email">Email</label>
-                        <input type="email" placeholder="Email@gmail.com" name="email" required>
+                        <input type="email" name="email" required value="{{ request.user.utilizador.email }}">
                     </div>
                     <div class="input-box">
                         <label for="password">Password</label>
@@ -38,27 +40,31 @@
                     </div>
                     <div class="input-box">
                         <label for="primeiro_nome">Primeiro Nome</label>
-                        <input type="text" placeholder="Primeiro Nome" name="primeiro_nome" required>
+                        <input type="text" name="primeiro_nome" required value="{{ request.user.utilizador.primeiro_nome }}">
                     </div>
                     <div class="input-box">
                         <label for="apelido">Apelido</label>
-                        <input type="text" placeholder="Apelido" name="apelido" required>
+                        <input type="text" placeholder="Apelido" name="apelido" required value=" {{ request.user.utilizador.apelido }} ">
                     </div>
                     <div class="input-box">
                         <label for="data_nascimento">Data de Nascimento</label>
-                        <input type="date" name="data_nascimento" required>
+                        <input type="date" name="data_nascimento" required value="{{ request.user.utilizador.data_nascimento|date:'Y-m-d' }}">
                     </div>
                     <div class="input-box">
                         <label for="numero_telemovel">Numero de Télemovel</label>
-                        <input type="number" placeholder="919191919" name="numero_telemovel" required>
+                        <input type="number" placeholder="919191919" name="numero_telemovel" required value="{{ request.user.utilizador.numero_telemovel }}">
                     </div>
                     <div class="input-box">
                         <label for="num_cartao_cidadao">Número de Cartão Cidadão (CC)</label>
-                        <input type="number" placeholder="124135167" name="num_cartao_cidadao" required>
+                        <input type="number" placeholder="124135167" name="num_cartao_cidadao" required value="{{ request.user.utilizador.num_cartao_cidadao }}">
                     </div>
                     <div class="input-box">
                         <label for="nif">Número de Identificação Fiscal (NIF)</label>
-                        <input type="number" placeholder="263254243" name="nif" required>
+                        <input type="number"  name="nif" required value="{{ request.user.utilizador.nif }}">
+                    </div>
+                    <div class="input-box" style="width: 100%; margin-left: 1%; margin-right: 1%">
+                        <label for="morada">Morada</label>
+                        <input type="textbox"  name="morada" required value="{{ request.user.utilizador.morada }}">
                     </div>
                 </div>
                 <div class="button-container">

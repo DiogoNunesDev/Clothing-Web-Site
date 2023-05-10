@@ -14,14 +14,6 @@
         <div class="tittle-container">
             <h1> Carrinho </h1>
         </div>
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert-primary" style="width: 70%; border-radius: 4px; color: black; align-items: center">
-                    <strong>{{ message }}</strong>
-                </div>
-                {% break %}
-            {% endfor %}
-        {% endif %}
         <div class="alert-warning">
             {% if empty %}
                 <strong> {{ empty }} </strong>
