@@ -474,7 +474,7 @@ def edit_profile(request):
             if request.POST['data_nascimento']:
                 utilizador.data_nascimento = request.POST['data_nascimento']
 
-            if request.POST['morada']:
+            if request.POST.get('morada'):
                 utilizador.morada = request.POST['morada']
 
             if request.POST['email']:
@@ -490,9 +490,9 @@ def edit_profile(request):
             if request.POST['nif']:
                 utilizador.nif = request.POST['nif']
 
-            if request.POST['password'] & request.POST['confirm_password']:
+            if request.POST['password'] and request.POST['confirm_password']:
                 if request.POST['password'] == request.POST['confirm_password']:
-                    user.password = request.POST['password']
+                    user.set_password(request.POST['password'])
                 else:
                     return render(request, 'edit_profile.html', {'msg': 'Password confirmada incorretamente'})
 
