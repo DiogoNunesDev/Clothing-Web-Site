@@ -90,7 +90,7 @@
                    <button style="color: white; font-family: 'Helvetica Neue', sans-serif;" class="btn">Remover Staff</button>
                 </a>
             </li>
-            {% endif %}
+            {% else %}
             <li>
                 <a href="{% url 'full_collection' %}">
                     <button class="btn" style="color: white; font-family: 'Helvetica Neue', sans-serif;">Full Collection</button>
@@ -119,6 +119,7 @@
                     </div>
                 </div>
             </li>
+            {% endif %}
          </ul>
         </nav>
     </header>

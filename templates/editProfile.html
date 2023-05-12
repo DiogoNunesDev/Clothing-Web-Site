@@ -66,6 +66,9 @@
                         <label for="morada">Morada</label>
                         <input type="textbox"  name="morada" required value="{{ request.user.utilizador.morada }}">
                     </div>
+                    <div class="alert">
+                        <p>Se não pretende alterar a password certifique-se que inseriu corretamente a mesma nos 2 campos de password!</p>
+                    </div>
                 </div>
                 <div class="button-container">
                     <button type="submit">Save</button>

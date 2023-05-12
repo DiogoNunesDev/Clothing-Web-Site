@@ -273,7 +273,6 @@ def logout_view(request):
 def signup_view(request):
     if request.method == 'POST':
         name = request.POST.get('username', '')
-        password = request.POST.get('password', '')
         email = request.POST.get('email', '')
         primeiro_nome = request.POST.get('primeiro_nome', '')
         apelido = request.POST.get('apelido', '')
@@ -282,14 +281,15 @@ def signup_view(request):
         numero_telemovel = request.POST.get('numero_telemovel', 0)
         num_cartao_cidadao = request.POST.get('num_cartao_cidadao', 0)
         nif = request.POST.get('nif', 0)
-        user = User(username=name, password=password, email=email)
+        user = User(username=name, email=email)
+        user.set_password(request.POST.get('password', ''))
         user.save()
         utilizador = Utilizador(user=user, primeiro_nome=primeiro_nome, apelido=apelido, data_nascimento=data_nascimento,
                                 morada=morada, numero_telemovel=numero_telemovel, num_cartao_cidadao=num_cartao_cidadao,
                                 nif=nif, num_pontos=0, email=email)
         utilizador.save()
         login(request, user)
-        return redirect('home', {'msg', 'Bem vindo à Pescada Store!'})
+        return redirect('home')
     else:
         return render(request, 'signup.html')
 
@@ -536,9 +536,10 @@ def edit_profile(request):
             user.save()
             utilizador.save()
 
-            return render(request, 'profile.html')
+            border_color = get_border_color(request.user.utilizador.num_pontos)
+            return render(request, 'profile.html', {'border_color': border_color})
         else:
-            return render(request, 'edit_profile.html')
+            return render(request, 'editProfile.html')
     else:
         return render(request, 'login.html', {'msg': 'não está com conta de User'})
 
