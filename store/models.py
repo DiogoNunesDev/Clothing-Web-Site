@@ -77,27 +77,3 @@ class Historico_item(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     quantidade = models.IntegerField(default=1)
     data_finalizada = models.DateTimeField(auto_now_add=True)
-
-
-"""
-Funções para dar reset a base de dados, caso seja preciso
-
-
-from django.db import connection
-
-def reset_sequence_staff(new_value):
-    with connection.cursor() as cursor:
-        cursor.execute(f"UPDATE sqlite_sequence SET seq = {new_value} WHERE name = 'store_staff'")
-
-
-def reset_sequence_user(new_value):
-    with connection.cursor() as cursor:
-        cursor.execute(f"UPDATE sqlite_sequence SET seq = {new_value} WHERE name = 'auth_user'")
-
-
-def reset_sequence_utilizador(new_value):
-    with connection.cursor() as cursor:
-        cursor.execute(f"UPDATE sqlite_sequence SET seq = {new_value} WHERE name = 'store_utilizador'")
-  
-
-"""
